@@ -1,6 +1,7 @@
 /* Replace "dll.h" with the name of your header */
 #include "dll.h"
 #include "calculation.h"
+#include <string.h>
 #include <windows.h>
 
 DLLIMPORT void HelloWorld() {

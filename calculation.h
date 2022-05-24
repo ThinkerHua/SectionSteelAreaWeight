@@ -10,8 +10,8 @@
 #define METHOD_LOOKUP           0B1000
 
 //typedef struct {
-//	/*AoW = 0 -> area
-//	  AoW = 1 -> Weight*/
+//	/*AorW = 0 -> area
+//	  AorW = 1 -> Weight*/
 //	unsigned AorW : 1;
 //	/*TopSurface = 0 -> Exclude TopSurface
 //	  TopSurface = 1 -> Include TopSurface*/
