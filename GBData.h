@@ -1,11 +1,11 @@
 #ifndef _GBDATA_H_
 #define _GBDATA_H_
 
-#define GB_NAME_LENGTH 15
+//#define GB_NAME_LENGTH 15
 #define GB_DATA_ITEMS 4
 typedef struct {
 //	char *Type;
-	char const Name[GB_NAME_LENGTH];
+	char const *Name;
 	double const Data[GB_DATA_ITEMS];
 	double const Weight;
 	double const Area;

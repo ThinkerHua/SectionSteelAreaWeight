@@ -1,7 +1,7 @@
 #ifndef _SECTION_STEEL_H_
 #define _SECTION_STEEL_H_
 
-#define SECSTE_NAME_LENGTH 10
+//#define SECSTE_NAME_LENGTH 10
 typedef struct {
 	double ShortH;
 	double ShortB;
@@ -61,7 +61,7 @@ typedef struct {
 	char *Area;
 }SectionSteel_D;
 typedef struct {
-	char Name[SECSTE_NAME_LENGTH];
+	char *Name;
 	double H;
 	double B;
 	double tH;
@@ -70,7 +70,7 @@ typedef struct {
 	char *Area;
 }SectionSteel_I;
 typedef struct {
-	char Name[SECSTE_NAME_LENGTH];
+	char *Name;
 	double H;
 	double B;
 	double tH;
@@ -79,7 +79,7 @@ typedef struct {
 	char *Area;
 }SectionSteel_Chan;
 typedef struct {
-	char Name[SECSTE_NAME_LENGTH];
+	char *Name;
 	double H;
 	double B;
 	double tH;
@@ -88,7 +88,7 @@ typedef struct {
 	char *Area;
 }SectionSteel_Chan_MtM;
 typedef struct {
-	char Name[SECSTE_NAME_LENGTH];
+	char *Name;
 	double H;
 	double B;
 	double tH;
@@ -97,7 +97,7 @@ typedef struct {
 	char *Area;
 }SectionSteel_Chan_BtB;
 typedef struct {
-	char Name[SECSTE_NAME_LENGTH];
+	char *Name;
 	double B1;
 	double B2;
 	double t;
@@ -105,7 +105,7 @@ typedef struct {
 	char *Area;
 }SectionSteel_L;
 typedef struct {
-	char Name[SECSTE_NAME_LENGTH];
+	char *Name;
 	double B1;
 	double B2;
 	double t;
