@@ -21,5 +21,8 @@
 //	  Method = 2 -> Look up in table*/
 //	unsigned Method : 2;
 //}ControlCode;
+char *Formatting(char const *RawText);
+char *getSecSteType(char const *str);
+void *NewObj(char const *SecSteType);
 
 #endif

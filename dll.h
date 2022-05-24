@@ -7,8 +7,8 @@
 #define DLLIMPORT __declspec(dllimport)
 #endif
 
-DLLIMPORT void HelloWorld();
+//DLLIMPORT void HelloWorld();
 //DLLIMPORT char *SectionSteelAW(char const *Specification, ControlCode const CtrlCode);
-DLLIMPORT char *SectionSteelAW(char const *Specification, int const CtrlCode);
+DLLIMPORT char *SectionSteelAW(char const *RawText, int const CtrlCode);
 
 #endif
