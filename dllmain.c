@@ -16,6 +16,8 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	if (Formatting(RawText, FormatedText) == 0)
 		return NULL;
 	SecSteType = getSecSteType(FormatedText);
+	if (SecSteType == NULL) 
+		return NULL;
 	obj = NewObj(SecSteType);
 	if (obj == NULL) 
 		return NULL;

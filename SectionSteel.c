@@ -1,6 +1,7 @@
 #include "GBData.h"
 #include "SectionSteel.h"
 #include <stdlib.h>
+#include <string.h>
 
 SectionSteel_H *new_H (void) {
 	SectionSteel_H *obj;
@@ -111,11 +112,12 @@ SectionSteel_PLD *new_PLD (void) {
 }
 
 int setdata_H_(void *obj, char const *Formatedtext) {
-	
+	obj = (_SectionSteel_H *)obj;
+
 }
 
 int setdata_H(void *obj, char const *Formatedtext) {
-	
+
 }
 
 int setdata_HT(void *obj, char const *Formatedtext) {
@@ -461,5 +463,38 @@ char *getWeight_PLT(void *obj, unsigned const CtrlCode) {
 
 char *getWeight_PLD(void *obj, unsigned const CtrlCode) {
 
+}
+
+char **strsplit(char const *str, char const *delim) {
+	int len_s, len_d;
+	int i, nums, lastmatchedindex;
+	char *item;
+	char **strarr;
+	len_s = strlen(str), len_d = strlen(delim);
+	for (i = 0, lastmatchedindex = 0; i <= len_s - len_d; i++) {
+		if (strncmp(&str[i], delim, len_d) != 0)
+			continue;
+		if (i == 0 || i == lastmatchedindex + len_d) {
+			;
+		} else {
+			nums++;
+		}
+		lastmatchedindex = i;
+		i += (len_d - 1);
+	}
+	if (len_s > lastmatchedindex + len_d)
+		nums++;
+	if (nums = 0)
+		return NULL;
+	strarr = (char **)malloc(sizeof(char *) * nums);
+	if (strarr == NULL) 
+		return NULL;
+	for (i = 0; i <= len_s - len_d; i++) {
+		if (strncmp(&str[i], delim, len_d) == 0) {
+			i += (len_d - 1);
+			continue;
+		}
+		
+	}
 }
 

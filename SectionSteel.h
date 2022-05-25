@@ -265,4 +265,6 @@ char *getWeight_PL(void *obj, unsigned const CtrlCode);
 char *getWeight_PLT(void *obj, unsigned const CtrlCode);
 char *getWeight_PLD(void *obj, unsigned const CtrlCode);
 
+char **strsplit(char const *str, char const *delim);
+
 #endif

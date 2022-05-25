@@ -33,55 +33,58 @@ struct replaceinfo const replacetable[] = {
 };
 
 int Formatting(char const *RawText, char *FormatedText) {
-	int i, items;
+	int i, nums;
 	if ((FormatedText = (char *)malloc(strlen(RawText) + 1)) == NULL)
 		return 0;
 	strcpy(FormatedText, RawText);
-	items = sizeof(replacetable) / sizeof(replacetable[0]);
-	for (i = 0; i < items; i++)
+	nums = sizeof(replacetable) / sizeof(replacetable[0]);
+	for (i = 0; i < nums; i++)
 		if (replace(FormatedText, replacetable[i].from, replacetable[i].to) == 0)
 			break;
-	if (i == items)
+	if (i == nums)
 		return 1;
-	else
-		return 0;
+	free(FormatedText);
+	return 0;
 }
 
 int replace(char *str, char const *from, char const *to) {
-	int lenf, lent, i, j;
+	int lens, lenf, lent, i, j, k, nums;
 	char *newstr;
-	lenf = strlen(from), lent = strlen(to);
+	lens = strlen(str), lenf = strlen(from), lent = strlen(to);
 	if (lenf == 0) return 1;
-	if (lent > lenf) {
-		newstr = (char *)malloc(strlen(str) + lent - lenf + 1);
-		if (newstr == NULL)
-			return 0;
-		strcpy(newstr, str);
-		free(str);
-		str = newstr;
-	}
-	for(i = 0; i <= strlen(str) - lenf; i++) {
+	for (i = 0, nums = 0; i <= lens - lenf; i++) {
 		if (strncmp(&str[i], from, lenf) != 0)
 			continue;
-		if (lent > lenf) {
-			for(j = strlen(str); j >= i + lenf; j--)
-				str[j+lent-lenf] = str[j];
-		} else if (lent < lenf) {
-			for(j = i + lent; j <= strlen(str)-(lenf-lent); j++)
-				str[j] = str[j+lenf-lent];
-		}
-		for(j = 0; j < lent; j++)
-			str[i+j] = to[j];
-		i += (lent-1);
+		nums++;
+		i += (lenf - -1);
 	}
+	if (nums == 0) 
+		return 1;
+	if (lent != lenf) {
+		newstr = (char *)malloc(lens + (lent - lenf) * nums + 1);
+		if (newstr == NULL)
+			return 0;
+	}
+	for(i = 0, j = 0; i <= lens - lenf; i++) {
+		if (strncmp(&str[i], from, lenf) != 0) {
+			newstr[j++] = str[i];
+			continue;
+		}
+		for(k = 0; k < lent; k++) 
+			newstr[j++] = to[k];
+		i += (lent - 1);
+	}
+	newstr[j] = '\0';
+	free(str);
+	str = newstr;
 	return 1;
 }
 
 char *getSecSteType(char const *FormatedText) {
-	int i, items;
-	items = sizeof(SecSteTypeArr)/sizeof(SecSteTypeArr[0]);
-	QSortStrArr(SecSteTypeArr, 0, items - 1);
-	for (i = 0; i < items; i++)
+	int i, nums;
+	nums = sizeof(SecSteTypeArr)/sizeof(SecSteTypeArr[0]);
+	QSortStrArr(SecSteTypeArr, 0, nums - 1);
+	for (i = 0; i < nums; i++)
 		if (strncmp(FormatedText, SecSteTypeArr[i], strlen(SecSteTypeArr[i])) == 0)
 			return SecSteTypeArr[i];
 	return NULL;

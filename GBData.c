@@ -562,12 +562,12 @@ GBSectionSteel const GBSecSte_Z[] = {
 
 double const search_AorW(char const *SecSteType, double const data[], int const AorW) {
 	GBSectionSteel const *pGBSecSte;
-	int items;
+	int nums;
 
 	link_pGBSecSte(pGBSecSte, SecSteType);
 	if (pGBSecSte != NULL) {
-		items = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
-		for (; items > 0; items--, pGBSecSte++) {
+		nums = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
+		for (; nums > 0; nums--, pGBSecSte++) {
 			if (compare_Arr_f(data, pGBSecSte->Data) == 1)
 				return AorW ? pGBSecSte->Weight : pGBSecSte->Area;
 		}
@@ -577,12 +577,12 @@ double const search_AorW(char const *SecSteType, double const data[], int const 
 
 double const *search_Data_ByName(char const *SecSteType, char const *Name) {
 	GBSectionSteel const *pGBSecSte;
-	int items;
+	int nums;
 
 	link_pGBSecSte(pGBSecSte, SecSteType);
 	if (pGBSecSte != NULL) {
-		items = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
-		for (; items > 0; items--, pGBSecSte++) {
+		nums = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
+		for (; nums > 0; nums--, pGBSecSte++) {
 			if (strcmp(Name, pGBSecSte->Name) == 0)
 				return pGBSecSte->Data;
 		}
@@ -592,12 +592,12 @@ double const *search_Data_ByName(char const *SecSteType, char const *Name) {
 
 double const *search_Data_ByPart(char const *SecSteType, double const partData[]) {
 	GBSectionSteel const *pGBSecSte;
-	int items;
+	int nums;
 
 	link_pGBSecSte(pGBSecSte, SecSteType);
 	if (pGBSecSte != NULL) {
-		items = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
-		for (; items > 0; items--, pGBSecSte++) {
+		nums = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
+		for (; nums > 0; nums--, pGBSecSte++) {
 			if (compare_Arr_f(partData, pGBSecSte->Data) == 1)
 				return pGBSecSte->Data;
 		}
