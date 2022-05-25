@@ -8,17 +8,24 @@
 //	MessageBox(0,"Hello World from DLL!\n","Hi",MB_ICONINFORMATION);
 //}
 
-char *SecSteTypeArr[] = {"H", "HT", "HI", "T", "J", "D", "I", "[", "[]", "2[", "L", "2L", "C", "2C", "Z", "PL", "PLT", "PLD"};
-
-DLLIMPORT char *SectionSteelAW(char const *RawText, int const CtrlCode) {
+DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	char *FormatedText;
 	char *SecSteType;
 	char *Resault;
 	void *obj;
-	FormatedText = Formatting(RawText);
+	if (Formatting(RawText, FormatedText) == 0)
+		return NULL;
 	SecSteType = getSecSteType(FormatedText);
 	obj = NewObj(SecSteType);
-		
+	if (obj == NULL) 
+		return NULL;
+	if (setdata(obj, SecSteType, FormatedText) == 0) {
+		free(obj);
+		return NULL;
+	}
+	Resault = getResault(obj, SecSteType, CtrlCode);
+	free(obj);
+	return Resault;
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved) {

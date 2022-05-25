@@ -9,6 +9,6 @@
 
 //DLLIMPORT void HelloWorld();
 //DLLIMPORT char *SectionSteelAW(char const *Specification, ControlCode const CtrlCode);
-DLLIMPORT char *SectionSteelAW(char const *RawText, int const CtrlCode);
+DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode);
 
 #endif

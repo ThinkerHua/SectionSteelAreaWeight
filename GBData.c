@@ -1,86 +1,6 @@
 #include "GBData.h"
 #include <string.h>
 
-double const search_AorW(char const *SecSteType, double const data[], int const AorW) {
-	GBSectionSteel const *pGBSecSte;
-	int items;
-
-	link_pGBSecSte(pGBSecSte, SecSteType);
-	if (pGBSecSte != NULL) {
-		items = sizeof(pGBSecSte);
-		for (; items > 0; items--, pGBSecSte++) {
-			if (compare_Arr_f(data, pGBSecSte->Data) == 1)
-				return AorW ? pGBSecSte->Weight : pGBSecSte->Area;
-		}
-	}
-	return 0.0;
-}
-
-double const *search_Data(char const *SecSteType, char const *Name) {
-	GBSectionSteel const *pGBSecSte;
-	int items;
-
-	link_pGBSecSte(pGBSecSte, SecSteType);
-	if (pGBSecSte != NULL) {
-		items = sizeof(pGBSecSte);
-		for (; items > 0; items--, pGBSecSte++) {
-			if (strcmp(Name, pGBSecSte->Name) == 0)
-				return pGBSecSte->Data;
-		}
-	}
-	return NULL;
-}
-
-double const *search_Data_ByPart(char const *SecSteType, double const partData[]) {
-	GBSectionSteel const *pGBSecSte;
-	int items;
-
-	link_pGBSecSte(pGBSecSte, SecSteType);
-	if (pGBSecSte != NULL) {
-		items = sizeof(pGBSecSte);
-		for (; items > 0; items--, pGBSecSte++) {
-			if (compare_Arr_f(partData, pGBSecSte->Data) == 1)
-				return pGBSecSte->Data;
-		}
-	}
-	return NULL;
-}
-
-int compare_Arr_f(double const arr1[], double const arr2[]) {
-	int i, len1, len2;
-	len1 = sizeof(arr1), len2 = sizeof(arr2);
-	if (len1 <= len2) {
-		for(i = 0; i < len1; i++) {
-			if ((arr1[i] - arr2[i]) != 0)
-				return 0;
-		}
-		return 1;
-	}
-	return -1;
-}
-
-void link_pGBSecSte(GBSectionSteel const *p, char const *SecSteType) {
-	if (strcmp(SecSteType, "H") == 0) {
-		p = GBSecSte_H;
-	} else if (strcmp(SecSteType, "HT") == 0) {
-		p = GBSecSte_HT;
-	} else if (strcmp(SecSteType, "T") == 0) {
-		p = GBSecSte_T;
-	} else if (strcmp(SecSteType, "I") == 0) {
-		p = GBSecSte_I;
-	} else if (strcmp(SecSteType, "[") == 0) {
-		p = GBSecSte_Chan;
-	} else if (strcmp(SecSteType, "L") == 0) {
-		p = GBSecSte_L;
-	} else if (strcmp(SecSteType, "C") == 0) {
-		p = GBSecSte_C;
-	} else if (strcmp(SecSteType, "Z") == 0) {
-		p = GBSecSte_Z;
-	} else {
-		p = NULL;
-	}
-}
-
 GBSectionSteel const GBSecSte_H[] = {
 	{"100*100",{100,100,6,8},16.9,0.574,},
 	{"125*125",{125,125,6.5,9},23.6,0.723,},
@@ -639,3 +559,85 @@ GBSectionSteel const GBSecSte_Z[] = {
 	{"400*120*40*8.0",{400,120,40,8},40.789,0,},
 	{"400*120*40*10",{400,120,40,10},49.692,0,}
 };
+
+double const search_AorW(char const *SecSteType, double const data[], int const AorW) {
+	GBSectionSteel const *pGBSecSte;
+	int items;
+
+	link_pGBSecSte(pGBSecSte, SecSteType);
+	if (pGBSecSte != NULL) {
+		items = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
+		for (; items > 0; items--, pGBSecSte++) {
+			if (compare_Arr_f(data, pGBSecSte->Data) == 1)
+				return AorW ? pGBSecSte->Weight : pGBSecSte->Area;
+		}
+	}
+	return 0.0;
+}
+
+double const *search_Data_ByName(char const *SecSteType, char const *Name) {
+	GBSectionSteel const *pGBSecSte;
+	int items;
+
+	link_pGBSecSte(pGBSecSte, SecSteType);
+	if (pGBSecSte != NULL) {
+		items = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
+		for (; items > 0; items--, pGBSecSte++) {
+			if (strcmp(Name, pGBSecSte->Name) == 0)
+				return pGBSecSte->Data;
+		}
+	}
+	return NULL;
+}
+
+double const *search_Data_ByPart(char const *SecSteType, double const partData[]) {
+	GBSectionSteel const *pGBSecSte;
+	int items;
+
+	link_pGBSecSte(pGBSecSte, SecSteType);
+	if (pGBSecSte != NULL) {
+		items = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
+		for (; items > 0; items--, pGBSecSte++) {
+			if (compare_Arr_f(partData, pGBSecSte->Data) == 1)
+				return pGBSecSte->Data;
+		}
+	}
+	return NULL;
+}
+
+int compare_Arr_f(double const arr1[], double const arr2[]) {
+	int i, len1, len2;
+	len1 = sizeof(arr1) / sizeof(arr1[0]);
+	len2 = sizeof(arr2) / sizeof(arr2[0]);
+	if (len1 <= len2) {
+		for(i = 0; i < len1; i++) {
+			if ((arr1[i] - arr2[i]) != 0)
+				return 0;
+		}
+		return 1;
+	}
+	return -1;
+}
+
+void link_pGBSecSte(GBSectionSteel const *p, char const *SecSteType) {
+	if (strcmp(SecSteType, "H") == 0) {
+		p = GBSecSte_H;
+	} else if (strcmp(SecSteType, "HT") == 0) {
+		p = GBSecSte_HT;
+	} else if (strcmp(SecSteType, "T") == 0) {
+		p = GBSecSte_T;
+	} else if (strcmp(SecSteType, "I") == 0) {
+		p = GBSecSte_I;
+	} else if (strcmp(SecSteType, "[") == 0) {
+		p = GBSecSte_Chan;
+	} else if (strcmp(SecSteType, "L") == 0) {
+		p = GBSecSte_L;
+	} else if (strcmp(SecSteType, "C") == 0) {
+		p = GBSecSte_C;
+	} else if (strcmp(SecSteType, "Z") == 0) {
+		p = GBSecSte_Z;
+	} else {
+		p = NULL;
+	}
+}
+
