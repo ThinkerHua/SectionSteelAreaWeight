@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+_SectionSteel_H *new_H_ (void) {
+	_SectionSteel_H *obj;
+	obj = (_SectionSteel_H *)malloc(sizeof(_SectionSteel_H));
+	return obj;
+}
+
 SectionSteel_H *new_H (void) {
 	SectionSteel_H *obj;
 	obj = (SectionSteel_H *)malloc(sizeof(SectionSteel_H));
@@ -93,6 +99,24 @@ SectionSteel_Z *new_Z (void) {
 	return obj;
 }
 
+_SectionSteel_PL *new_PL_ (void) {
+	_SectionSteel_PL *obj;
+	obj = (_SectionSteel_PL *)malloc(sizeof(_SectionSteel_PL));
+	return obj;
+}
+
+_SectionSteel_PLT *new_PLT_ (void) {
+	_SectionSteel_PLT *obj;
+	obj = (_SectionSteel_PLT *)malloc(sizeof(_SectionSteel_PLT));
+	return obj;
+}
+
+_SectionSteel_PLD *new_PLD_ (void) {
+	_SectionSteel_PLD *obj;
+	obj = (_SectionSteel_PLD *)malloc(sizeof(_SectionSteel_PLD));
+	return obj;
+}
+
 SectionSteel_PL *new_PL (void) {
 	SectionSteel_PL *obj;
 	obj = (SectionSteel_PL *)malloc(sizeof(SectionSteel_PL));
@@ -109,6 +133,94 @@ SectionSteel_PLD *new_PLD (void) {
 	SectionSteel_PLD *obj;
 	obj = (SectionSteel_PLD *)malloc(sizeof(SectionSteel_PLD));
 	return obj;
+}
+
+void free_H_(void *obj) {
+	
+}
+
+void free_H(void *obj) {
+	
+}
+
+void free_HT(void *obj) {
+	
+}
+
+void free_HI(void *obj) {
+	
+}
+
+void free_T(void *obj) {
+	
+}
+
+void free_J(void *obj) {
+	
+}
+
+void free_D(void *obj) {
+	
+}
+
+void free_I(void *obj) {
+	
+}
+
+void free_Chan(void *obj) {
+	
+}
+
+void free_Chan_MtM(void *obj) {
+	
+}
+
+void free_Chan_BtB(void *obj) {
+	
+}
+
+void free_L(void *obj) {
+	
+}
+
+void free_2L(void *obj) {
+	
+}
+
+void free_C(void *obj) {
+	
+}
+
+void free_2C(void *obj) {
+	
+}
+
+void free_Z(void *obj) {
+	
+}
+
+void free_PL_(void *obj) {
+	
+}
+
+void free_PLT_(void *obj) {
+	
+}
+
+void free_PLD_(void *obj) {
+	
+}
+
+void free_PL(void *obj) {
+	
+}
+
+void free_PLT(void *obj) {
+	
+}
+
+void free_PLD(void *obj) {
+	
 }
 
 int setdata_H_(void *obj, char const *Formatedtext) {
@@ -467,22 +579,22 @@ char *getWeight_PLD(void *obj, unsigned const CtrlCode) {
 
 char **strsplit(char const *str, char const *delim) {
 	int len_s, len_d;
-	int i, nums, lastmatchedindex;
+	int i, nums, lastmatchedindex, index;
 	char *item;
 	char **strarr;
 /*
-	不允许传入空字符串,否则返回NULL 
+	不允许传入空字符串,否则返回NULL
 */
 	if (str == NULL || delim == NULL)
 		return NULL;
 	len_s = strlen(str), len_d = strlen(delim);
-	if (len_s == 0 || len_d == 0) 
+	if (len_s == 0 || len_d == 0)
 		return NULL;
 /*
 	nums为分隔完成后字符串数组项目数
 	循环体统每次循环统计出分隔符左侧应分隔出的项目数
-	（分隔符在开头出现，以及连续出现分隔符，则不计数） 
-	循环体结束再判断最后一个分隔符右侧是否存在待分隔的项目 
+	（分隔符在开头出现，以及连续出现分隔符，则不计数）
+	循环体结束再判断最后一个分隔符右侧是否存在待分隔的项目
 */
 	for (i = 0, lastmatchedindex = 0; i <= len_s - len_d; i++) {
 		if (strncmp(&str[i], delim, len_d) != 0)
@@ -498,38 +610,58 @@ char **strsplit(char const *str, char const *delim) {
 	if (len_s > lastmatchedindex + len_d)
 		nums++;
 /*
-	计数器为0，即被分隔后没有剩下的字符串，返回NULL 
+	计数器为0，即被分隔后没有剩下的字符串，返回NULL
 */
 	if (nums = 0)
 		return NULL;
 /*
-	申请字符串指针数组存储空间 
+	申请字符串指针数组存储空间
 */
 	strarr = (char **)malloc(sizeof(char *) * nums);
-	if (strarr == NULL) 
+	if (strarr == NULL)
 		return NULL;
 /*
-	每次循环找出分隔出的字符串，申请存储空间，创建副本 
-	申请不成功要将前面已申请的空间（包括strarr）释放掉，并返回NULL 
+	每次循环找出分隔出的字符串，申请存储空间，创建副本
+	申请不成功要将前面已申请的空间（包括strarr）释放掉，并返回NULL
 */
-	for (i = 0; i <= len_s - len_d; i++) {
-		if (strncmp(&str[i], delim, len_d) != 0) {
-			lastmatchedindex = i; 
-			do {
-				i++;
-			} while(str[i] != '\0' || strncmp(&str[i], delim, len_d) !=0);
-			item = (void *)malloc(i - lastmatchedindex + 1);
-			if (item == NULL) {
-				while (--nums >= 0){
-					if (strarr[nums] != NULL)
-						free(strarr[nums]);
-				};
-				free(strarr);
-				return NULL;
-			}
-			strncpy(item, &str[lastmatchedindex], i - lastmatchedindex);
+	for (i = 0, index = 0; i <= len_s - len_d; i++) {
+		if (strncmp(&str[i], delim, len_d) == 0) {
+			i += (len_d - 1);
+			continue;
 		}
-		
+		lastmatchedindex = i;
+		do {
+			i++;
+		} while(str[i] != '\0' || strncmp(&str[i], delim, len_d) !=0);
+		item = (void *)malloc(i - lastmatchedindex + 1);
+		if (item == NULL) {
+			while (--nums >= 0) {
+				if (strarr[nums] != NULL)
+					free(strarr[nums]);
+			};
+			free(strarr);
+			return NULL;
+		}
+		strncpy(item, &str[lastmatchedindex], i - lastmatchedindex);
+		strarr[index++] = item;
+		if (str[i] == '\0')
+			break;
+		i += (len_d - 1);
 	}
+	return strarr;
 }
 
+void strsplit_free(char **strarr) {
+	int nums;
+	if (strarr == NULL) 
+		return;
+	nums = sizeof(strarr) / sizeof(char *);
+	if (nums > 0) 
+		for (nums-- ; nums >= 0; nums--) 
+			free(strarr[nums]);
+	free(strarr);
+}
+
+char *dtoa(double const d, unsigned const pre) {
+	
+}

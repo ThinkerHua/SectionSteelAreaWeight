@@ -36,7 +36,7 @@ int replace(char *str, char const *from, char const *to);
 			0	替换失败。
 */
 char *getSecSteType(char const *FormatedText);
-void QSortStrArr(char *strarr[], int const left, int const right);
+void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)(char const *str1, char const *str2));
 void swap(void *op1, void *op2);
 int strcmp_X(char const *str1, char const *str2);
 /*
@@ -47,6 +47,7 @@ int strcmp_X(char const *str1, char const *str2);
 		长度相等时，按标准库函数strcmp的规则进行比较。 
 */
 void *NewObj(char const *SecSteType);
+void FreeObj(void *obj, char const *SecSteType);
 int setdata(void *obj, char const *SecSteType, char const *FormatedText);
 /*
 	返回值	1	obj属性设置成功；

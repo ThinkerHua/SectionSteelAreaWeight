@@ -107,25 +107,25 @@ int replace(char *str, char const *from, char const *to) {
 char *getSecSteType(char const *FormatedText) {
 	int i, nums;
 	nums = sizeof(SecSteTypeArr)/sizeof(SecSteTypeArr[0]);
-	QSortStrArr(SecSteTypeArr, 0, nums - 1);
+	QSortStrArr(SecSteTypeArr, 0, nums - 1, &strcmp_X);
 	for (i = 0; i < nums; i++)
 		if (strncmp(FormatedText, SecSteTypeArr[i], strlen(SecSteTypeArr[i])) == 0)
 			return SecSteTypeArr[i];
 	return NULL;
 }
 
-void QSortStrArr(char *strarr[], int const left, int const right) {
+void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)(char const *str1, char const *str2)) {
 	int mid, last, i;
 	if (left >= right) return;
 	mid = (left + right) / 2;
 	swap((void *)strarr[left], (void *)strarr[mid]);
 	for (i = left + 1, last = left; i <= right; i++) {
-		if (strcmp_X(strarr[i], strarr[left]))
+		if (compare(strarr[i], strarr[left]))
 			swap((void *)strarr[i], (void *)strarr[++last]);
 	}
 	swap((void *)strarr[left], (void *)strarr[last]);
-	QSortStrArr(strarr, left, last - 1);
-	QSortStrArr(strarr, last + 1, right);
+	QSortStrArr(strarr, left, last - 1, compare);
+	QSortStrArr(strarr, last + 1, right, compare);
 }
 
 void swap(void *op1, void *op2) {
@@ -183,6 +183,47 @@ void *NewObj(char const *SecSteType) {
 	} else {
 		return NULL;
 	}
+}
+
+void FreeObj(void *obj, char const *SecSteType) {
+	if (strcmp(SecSteType, "H") == 0) {
+		free_H(obj);
+	} else if (strcmp(SecSteType, "HT") == 0) {
+		free_HT(obj);
+	} else if (strcmp(SecSteType, "HI") == 0)  {
+		free_HI(obj);
+	} else if (strcmp(SecSteType, "T") == 0) {
+		free_T(obj);
+	} else if (strcmp(SecSteType, "J") == 0) {
+		free_J(obj);
+	} else if (strcmp(SecSteType, "D") == 0) {
+		free_D(obj);
+	} else if (strcmp(SecSteType, "I") == 0) {
+		free_I(obj);
+	} else if (strcmp(SecSteType, "[") == 0) {
+		free_Chan(obj);
+	} else if (strcmp(SecSteType, "[]") == 0) {
+		free_Chan_MtM(obj);
+	} else if (strcmp(SecSteType, "2[") == 0) {
+		free_Chan_BtB(obj);
+	} else if (strcmp(SecSteType, "L") == 0) {
+		free_L(obj);
+	} else if (strcmp(SecSteType, "2L") == 0) {
+		free_2L(obj);
+	} else if (strcmp(SecSteType, "C") == 0) {
+		free_C(obj);
+	} else if (strcmp(SecSteType, "2C") == 0) {
+		free_2C(obj);
+	} else if (strcmp(SecSteType, "Z") == 0) {
+		free_Z(obj);
+	} else if (strcmp(SecSteType, "PL") == 0) {
+		free_PL(obj);
+	} else if (strcmp(SecSteType, "PLT") == 0) {
+		free_PLT(obj);
+	} else if (strcmp(SecSteType, "PLD") == 0) {
+		free_PLD(obj);
+	}
+	return;
 }
 
 int setdata(void *obj, char const *SecSteType, char const *FormatedText) {

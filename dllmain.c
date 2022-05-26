@@ -22,7 +22,7 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	if (obj == NULL) 
 		return NULL;
 	if (setdata(obj, SecSteType, FormatedText) == 0) {
-		free(obj);/////////////////////´ý¸ÄÐ´ 
+		FreeObj(obj, SecSteType);
 		return NULL;
 	}
 	Resault = getResault(obj, SecSteType, CtrlCode);
