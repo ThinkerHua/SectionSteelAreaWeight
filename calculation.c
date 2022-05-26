@@ -50,21 +50,42 @@ int Formatting(char const *RawText, char *FormatedText) {
 int replace(char *str, char const *from, char const *to) {
 	int lens, lenf, lent, i, j, k, nums;
 	char *newstr;
+/*
+	不允许传入空字符串，否则返回0
+*/ 
+	if (str == NULL || from == NULL || to == NULL)
+		return 0;
 	lens = strlen(str), lenf = strlen(from), lent = strlen(to);
+/*
+	查找值为空字符串，直接返回1 
+*/
 	if (lenf == 0) return 1;
+/*
+	先统计出待替换数量 
+*/
 	for (i = 0, nums = 0; i <= lens - lenf; i++) {
 		if (strncmp(&str[i], from, lenf) != 0)
 			continue;
 		nums++;
 		i += (lenf - -1);
 	}
+/*
+	没有待替换的字符串，直接返回1 
+*/
 	if (nums == 0) 
 		return 1;
+/*
+	计算替换后的字符串需占用的空间大小，并申请新空间 
+	申请失败返回0 
+*/ 
 	if (lent != lenf) {
 		newstr = (char *)malloc(lens + (lent - lenf) * nums + 1);
 		if (newstr == NULL)
 			return 0;
 	}
+/*
+	将不需要替换的字符和要替换成的字符依次复制到新空间 
+*/
 	for(i = 0, j = 0; i <= lens - lenf; i++) {
 		if (strncmp(&str[i], from, lenf) != 0) {
 			newstr[j++] = str[i];
@@ -75,6 +96,9 @@ int replace(char *str, char const *from, char const *to) {
 		i += (lent - 1);
 	}
 	newstr[j] = '\0';
+/*
+	指针重定向 
+*/
 	free(str);
 	str = newstr;
 	return 1;

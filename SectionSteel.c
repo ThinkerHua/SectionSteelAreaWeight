@@ -470,7 +470,20 @@ char **strsplit(char const *str, char const *delim) {
 	int i, nums, lastmatchedindex;
 	char *item;
 	char **strarr;
+/*
+	不允许传入空字符串,否则返回NULL 
+*/
+	if (str == NULL || delim == NULL)
+		return NULL;
 	len_s = strlen(str), len_d = strlen(delim);
+	if (len_s == 0 || len_d == 0) 
+		return NULL;
+/*
+	nums为分隔完成后字符串数组项目数
+	循环体统每次循环统计出分隔符左侧应分隔出的项目数
+	（分隔符在开头出现，以及连续出现分隔符，则不计数） 
+	循环体结束再判断最后一个分隔符右侧是否存在待分隔的项目 
+*/
 	for (i = 0, lastmatchedindex = 0; i <= len_s - len_d; i++) {
 		if (strncmp(&str[i], delim, len_d) != 0)
 			continue;
@@ -484,15 +497,37 @@ char **strsplit(char const *str, char const *delim) {
 	}
 	if (len_s > lastmatchedindex + len_d)
 		nums++;
+/*
+	计数器为0，即被分隔后没有剩下的字符串，返回NULL 
+*/
 	if (nums = 0)
 		return NULL;
+/*
+	申请字符串指针数组存储空间 
+*/
 	strarr = (char **)malloc(sizeof(char *) * nums);
 	if (strarr == NULL) 
 		return NULL;
+/*
+	每次循环找出分隔出的字符串，申请存储空间，创建副本 
+	申请不成功要将前面已申请的空间（包括strarr）释放掉，并返回NULL 
+*/
 	for (i = 0; i <= len_s - len_d; i++) {
-		if (strncmp(&str[i], delim, len_d) == 0) {
-			i += (len_d - 1);
-			continue;
+		if (strncmp(&str[i], delim, len_d) != 0) {
+			lastmatchedindex = i; 
+			do {
+				i++;
+			} while(str[i] != '\0' || strncmp(&str[i], delim, len_d) !=0);
+			item = (void *)malloc(i - lastmatchedindex + 1);
+			if (item == NULL) {
+				while (--nums >= 0){
+					if (strarr[nums] != NULL)
+						free(strarr[nums]);
+				};
+				free(strarr);
+				return NULL;
+			}
+			strncpy(item, &str[lastmatchedindex], i - lastmatchedindex);
 		}
 		
 	}
