@@ -577,30 +577,30 @@ char *getWeight_PLD(void *obj, unsigned const CtrlCode) {
 
 }
 
-char **strsplit(char const *str, char const *delim) {
+int strsplit(char const *str, char const *delim, char  ***const p_strarr) {
 	int len_s, len_d;
-	int i, nums, lastmatchedindex, index;
-	char *item;
-	char **strarr;
+	int i, lastmatchedindex, index;
+	int nums, j;
+	char *item = NULL;
 /*
-	不允许传入空字符串,否则返回NULL
+	不允许传入空字符串,否则返回-1
 */
 	if (str == NULL || delim == NULL)
-		return NULL;
+		return -1;
 	len_s = strlen(str), len_d = strlen(delim);
 	if (len_s == 0 || len_d == 0)
-		return NULL;
+		return -1;
 /*
 	nums为分隔完成后字符串数组项目数
 	循环体统每次循环统计出分隔符左侧应分隔出的项目数
 	（分隔符在开头出现，以及连续出现分隔符，则不计数）
 	循环体结束再判断最后一个分隔符右侧是否存在待分隔的项目
 */
-	for (i = 0, lastmatchedindex = 0; i <= len_s - len_d; i++) {
+	for (i = 0, lastmatchedindex = 0, nums = 0; i <= len_s - len_d; i++) {
 		if (strncmp(&str[i], delim, len_d) != 0)
 			continue;
 		if (i == 0 || i == lastmatchedindex + len_d) {
-			;
+			;//分隔符在开头出现，或者连续出现分隔符
 		} else {
 			nums++;
 		}
@@ -610,19 +610,19 @@ char **strsplit(char const *str, char const *delim) {
 	if (len_s > lastmatchedindex + len_d)
 		nums++;
 /*
-	计数器为0，即被分隔后没有剩下的字符串，返回NULL
+	计数器为0，即被分隔后没有剩下的字符串
 */
-	if (nums = 0)
-		return NULL;
+	if (nums == 0)
+		return nums;
 /*
 	申请字符串指针数组存储空间
 */
-	strarr = (char **)malloc(sizeof(char *) * nums);
-	if (strarr == NULL)
-		return NULL;
+	*p_strarr = (char **)malloc(sizeof(char *) * nums);
+	if (*p_strarr == NULL)
+		return -1;
 /*
 	每次循环找出分隔出的字符串，申请存储空间，创建副本
-	申请不成功要将前面已申请的空间（包括strarr）释放掉，并返回NULL
+	申请不成功要将前面已申请的空间（包括*strarr）释放掉，并返回NULL
 */
 	for (i = 0, index = 0; i <= len_s - len_d; i++) {
 		if (strncmp(&str[i], delim, len_d) == 0) {
@@ -630,36 +630,35 @@ char **strsplit(char const *str, char const *delim) {
 			continue;
 		}
 		lastmatchedindex = i;
-		do {
+		while(str[i] != '\0' && strncmp(&str[i], delim, len_d) !=0) {
 			i++;
-		} while(str[i] != '\0' || strncmp(&str[i], delim, len_d) !=0);
+		}
 		item = (void *)malloc(i - lastmatchedindex + 1);
 		if (item == NULL) {
-			while (--nums >= 0) {
-				if (strarr[nums] != NULL)
-					free(strarr[nums]);
-			};
-			free(strarr);
-			return NULL;
+			for (j = 0; j < nums; j++) 
+				if ((*p_strarr)[j] != NULL) 
+					free ((*p_strarr)[j]), (*p_strarr)[j] == NULL;
+			free(*p_strarr), *p_strarr = NULL;
+			return -1;
 		}
 		strncpy(item, &str[lastmatchedindex], i - lastmatchedindex);
-		strarr[index++] = item;
+		item[i - lastmatchedindex] = '\0';
+		(*p_strarr)[index++] = item;
+		item = NULL;
 		if (str[i] == '\0')
 			break;
 		i += (len_d - 1);
 	}
-	return strarr;
+	return nums;
 }
 
-void strsplit_free(char **strarr) {
-	int nums;
-	if (strarr == NULL) 
+void strsplit_free(char ***const p_strarr, int const nums) {
+	int i;
+	if (*p_strarr == NULL) 
 		return;
-	nums = sizeof(strarr) / sizeof(char *);
-	if (nums > 0) 
-		for (nums-- ; nums >= 0; nums--) 
-			free(strarr[nums]);
-	free(strarr);
+	for (i = 0; i < nums; i++) 
+		free((*p_strarr)[i]), (*p_strarr)[i] = NULL;
+	free(*p_strarr), *p_strarr = NULL;
 }
 
 char *dtoa(double const d, unsigned const pre) {

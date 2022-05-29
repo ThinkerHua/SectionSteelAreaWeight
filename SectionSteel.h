@@ -288,8 +288,19 @@ char *getResault_PLD(void *obj, unsigned const CtrlCode);
 char *getArea_PLD(void *obj, unsigned const CtrlCode);
 char *getWeight_PLD(void *obj, unsigned const CtrlCode);
 
-char **strsplit(char const *str, char const *delim);
-void strsplit_free(char **strarr);
+int strsplit(char const *str, char const *delim, char ***const p_strarr);
+/*
+	将字符串str用字符串delim进行分割，分割后的多个字符串，保存在字符串数组strarr中
+	应当将字符串数组strarr的地址做为参数传入 
+	返回值	-1	传入的字符串str或delim为空字符串，或无法为strarr分配空间
+			>=0	分割操作后，字符串数组strarr中的项目数
+	当strarr不需要使用时，必须使用配套的strsplit_free函数释放存储空间 
+*/
+void strsplit_free(char ***const p_strarr, int const nums);
+/*
+	与strsplit函数配套使用，将strsplit函数创建的字符串数组strarr释放掉
+	必须保证nums与strsplit函数的返回值一致，否则后果未知 
+*/
 
 char *dtoa(double const d, unsigned const pre);
 

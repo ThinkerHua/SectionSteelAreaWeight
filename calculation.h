@@ -21,19 +21,23 @@
 //	unsigned Method : 2;
 //}ControlCode;
 
-int Formatting(char const *RawText, char *FormatedText);
+int Formatting(char const *RawText, char **const p_FormatedText);
 /*
-	返回值	1	格式化成功；
+	返回值	-1	无法为格式化字符串分配空间 
 			0	格式化失败。
+			1	格式化成功；
 */
 struct replaceinfo {
 	char *from;
 	char *to;
 };
-int replace(char *str, char const *from, char const *to);
+int replace(char **const p_str, char const *from, char const *to);
 /*
-	返回值	1	替换成功；
-			0	替换失败。
+	将字符串str中包含的字符串from替换成字符串to
+	只能处理malloc出来的字符串str，且应当传入字符串str的地址做为参数
+	返回值	-1	无法为处理后的字符串分配空间
+			0	传入的字符串为空字符串（空指针或0长度）
+			1	替换成功 
 */
 char *getSecSteType(char const *FormatedText);
 void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)(char const *str1, char const *str2));

@@ -32,75 +32,79 @@ struct replaceinfo const replacetable[] = {
 	{"][", "2["},
 };
 
-int Formatting(char const *RawText, char *FormatedText) {
+int Formatting(char const *RawText, char **const p_FormatedText) {
 	int i, nums;
-	if ((FormatedText = (char *)malloc(strlen(RawText) + 1)) == NULL)
+	if (RawText == NULL)
 		return 0;
-	strcpy(FormatedText, RawText);
+	if ((*p_FormatedText = (char *)malloc(strlen(RawText) + 1)) == NULL)
+		return -1;
+	strcpy(*p_FormatedText, RawText);
 	nums = sizeof(replacetable) / sizeof(replacetable[0]);
 	for (i = 0; i < nums; i++)
-		if (replace(FormatedText, replacetable[i].from, replacetable[i].to) == 0)
+		if (replace(p_FormatedText, replacetable[i].from, replacetable[i].to) <= 0)
 			break;
 	if (i == nums)
 		return 1;
-	free(FormatedText);
 	return 0;
 }
 
-int replace(char *str, char const *from, char const *to) {
-	int lens, lenf, lent, i, j, k, nums;
-	char *newstr;
+int replace(char **const p_str, char const *from, char const *to) {
+	int len_s, len_f, len_t, len;
+	int i, j, nums, lastmatchedindex;
+	char *newstr = NULL;
 /*
 	不允许传入空字符串，否则返回0
 */ 
-	if (str == NULL || from == NULL || to == NULL)
+	if (*p_str == NULL || from == NULL || to == NULL)
 		return 0;
-	lens = strlen(str), lenf = strlen(from), lent = strlen(to);
+	len_s = strlen(*p_str), len_f = strlen(from), len_t = strlen(to);
+	if (len_s == 0) 
+		return 0;
 /*
-	查找值为空字符串，直接返回1 
+	统计出待替换数量nums
 */
-	if (lenf == 0) return 1;
-/*
-	先统计出待替换数量 
-*/
-	for (i = 0, nums = 0; i <= lens - lenf; i++) {
-		if (strncmp(&str[i], from, lenf) != 0)
-			continue;
-		nums++;
-		i += (lenf - -1);
+	if (len_f == 0) {
+		nums = 0;
+	} else {
+		for (i = 0, nums = 0; i <= len_s - len_f; i++) {
+			if (strncmp(&(*p_str)[i], from, len_f) != 0)
+				continue;
+			nums++;
+			i += (len_f - 1);
+		}
 	}
-/*
-	没有待替换的字符串，直接返回1 
-*/
-	if (nums == 0) 
-		return 1;
 /*
 	计算替换后的字符串需占用的空间大小，并申请新空间 
-	申请失败返回0 
+	申请失败返回-1
 */ 
-	if (lent != lenf) {
-		newstr = (char *)malloc(lens + (lent - lenf) * nums + 1);
-		if (newstr == NULL)
-			return 0;
-	}
+	newstr = (char *)malloc(len_s + (len_t - len_f) * nums + 1);
+	if (newstr == NULL)
+		return -1;
 /*
 	将不需要替换的字符和要替换成的字符依次复制到新空间 
 */
-	for(i = 0, j = 0; i <= lens - lenf; i++) {
-		if (strncmp(&str[i], from, lenf) != 0) {
-			newstr[j++] = str[i];
-			continue;
+	if (nums == 0) {
+		strncpy(newstr, *p_str, len_s + 1);
+	} else {
+		for (i = 0, lastmatchedindex = 0, j = 0; i <= len_s - len_f;) {
+			if (strncmp(&(*p_str)[i], from, len_f) == 0) {
+				strncpy(&newstr[j], to, len_t);
+				j += len_t;
+				i += len_f;
+				continue;
+			}
+			lastmatchedindex = i;
+			while (i < len_s && strncmp(&(*p_str)[i], from, len_f) != 0)
+				i++;
+			len = i - lastmatchedindex;
+			strncpy(&newstr[j], &(*p_str)[lastmatchedindex], len);
+			j += len;
 		}
-		for(k = 0; k < lent; k++) 
-			newstr[j++] = to[k];
-		i += (lent - 1);
+		newstr[j] = '\0';
 	}
-	newstr[j] = '\0';
-/*
-	指针重定向 
-*/
-	free(str);
-	str = newstr;
+	free(*p_str);
+	*p_str = newstr;
+	newstr = NULL;
 	return 1;
 }
 
