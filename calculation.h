@@ -21,7 +21,7 @@
 //	unsigned Method : 2;
 //}ControlCode;
 
-int Formatting(char const *RawText, char **const p_FormatedText);
+int formatting(char const *RawText, char **const p_FormatedText);
 /*
 	返回值	-1	无法为格式化字符串分配空间 
 			0	格式化失败。
@@ -52,7 +52,7 @@ int strcmp_X(char const *str1, char const *str2);
 */
 void *NewObj(char const *SecSteType);
 void FreeObj(void *obj, char const *SecSteType);
-int setdata(void *obj, char const *SecSteType, char const *FormatedText);
+int SetData(void *obj, char const *SecSteType, char const *FormatedText);
 /*
 	返回值	1	obj属性设置成功；
 			0	obj属性设置失败。

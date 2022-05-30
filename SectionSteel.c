@@ -135,445 +135,465 @@ SectionSteel_PLD *new_PLD (void) {
 	return obj;
 }
 
-void free_H_(void *obj) {
-	
+void free_H_(void *object) {
+	free(object);
 }
 
-void free_H(void *obj) {
-	
+void free_H(void *object) {
+	free(object);
 }
 
-void free_HT(void *obj) {
-	
+void free_HT(void *object) {
+	free(object);
 }
 
-void free_HI(void *obj) {
-	
+void free_HI(void *object) {
+	free(object);
 }
 
-void free_T(void *obj) {
-	
+void free_T(void *object) {
+	free(object);
 }
 
-void free_J(void *obj) {
-	
+void free_J(void *object) {
+	free(object);
 }
 
-void free_D(void *obj) {
-	
+void free_D(void *object) {
+	free(object);
 }
 
-void free_I(void *obj) {
-	
+void free_I(void *object) {
+	free(object);
 }
 
-void free_Chan(void *obj) {
-	
+void free_Chan(void *object) {
+	free(object);
 }
 
-void free_Chan_MtM(void *obj) {
-	
+void free_Chan_MtM(void *object) {
+	free(object);
 }
 
-void free_Chan_BtB(void *obj) {
-	
+void free_Chan_BtB(void *object) {
+	free(object);
 }
 
-void free_L(void *obj) {
-	
+void free_L(void *object) {
+	free(object);
 }
 
-void free_2L(void *obj) {
-	
+void free_2L(void *object) {
+	free(object);
 }
 
-void free_C(void *obj) {
-	
+void free_C(void *object) {
+	free(object);
 }
 
-void free_2C(void *obj) {
-	
+void free_2C(void *object) {
+	free(object);
 }
 
-void free_Z(void *obj) {
-	
+void free_Z(void *object) {
+	free(object);
 }
 
-void free_PL_(void *obj) {
-	
+void free_PL_(void *object) {
+	free(object);
 }
 
-void free_PLT_(void *obj) {
-	
+void free_PLT_(void *object) {
+	free(object);
 }
 
-void free_PLD_(void *obj) {
-	
+void free_PLD_(void *object) {
+	free(object);
 }
 
-void free_PL(void *obj) {
-	
+void free_PL(void *object) {
+	free(object);
 }
 
-void free_PLT(void *obj) {
-	
+void free_PLT(void *object) {
+	free(object);
 }
 
-void free_PLD(void *obj) {
-	
+void free_PLD(void *object) {
+	free(object);
 }
 
-int setdata_H_(void *obj, char const *Formatedtext) {
-	obj = (_SectionSteel_H *)obj;
-
+int setData_H_(void *object, char const *FormatedText) {
+	int nums;
+	double data[4];
+	char **strarr;
+	_SectionSteel_H *obj; 
+	obj = (_SectionSteel_H *)object;
+	//跳过前导类型标识符H 
+	nums = strsplit(FormatedText + 1, "*", &strarr);
+	switch(nums) {
+		case 2:
+			obj->ShortH = atof(strarr[0]);
+			obj->ShortB = atof(strarr[1]);
+			
+			break;
+		case 4:
+			obj->H = average_delim(strarr[0], "~");
+			obj->B = average_delim(strarr[1], "~");
+			obj->tB = atof(strarr[2]);
+			obj->tH = atof(strarr[3]);
+			break;
+		default:
+			break;
+	}
 }
 
-int setdata_H(void *obj, char const *Formatedtext) {
+int setData_H(void *object, char const *FormatedText) {
 
 }
 
-int setdata_HT(void *obj, char const *Formatedtext) {
+int setData_HT(void *object, char const *FormatedText) {
 
 }
 
-int setdata_HI(void *obj, char const *Formatedtext) {
+int setData_HI(void *object, char const *FormatedText) {
 
 }
 
-int setdata_T(void *obj, char const *Formatedtext) {
+int setData_T(void *object, char const *FormatedText) {
 
 }
 
-int setdata_J(void *obj, char const *Formatedtext) {
+int setData_J(void *object, char const *FormatedText) {
 
 }
 
-int setdata_D(void *obj, char const *Formatedtext) {
+int setData_D(void *object, char const *FormatedText) {
 
 }
 
-int setdata_I(void *obj, char const *Formatedtext) {
+int setData_I(void *object, char const *FormatedText) {
 
 }
 
-int setdata_Chan(void *obj, char const *Formatedtext) {
+int setData_Chan(void *object, char const *FormatedText) {
 
 }
 
-int setdata_Chan_MtM(void *obj, char const *Formatedtext) {
+int setData_Chan_MtM(void *object, char const *FormatedText) {
 
 }
 
-int setdata_Chan_BtB(void *obj, char const *Formatedtext) {
+int setData_Chan_BtB(void *object, char const *FormatedText) {
 
 }
 
-int setdata_L(void *obj, char const *Formatedtext) {
+int setData_L(void *object, char const *FormatedText) {
 
 }
 
-int setdata_2L(void *obj, char const *Formatedtext) {
+int setData_2L(void *object, char const *FormatedText) {
 
 }
 
-int setdata_C(void *obj, char const *Formatedtext) {
+int setData_C(void *object, char const *FormatedText) {
 
 }
 
-int setdata_2C(void *obj, char const *Formatedtext) {
+int setData_2C(void *object, char const *FormatedText) {
 
 }
 
-int setdata_Z(void *obj, char const *Formatedtext) {
+int setData_Z(void *object, char const *FormatedText) {
 
 }
 
-int setdata_PL_(void *obj, char const *Formatedtext) {
+int setData_PL_(void *object, char const *FormatedText) {
 
 }
 
-int setdata_PLT_(void *obj, char const *Formatedtext) {
+int setData_PLT_(void *object, char const *FormatedText) {
 
 }
 
-int setdata_PLD_(void *obj, char const *Formatedtext) {
+int setData_PLD_(void *object, char const *FormatedText) {
 
 }
 
-int setdata_PL(void *obj, char const *Formatedtext) {
+int setData_PL(void *object, char const *FormatedText) {
 
 }
 
-int setdata_PLT(void *obj, char const *Formatedtext) {
+int setData_PLT(void *object, char const *FormatedText) {
 
 }
 
-int setdata_PLD(void *obj, char const *Formatedtext) {
+int setData_PLD(void *object, char const *FormatedText) {
 
 }
 
-char *getResault_H_(void *obj, unsigned const CtrlCode) {
+char *getResault_H_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_H(void *obj, unsigned const CtrlCode) {
+char *getResault_H(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_HT(void *obj, unsigned const CtrlCode) {
+char *getResault_HT(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_HI(void *obj, unsigned const CtrlCode) {
+char *getResault_HI(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_T(void *obj, unsigned const CtrlCode) {
+char *getResault_T(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_J(void *obj, unsigned const CtrlCode) {
+char *getResault_J(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_D(void *obj, unsigned const CtrlCode) {
+char *getResault_D(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_I(void *obj, unsigned const CtrlCode) {
+char *getResault_I(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_Chan(void *obj, unsigned const CtrlCode) {
+char *getResault_Chan(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_Chan_MtM(void *obj, unsigned const CtrlCode) {
+char *getResault_Chan_MtM(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_Chan_BtB(void *obj, unsigned const CtrlCode) {
+char *getResault_Chan_BtB(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_L(void *obj, unsigned const CtrlCode) {
+char *getResault_L(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_2L(void *obj, unsigned const CtrlCode) {
+char *getResault_2L(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_C(void *obj, unsigned const CtrlCode) {
+char *getResault_C(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_2C(void *obj, unsigned const CtrlCode) {
+char *getResault_2C(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_Z(void *obj, unsigned const CtrlCode) {
+char *getResault_Z(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_PL_(void *obj, unsigned const CtrlCode) {
+char *getResault_PL_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_PLT_(void *obj, unsigned const CtrlCode) {
+char *getResault_PLT_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_PLD_(void *obj, unsigned const CtrlCode) {
+char *getResault_PLD_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_PL(void *obj, unsigned const CtrlCode) {
+char *getResault_PL(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_PLT(void *obj, unsigned const CtrlCode) {
+char *getResault_PLT(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getResault_PLD(void *obj, unsigned const CtrlCode) {
+char *getResault_PLD(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_H_(void *obj, unsigned const CtrlCode) {
+char *getArea_H_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_H(void *obj, unsigned const CtrlCode) {
+char *getArea_H(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_HT(void *obj, unsigned const CtrlCode) {
+char *getArea_HT(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_HI(void *obj, unsigned const CtrlCode) {
+char *getArea_HI(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_T(void *obj, unsigned const CtrlCode) {
+char *getArea_T(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_J(void *obj, unsigned const CtrlCode) {
+char *getArea_J(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_D(void *obj, unsigned const CtrlCode) {
+char *getArea_D(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_I(void *obj, unsigned const CtrlCode) {
+char *getArea_I(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_Chan(void *obj, unsigned const CtrlCode) {
+char *getArea_Chan(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_Chan_MtM(void *obj, unsigned const CtrlCode) {
+char *getArea_Chan_MtM(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_Chan_BtB(void *obj, unsigned const CtrlCode) {
+char *getArea_Chan_BtB(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_L(void *obj, unsigned const CtrlCode) {
+char *getArea_L(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_2L(void *obj, unsigned const CtrlCode) {
+char *getArea_2L(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_C(void *obj, unsigned const CtrlCode) {
+char *getArea_C(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_2C(void *obj, unsigned const CtrlCode) {
+char *getArea_2C(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_Z(void *obj, unsigned const CtrlCode) {
+char *getArea_Z(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_PL_(void *obj, unsigned const CtrlCode) {
+char *getArea_PL_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_PLT_(void *obj, unsigned const CtrlCode) {
+char *getArea_PLT_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_PLD_(void *obj, unsigned const CtrlCode) {
+char *getArea_PLD_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_PL(void *obj, unsigned const CtrlCode) {
+char *getArea_PL(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_PLT(void *obj, unsigned const CtrlCode) {
+char *getArea_PLT(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getArea_PLD(void *obj, unsigned const CtrlCode) {
+char *getArea_PLD(void *object, unsigned const CtrlCode) {
 
 }
 
 
-char *getWeight_H_(void *obj, unsigned const CtrlCode) {
+char *getWeight_H_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_H(void *obj, unsigned const CtrlCode) {
+char *getWeight_H(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_HT(void *obj, unsigned const CtrlCode) {
+char *getWeight_HT(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_HI(void *obj, unsigned const CtrlCode) {
+char *getWeight_HI(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_T(void *obj, unsigned const CtrlCode) {
+char *getWeight_T(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_J(void *obj, unsigned const CtrlCode) {
+char *getWeight_J(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_D(void *obj, unsigned const CtrlCode) {
+char *getWeight_D(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_I(void *obj, unsigned const CtrlCode) {
+char *getWeight_I(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_Chan(void *obj, unsigned const CtrlCode) {
+char *getWeight_Chan(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_Chan_MtM(void *obj, unsigned const CtrlCode) {
+char *getWeight_Chan_MtM(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_Chan_BtB(void *obj, unsigned const CtrlCode) {
+char *getWeight_Chan_BtB(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_L(void *obj, unsigned const CtrlCode) {
+char *getWeight_L(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_2L(void *obj, unsigned const CtrlCode) {
+char *getWeight_2L(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_C(void *obj, unsigned const CtrlCode) {
+char *getWeight_C(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_2C(void *obj, unsigned const CtrlCode) {
+char *getWeight_2C(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_Z(void *obj, unsigned const CtrlCode) {
+char *getWeight_Z(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_PL_(void *obj, unsigned const CtrlCode) {
+char *getWeight_PL_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_PLT_(void *obj, unsigned const CtrlCode) {
+char *getWeight_PLT_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_PLD_(void *obj, unsigned const CtrlCode) {
+char *getWeight_PLD_(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_PL(void *obj, unsigned const CtrlCode) {
+char *getWeight_PL(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_PLT(void *obj, unsigned const CtrlCode) {
+char *getWeight_PLT(void *object, unsigned const CtrlCode) {
 
 }
 
-char *getWeight_PLD(void *obj, unsigned const CtrlCode) {
+char *getWeight_PLD(void *object, unsigned const CtrlCode) {
 
 }
 
@@ -661,6 +681,24 @@ void strsplit_free(char ***const p_strarr, int const nums) {
 	free(*p_strarr), *p_strarr = NULL;
 }
 
-char *dtoa(double const d, unsigned const pre) {
+double average_delim(char const *str, char const *delim) {
+	int i, nums;
+	double value;
+	char **strarr;
+	nums = strsplit(str, delim, &strarr);
+	if (nums < 0)
+		return 0;
+	else if (nums == 0)
+		value = atof(str);
+	else {
+		for (i = 0, value = 0; i < nums; i++) 
+			value += atof(strarr[i]);
+		value /= nums;
+		strsplit_free(&strarr, nums);
+	}
+	return value;
+}
+
+char *dtostr(double const d, unsigned const pre) {
 	
 }

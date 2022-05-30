@@ -13,7 +13,7 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	char *SecSteType;
 	char *Resault;
 	void *obj;
-	if (Formatting(RawText, &FormatedText) == 0)
+	if (formatting(RawText, &FormatedText) == 0)
 		return NULL;
 	SecSteType = getSecSteType(FormatedText);
 	if (SecSteType == NULL) 
@@ -21,7 +21,7 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	obj = NewObj(SecSteType);
 	if (obj == NULL) 
 		return NULL;
-	if (setdata(obj, SecSteType, FormatedText) == 0) {
+	if (SetData(obj, SecSteType, FormatedText) == 0) {
 		FreeObj(obj, SecSteType);
 		return NULL;
 	}

@@ -2,11 +2,11 @@
 #define _GBDATA_H_
 
 //#define GB_NAME_LENGTH 15
-#define GB_DATA_ITEMS 4
+#define GB_DATA_NUMS 4
 typedef struct {
 //	char *Type;
 	char *Name;
-	double Data[GB_DATA_ITEMS];
+	double Data[GB_DATA_NUMS];
 	double Weight;
 	double Area;
 }GBSectionSteel;

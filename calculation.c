@@ -32,7 +32,7 @@ struct replaceinfo const replacetable[] = {
 	{"][", "2["},
 };
 
-int Formatting(char const *RawText, char **const p_FormatedText) {
+int formatting(char const *RawText, char **const p_FormatedText) {
 	int i, nums;
 	if (RawText == NULL)
 		return 0;
@@ -230,44 +230,44 @@ void FreeObj(void *obj, char const *SecSteType) {
 	return;
 }
 
-int setdata(void *obj, char const *SecSteType, char const *FormatedText) {
+int SetData(void *obj, char const *SecSteType, char const *FormatedText) {
 	int (*p_setdata)(void *obj, char const *Formatedtext);
 	if (strcmp(SecSteType, "H") == 0) {
-		p_setdata = setdata_H;
+		p_setdata = setData_H;
 	} else if (strcmp(SecSteType, "HT") == 0) {
-		p_setdata = setdata_HT;
+		p_setdata = setData_HT;
 	} else if (strcmp(SecSteType, "HI") == 0)  {
-		p_setdata = setdata_HI;
+		p_setdata = setData_HI;
 	} else if (strcmp(SecSteType, "T") == 0) {
-		p_setdata = setdata_T;
+		p_setdata = setData_T;
 	} else if (strcmp(SecSteType, "J") == 0) {
-		p_setdata = setdata_J;
+		p_setdata = setData_J;
 	} else if (strcmp(SecSteType, "D") == 0) {
-		p_setdata = setdata_D;
+		p_setdata = setData_D;
 	} else if (strcmp(SecSteType, "I") == 0) {
-		p_setdata = setdata_I;
+		p_setdata = setData_I;
 	} else if (strcmp(SecSteType, "[") == 0) {
-		p_setdata = setdata_Chan;
+		p_setdata = setData_Chan;
 	} else if (strcmp(SecSteType, "[]") == 0) {
-		p_setdata = setdata_Chan_MtM;
+		p_setdata = setData_Chan_MtM;
 	} else if (strcmp(SecSteType, "2[") == 0) {
-		p_setdata = setdata_Chan_BtB;
+		p_setdata = setData_Chan_BtB;
 	} else if (strcmp(SecSteType, "L") == 0) {
-		p_setdata = setdata_L;
+		p_setdata = setData_L;
 	} else if (strcmp(SecSteType, "2L") == 0) {
-		p_setdata = setdata_2L;
+		p_setdata = setData_2L;
 	} else if (strcmp(SecSteType, "C") == 0) {
-		p_setdata = setdata_C;
+		p_setdata = setData_C;
 	} else if (strcmp(SecSteType, "2C") == 0) {
-		p_setdata = setdata_2C;
+		p_setdata = setData_2C;
 	} else if (strcmp(SecSteType, "Z") == 0) {
-		p_setdata = setdata_Z;
+		p_setdata = setData_Z;
 	} else if (strcmp(SecSteType, "PL") == 0) {
-		p_setdata = setdata_PL;
+		p_setdata = setData_PL;
 	} else if (strcmp(SecSteType, "PLT") == 0) {
-		p_setdata = setdata_PLT;
+		p_setdata = setData_PLT;
 	} else if (strcmp(SecSteType, "PLD") == 0) {
-		p_setdata = setdata_PLD;
+		p_setdata = setData_PLD;
 	} else {
 		return 0;
 	}
