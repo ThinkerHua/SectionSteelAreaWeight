@@ -700,5 +700,70 @@ double average_delim(char const *str, char const *delim) {
 }
 
 char *dtostr(double const d, unsigned const pre) {
-	
+	int i = 0;
+	int sign = 1;//正负标记 
+	int pow = 1;
+	int len_i, len_f;
+	long num;
+	char *int_part = NULL;//整数部分 
+	char *float_part = NULL; //小数部分 
+	char *str = NULL;
+	int_part = ltostr(d);
+	if (int_part == NULL) 
+		return NULL;
+	if (pre == 0)
+		return int_part;
+	while (++i <= pre)
+		pow *= 10;
+	num = (d - (long)d) * pow;
+	if (num < 0) 
+		num = ~num + 1;
+	float_part = ltostr(num);
+	if (float_part == NULL) {
+		free(int_part);
+		return NULL;
+	}
+	len_i = strlen(int_part), len_f = strlen(float_part);
+	for (i = len_f; i > 0;) {
+		if (float_part[--i] != '0') 
+			break;
+		len_f--;
+	}
+	float_part[len_f] = '\0';
+	if (len_f == 0) 
+		return int_part;
+	str = (char *)malloc(len_i + len_f + 2);
+	if (str == NULL)
+		free(int_part), free(float_part);
+	strcpy(str, int_part);
+	str[len_i] = '.';
+	strcpy(&str[++len_i], float_part);
+	free(int_part), free(float_part);
+	return str;
+}
+
+char *ltostr(long const l) {
+	int digits;//位数 
+	int sign = 1;//正负标记 
+	long num, i;
+	char *str = NULL;
+	num = l;
+	if (num < 0) {
+		sign = -1;
+		num = ~num + 1;
+	}
+	for (digits = 0, i = num; i > 0; i /= 10) 
+		digits++;
+	if (sign == -1) 
+		digits++;
+	str = (char *)malloc(digits + 1);
+	if (str == NULL) 
+		return NULL;
+	for (str[digits--] = '\0'; digits >= 0; digits--) {
+		str[digits] = num % 10 + '0';
+		num /= 10;
+	}
+	if (sign == -1)
+		str[0] = '-';
+	return str;
 }

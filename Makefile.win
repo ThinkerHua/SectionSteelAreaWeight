@@ -1,39 +1,34 @@
-# Project: SectionSteelData
+# Project: Demo
 # Makefile created by Dev-C++ 5.11
 
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = dllmain.o GBData.o calculation.o SectionSteel.o
-LINKOBJ  = dllmain.o GBData.o calculation.o SectionSteel.o
+OBJ      = main.o SectionSteel.o calculation.o
+LINKOBJ  = main.o SectionSteel.o calculation.o
 LIBS     = -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
 INCS     = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
-BIN      = SectionSteelData.dll
-CXXFLAGS = $(CXXINCS) -g3 -DBUILDING_DLL=1
-CFLAGS   = $(INCS) -g3 -DBUILDING_DLL=1
+BIN      = Demo.exe
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
 RM       = rm.exe -f
-DEF      = libSectionSteelData.def
-STATIC   = libSectionSteelData.a
 
 .PHONY: all all-before all-after clean clean-custom
 
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN) $(DEF) $(STATIC)
+	${RM} $(OBJ) $(BIN)
 
-$(BIN): $(LINKOBJ)
-	$(CC) -shared $(LINKOBJ) -o $(BIN) $(LIBS) -Wl,--output-def,$(DEF),--out-implib,$(STATIC),--add-stdcall-alias
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-dllmain.o: dllmain.c
-	$(CC) -c dllmain.c -o dllmain.o $(CFLAGS)
-
-GBData.o: GBData.c
-	$(CC) -c GBData.c -o GBData.o $(CFLAGS)
-
-calculation.o: calculation.c
-	$(CC) -c calculation.c -o calculation.o $(CFLAGS)
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
 
 SectionSteel.o: SectionSteel.c
 	$(CC) -c SectionSteel.c -o SectionSteel.o $(CFLAGS)
+
+calculation.o: calculation.c
+	$(CC) -c calculation.c -o calculation.o $(CFLAGS)

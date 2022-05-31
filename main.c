@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
 	char from[5] = {'\0'}, to[5] = {'\0'};
 	char *newstr = NULL, **strarr = NULL;
 	int i, nums;
+	double d;
 	while (scanf("%s %s", str, delim) != EOF) {
 		nums = strsplit(str, delim, &strarr);
 		if (nums <= 0)
@@ -30,6 +31,16 @@ int main(int argc, char *argv[]) {
 		strcpy(newstr, str);
 		if (replace(&newstr, from, to) > 0) 
 			printf("%s\n", newstr), free(newstr);
+	}
+	while (scanf("%lf", &d) != EOF) {
+		newstr = dtostr(d, 3);
+		if (newstr == NULL)
+			continue;
+		printf("%s\n", newstr), free(newstr);
+	}
+	while (scanf("%d", &i) != EOF) {
+		i = ~i + 1;
+		printf("%d\n", i);
 	}
 	return 0;
 }

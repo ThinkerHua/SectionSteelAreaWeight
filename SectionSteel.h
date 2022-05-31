@@ -275,5 +275,13 @@ void strsplit_free(char ***const p_strarr, int const nums);
 double average_delim(char const *str, char const *delim);
 
 char *dtostr(double const d, unsigned const pre);
+/*
+	仅支持十进制非指数形式 
+	pre为小数位数。小数末尾的0不显示，小数全为0则小数点也不显示。 
+*/
+char *ltostr(long const l);
+/*
+	仅支持十进制非指数形式 
+*/
 
 #endif
