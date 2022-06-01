@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 		for (i = 0; i < nums; i++) {
 			printf("%s\n", strarr[i]);
 		}
-		strsplit_free(&strarr, nums);
+		strsplit_free(&strarr, nums), strarr = NULL;
 		i = 0;
 		while(str[i] != '\0') 
 			str[i] = '\0', i++;
@@ -32,14 +32,14 @@ int main(int argc, char *argv[]) {
 			continue;
 		strcpy(newstr, str);
 		if (replace(&newstr, from, to) > 0) 
-			printf("%s\n", newstr), free(newstr);
+			printf("%s\n", newstr), free(newstr), newstr = NULL;
 	}
 	printf("Now testting function \"dtostr\"\n");
 	while (scanf("%lf", &d) != EOF) {
 		newstr = dtostr(d, 3);
 		if (newstr == NULL)
 			continue;
-		printf("%s\n", newstr), free(newstr);
+		printf("%s\n", newstr), free(newstr), newstr = NULL;
 	}
 	return 0;
 }

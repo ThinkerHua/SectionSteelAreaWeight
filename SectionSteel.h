@@ -1,7 +1,8 @@
 #ifndef _SECTION_STEEL_H_
 #define _SECTION_STEEL_H_
 
-//#define SECSTE_NAME_LENGTH 10
+#define GBSECSTE_NAME_LENGTH 15
+
 typedef struct {
 	double ShortH;
 	double ShortB;
@@ -13,6 +14,7 @@ typedef struct {
 _SectionSteel_H *new_H_ (void);
 void free_H_(void *object);
 int setData_H_(void *object, char const *FormatedText);
+int expand_H_(void *object);
 char *getResault_H_(void *object, unsigned const CtrlCode);
 char *getArea_H_(void *object, unsigned const CtrlCode);
 char *getWeight_H_(void *object, unsigned const CtrlCode);
