@@ -703,47 +703,98 @@ char *dtostr(double const d, unsigned const pre) {
 	int i = 0;
 	int sign = 1;//正负标记 
 	int pow = 1;
-	int len_i, len_f;
-	long num;
+	int len_i = 0, len_f = 0;
+	int cor = 0;//小数部分前部需补位数 
+	long num_i = 0, num_f = 0;
 	char *int_part = NULL;//整数部分 
 	char *float_part = NULL; //小数部分 
 	char *str = NULL;
-	int_part = ltostr(d);
-	if (int_part == NULL) 
-		return NULL;
-	if (pre == 0)
-		return int_part;
+/*
+	先求小数部分，再求整数部分
+	因为小数部分可能存在进位到整数部分的问题
+	如：9.9999，取三位有效数字，结果应该为10 
+	正负符号判断应直接根据传入值判断
+	否则如：-0.001，取三位有效数字，则整数部分为0，将会被判定为正 
+*/
+	//判断正负
+	if (d < 0) 
+		sign = -1;
+	//求出小数部分，要进行四舍五入。扩展两位进行舍入
+	//如0.9995，计算机内部可能是0.9994999之类表示，扩展一位不能正确舍入 
 	while (++i <= pre)
-		pow *= 10;
-	num = (d - (long)d) * pow;
-	if (num < 0) 
-		num = ~num + 1;
-	float_part = ltostr(num);
-	if (float_part == NULL) {
-		free(int_part);
-		return NULL;
+		pow *= 10; 
+	num_f = (d - (long)d) * pow * 100;
+	if (num_f < 0) 
+		num_f = ~num_f + 1;
+	for (i = 0; i < 2; i++) {
+		if (num_f % 10 >= 5) 
+			num_f += 10;
+		num_f /= 10;
 	}
-	len_i = strlen(int_part), len_f = strlen(float_part);
+	
+	//求出整数部分 
+	num_i = d;
+	if (num_i < 0) 
+		num_i = ~num_i + 1;
+	if (num_f == pow) 
+		num_i++, num_f = 0;
+	
+	//转换整数部分和小数部分 
+	int_part = ltostr(num_i);
+	if (int_part == NULL)
+		return NULL;
+	if (num_f > 0) {
+		float_part = ltostr(num_f);
+		if (float_part == NULL) {
+			free(int_part);
+			return NULL;
+		}
+	}
+	
+/*
+	判断小数部分是否需要修正
+	如果小数部分是例如001这样传入ltostr函数，则返回字符串将变成1。
+	这种情况需要在前面添加字符0修正 
+	正负符号位修正也计入cor 
+*/ 	
+	len_i = strlen(int_part);
+	if (num_f > 0)
+		len_f = strlen(float_part);
+	cor = pre - len_f;
+	//消除小数部分末尾的0，并得到操作之后的长度 
 	for (i = len_f; i > 0;) {
 		if (float_part[--i] != '0') 
 			break;
-		len_f--;
+		float_part[i] = '\0';
+		len_f = i; 
 	}
-	float_part[len_f] = '\0';
-	if (len_f == 0) 
-		return int_part;
-	str = (char *)malloc(len_i + len_f + 2);
-	if (str == NULL)
+
+	if (num_f == 0)
+		cor = 0;
+	if (sign == -1) 
+		cor++;
+	//申请空间大小为：整数部分长度 + 修正部分长度（含符号位） + 小数消除末尾0后的长度 + 1 
+	str = (char *)malloc(len_i + cor + len_f + 1);
+	if (str == NULL) {
 		free(int_part), free(float_part);
-	strcpy(str, int_part);
-	str[len_i] = '.';
-	strcpy(&str[++len_i], float_part);
+		return NULL;
+	}
+	str[0] = '\0';
+	if (sign == -1 && (num_i != 0 || num_f != 0))
+		str[0] = '-', str[1] = '\0', len_i++, cor--;
+	str = strcat(str, int_part);
+	if (num_f > 0)
+		str[len_i] = '.';
+	for (i = 0; i < cor; i++)
+		str[++len_i] = '0';
+	if (num_f > 0)
+		strcpy(&str[++len_i], float_part);
 	free(int_part), free(float_part);
 	return str;
 }
 
 char *ltostr(long const l) {
-	int digits;//位数 
+	int digits = 0;//位数 
 	int sign = 1;//正负标记 
 	long num, i;
 	char *str = NULL;
@@ -752,13 +803,25 @@ char *ltostr(long const l) {
 		sign = -1;
 		num = ~num + 1;
 	}
-	for (digits = 0, i = num; i > 0; i /= 10) 
+	i = num, digits = 0;
+/*
+	统计有多少位数字，最后再加符号位 
+*/
+	do {
+		i /= 10;
 		digits++;
+	} while(i != 0);
 	if (sign == -1) 
 		digits++;
+/*
+	申请存储空间 
+*/
 	str = (char *)malloc(digits + 1);
 	if (str == NULL) 
 		return NULL;
+/*
+	辗转相除，每次的余数从后向前存入字符数组，最后有负号添负号 
+*/
 	for (str[digits--] = '\0'; digits >= 0; digits--) {
 		str[digits] = num % 10 + '0';
 		num /= 10;

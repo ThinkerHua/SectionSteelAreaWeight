@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
 	char *newstr = NULL, **strarr = NULL;
 	int i, nums;
 	double d;
+	printf("Now testting function \"strsplit\"\n");
 	while (scanf("%s %s", str, delim) != EOF) {
 		nums = strsplit(str, delim, &strarr);
 		if (nums <= 0)
@@ -24,6 +25,7 @@ int main(int argc, char *argv[]) {
 		while(str[i] != '\0') 
 			str[i] = '\0', i++;
 	}
+	printf("Now testting function \"replace\"\n");
 	while (scanf("%s %s %s", str, from, to) != EOF) {
 		newstr = (char *)malloc(strlen(str) + 1);
 		if (newstr == NULL) 
@@ -32,15 +34,12 @@ int main(int argc, char *argv[]) {
 		if (replace(&newstr, from, to) > 0) 
 			printf("%s\n", newstr), free(newstr);
 	}
+	printf("Now testting function \"dtostr\"\n");
 	while (scanf("%lf", &d) != EOF) {
 		newstr = dtostr(d, 3);
 		if (newstr == NULL)
 			continue;
 		printf("%s\n", newstr), free(newstr);
-	}
-	while (scanf("%d", &i) != EOF) {
-		i = ~i + 1;
-		printf("%d\n", i);
 	}
 	return 0;
 }
