@@ -560,7 +560,7 @@ GBSectionSteel const GBSecSte_Z[] = {
 	{"400*120*40*10",{400,120,40,10},49.692,0,}
 };
 
-double const search_AorW(char const *SecSteType, double const data[], int const AorW) {
+double const search_AorW(char const *SecSteType, double const data[], int const len, int const AorW) {
 	GBSectionSteel const *pGBSecSte;
 	int nums;
 
@@ -568,7 +568,7 @@ double const search_AorW(char const *SecSteType, double const data[], int const 
 	if (pGBSecSte != NULL) {
 		nums = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
 		for (; nums > 0; nums--, pGBSecSte++) {
-			if (compare_Arr_f(data, pGBSecSte->Data) == 1)
+			if (compare_Arr_f(data, len, pGBSecSte->Data, GB_DATA_NUMS) == 1)
 				return AorW ? pGBSecSte->Weight : pGBSecSte->Area;
 		}
 	}
@@ -589,24 +589,22 @@ double const *search_Data_ByName(char const *SecSteType, char const *Name) {
 	return NULL;
 }
 
-double const *search_Data_ByPart(char const *SecSteType, double const partData[]) {
+double const *search_Data_ByPart(char const *SecSteType, double const partData[], int const len) {
 	GBSectionSteel const *pGBSecSte;
 	int nums;
 
 	nums = link_pGBSecSte(&pGBSecSte, SecSteType);
 	if (pGBSecSte != NULL) {
 		for (; nums > 0; nums--, pGBSecSte++) {
-			if (compare_Arr_f(partData, pGBSecSte->Data) == 1)
+			if (compare_Arr_f(partData, len, pGBSecSte->Data, GB_DATA_NUMS) == 1)
 				return pGBSecSte->Data;
 		}
 	}
 	return NULL;
 }
 
-int compare_Arr_f(double const arr1[], double const arr2[]) {
-	int i, len1, len2;
-	len1 = sizeof(arr1) / sizeof(arr1[0]);
-	len2 = sizeof(arr2) / sizeof(arr2[0]);
+int compare_Arr_f(double const arr1[], int const len1, double const arr2[], int const len2) {
+	int i;
 	if (len1 <= len2) {
 		for(i = 0; i < len1; i++) {
 			if ((arr1[i] - arr2[i]) != 0)

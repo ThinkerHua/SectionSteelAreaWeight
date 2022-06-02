@@ -282,7 +282,7 @@ int expand_H_(void *object) {
 	if (data == NULL) {
 		free(Name);
 		partdata[0] = obj->ShortH, partdata[1] = obj->ShortB;
-		data = search_Data_ByPart("H", partdata);
+		data = search_Data_ByPart("H", partdata, 2);
 	}
 	obj->H = data[0];
 	obj->B = data[1];
