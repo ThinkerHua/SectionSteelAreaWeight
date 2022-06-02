@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "GBData.h"
 #include "SectionSteel.h"
 #include "calculation.h"
 
@@ -41,5 +42,30 @@ int main(int argc, char *argv[]) {
 			continue;
 		printf("%s\n", newstr), free(newstr), newstr = NULL;
 	}
+	printf("Now testting struct initialization\n");
+	while (scanf("%s", str) != EOF) {
+		structinitial(str);
+	}
 	return 0;
+}
+
+int structinitial(char const *RawText) {
+	char *FormatedText;
+	char *SecSteType;
+	void *obj;
+	if (formatting(RawText, &FormatedText) == 0)
+		return 0;
+	SecSteType = getSecSteType(FormatedText);
+	if (SecSteType == NULL) 
+		return 0;
+	obj = new_H_();
+	if (obj == NULL) 
+		return 0;
+	if (setData_H_(obj, FormatedText) == 0) {
+		free_H_(obj);
+		return 0;
+	}
+	
+	free_H_(obj);
+	return 1;
 }

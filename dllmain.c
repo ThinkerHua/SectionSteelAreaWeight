@@ -26,7 +26,7 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 		return NULL;
 	}
 	Resault = getResault(obj, SecSteType, CtrlCode);
-	free(obj);
+	FreeObj(obj, SecSteType);
 	return Resault;
 }
 

@@ -2,6 +2,7 @@
 #include "SectionSteel.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 _SectionSteel_H *new_H_ (void) {
 	_SectionSteel_H *obj;
@@ -249,6 +250,9 @@ int setData_H_(void *object, char const *FormatedText) {
 		default:
 			break;
 	}
+	strsplit_free(&strarr, nums);
+	printf("Debug: H = %f,\tB = %f,\ttH = %f,\ttB= %f\n", obj->H, obj->B, obj->tH, obj->tB);
+	return 1;
 }
 
 int expand_H_(void *object) {
