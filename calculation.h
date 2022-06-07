@@ -1,26 +1,6 @@
 #ifndef _CALCULATION_H_
 #define _CALCULATION_H_
 
-#define TYPE_AREA			0B00000001
-#define TYPE_TOPSURFACE		0B00000010
-#define TYPE_WEIGHT			0B00000100
-#define METHOD_ROUGHLY		0B00001000
-#define METHOD_PRECISELY	0B00010000
-#define METHOD_LOOKUP		0B00100000
-
-//typedef struct {
-//	/*AorW = 0 -> area
-//	  AorW = 1 -> Weight*/
-//	unsigned AorW : 1;
-//	/*TopSurface = 0 -> Exclude TopSurface
-//	  TopSurface = 1 -> Include TopSurface*/
-//	unsigned TopSurface : 1;
-//	/*Method = 0 -> Roughly
-//	  Method = 1 -> Precisely
-//	  Method = 2 -> Look up in table*/
-//	unsigned Method : 2;
-//}ControlCode;
-
 int formatting(char const *RawText, char **const p_FormatedText);
 /*
 	返回值	-1	无法为格式化字符串分配空间 
@@ -41,7 +21,7 @@ int replace(char **const p_str, char const *from, char const *to);
 */
 char *getSecSteType(char const *FormatedText);
 void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)(char const *str1, char const *str2));
-void swap(void *op1, void *op2);
+void swap(char **op1, char **op2);
 int strcmp_X(char const *str1, char const *str2);
 /*
 	返回值	1	str1>str2;

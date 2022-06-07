@@ -122,21 +122,23 @@ void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)
 	int mid, last, i;
 	if (left >= right) return;
 	mid = (left + right) / 2;
-	swap((void *)strarr[left], (void *)strarr[mid]);
+	swap(&strarr[left], &strarr[mid]);
 	for (i = left + 1, last = left; i <= right; i++) {
 		if (compare(strarr[i], strarr[left]))
-			swap((void *)strarr[i], (void *)strarr[++last]);
+			swap(&strarr[i], &strarr[++last]);
 	}
-	swap((void *)strarr[left], (void *)strarr[last]);
+	swap(&strarr[left], &strarr[last]);
 	QSortStrArr(strarr, left, last - 1, compare);
 	QSortStrArr(strarr, last + 1, right, compare);
 }
 
-void swap(void *op1, void *op2) {
-	void *temp;
-	temp = op1;
-	op1 = op2;
-	op2 = temp;
+void swap(char **op1, char **op2) {
+	char *temp = NULL;
+	if (op1 == op2)
+		return;
+	temp = *op1;
+	*op1 = *op2;
+	*op2 = temp;
 }
 
 int strcmp_X(char const *str1, char const *str2) {

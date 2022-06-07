@@ -5,7 +5,7 @@
 #include "SectionSteel.h"
 #include "calculation.h"
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+char *SectionSteelAW(char const *RawText, unsigned const CtrlCode);
 
 int main(int argc, char *argv[]) {
 	char str[100], delim[10] = {'\0'};
@@ -50,27 +50,6 @@ int main(int argc, char *argv[]) {
 		free(resault);
 	}
 	return 0;
-}
-
-int structinitial(char const *RawText) {
-	char *FormatedText;
-	char *SecSteType;
-	void *obj;
-	if (formatting(RawText, &FormatedText) == 0)
-		return 0;
-	SecSteType = getSecSteType(FormatedText);
-	if (SecSteType == NULL) 
-		return 0;
-	obj = new_H();
-	if (obj == NULL) 
-		return 0;
-	if (setData_H(obj, FormatedText) == 0) {
-		free_H(obj);
-		return 0;
-	}
-	
-	free_H(obj);
-	return 1;
 }
 
 char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {

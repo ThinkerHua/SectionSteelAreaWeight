@@ -1,6 +1,25 @@
 #ifndef _SECTION_STEEL_H_
 #define _SECTION_STEEL_H_
 
+//typedef struct {
+//	/*AorW = 0 -> area
+//	  AorW = 1 -> Weight*/
+//	unsigned AorW : 1;
+//	/*TopSurface = 0 -> Exclude TopSurface
+//	  TopSurface = 1 -> Include TopSurface*/
+//	unsigned TopSurface : 1;
+//	/*Method = 0 -> Roughly
+//	  Method = 1 -> Precisely
+//	  Method = 2 -> Look up in table*/
+//	unsigned Method : 2;
+//}ControlCode;
+#define TYPE_AREA			1
+#define TYPE_TOPSURFACE		2
+#define TYPE_WEIGHT			4
+#define METHOD_ROUGHLY		8
+#define METHOD_PRECISELY	16
+#define METHOD_LOOKUP		32
+
 #define LINKSYM "*"
 #define GRADSYM "~"
 #define DIVSYM "/"
@@ -17,8 +36,8 @@ typedef struct {
 	double B;
 	double tH;
 	double tB;
-}_SectionSteel_H;
-_SectionSteel_H *new_H_ (void);
+}SectionSteel_H_;
+SectionSteel_H_ *new_H_ (void);
 void free_H_(void *object);
 int setData_H_(void *object, char const *FormatedText);
 int expand_H_(void *object);
@@ -44,7 +63,7 @@ char *getResault_H(void *object, unsigned const CtrlCode);
 char *getArea_H(void *object, unsigned const CtrlCode);
 char *getWeight_H(void *object, unsigned const CtrlCode);
 
-typedef _SectionSteel_H SectionSteel_HT;
+typedef SectionSteel_H_ SectionSteel_HT;
 SectionSteel_HT *new_HT (void);
 void free_HT(void *object);
 int setData_HT(void *object, char const *FormatedText);
@@ -71,7 +90,7 @@ char *getResault_HI(void *object, unsigned const CtrlCode);
 char *getArea_HI(void *object, unsigned const CtrlCode);
 char *getWeight_HI(void *object, unsigned const CtrlCode);
 
-typedef _SectionSteel_H SectionSteel_T;
+typedef SectionSteel_H_ SectionSteel_T;
 SectionSteel_T *new_T (void);
 void free_T(void *object);
 int setData_T(void *object, char const *FormatedText);
@@ -212,8 +231,8 @@ typedef struct structPL{
 	double L;
 	double t;
 	struct structPL *pNext;
-}_SectionSteel_PL;
-_SectionSteel_PL *new_PL_ (void);
+}SectionSteel_PL_;
+SectionSteel_PL_ *new_PL_ (void);
 void free_PL_(void *object);
 int setData_PL_(void *object, char const *FormatedText);
 char *getResault_PL_(void *object, unsigned const CtrlCode);
@@ -225,8 +244,8 @@ typedef struct structPLT{
 	double L;
 	double t;
 	struct structPLT *pNext;
-}_SectionSteel_PLT;
-_SectionSteel_PLT *new_PLT_ (void);
+}SectionSteel_PLT_;
+SectionSteel_PLT_ *new_PLT_ (void);
 void free_PLT_(void *object);
 int setData_PLT_(void *object, char const *FormatedText);
 char *getResault_PLT_(void *object, unsigned const CtrlCode);
@@ -237,8 +256,8 @@ typedef struct structPLD{
 	double D;
 	double t;
 	struct structPLD *pNext;
-}_SectionSteel_PLD;
-_SectionSteel_PLD *new_PLD_ (void);
+}SectionSteel_PLD_;
+SectionSteel_PLD_ *new_PLD_ (void);
 void free_PLD_(void *object);
 int setData_PLD_(void *object, char const *FormatedText);
 char *getResault_PLD_(void *object, unsigned const CtrlCode);
@@ -246,9 +265,9 @@ char *getArea_PLD_(void *object, unsigned const CtrlCode);
 char *getWeight_PLD_(void *object, unsigned const CtrlCode);
 
 typedef struct {
-	_SectionSteel_PL *pPL;
-	_SectionSteel_PLT *pPLT;
-	_SectionSteel_PLD *pPLD;
+	SectionSteel_PL_ *pPL;
+	SectionSteel_PLT_ *pPLT;
+	SectionSteel_PLD_ *pPLD;
 }SectionSteel_PL;
 SectionSteel_PL *new_PL (void);
 void free_PL(void *object);
