@@ -9,10 +9,10 @@
 //}
 
 DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
-	char *FormatedText;
-	char *SecSteType;
-	char *Resault;
-	void *obj;
+	char *FormatedText = NULL;
+	char *SecSteType = NULL;
+	char *Resault = NULL;
+	void *obj = NULL;
 	if (formatting(RawText, &FormatedText) == 0)
 		return NULL;
 	SecSteType = getSecSteType(FormatedText);

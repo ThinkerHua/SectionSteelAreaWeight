@@ -165,26 +165,44 @@ void free_D(void *object) {
 }
 
 void free_I(void *object) {
+	SectionSteel_I *obj;
+	obj = object;
+	free(obj->Name);
 	free(object);
 }
 
 void free_Chan(void *object) {
+	SectionSteel_Chan *obj;
+	obj = object;
+	free(obj->Name);
 	free(object);
 }
 
 void free_Chan_MtM(void *object) {
+	SectionSteel_Chan_MtM *obj;
+	obj = object;
+	free(obj->Name);
 	free(object);
 }
 
 void free_Chan_BtB(void *object) {
+	SectionSteel_Chan_BtB *obj;
+	obj = object;
+	free(obj->Name);
 	free(object);
 }
 
 void free_L(void *object) {
+	SectionSteel_L *obj;
+	obj = object;
+	free(obj->Name);
 	free(object);
 }
 
 void free_2L(void *object) {
+	SectionSteel_2L *obj;
+	obj = object;
+	free(obj->Name);
 	free(object);
 }
 
@@ -225,39 +243,41 @@ void free_PLD(void *object) {
 }
 
 int setData_H_(void *object, char const *FormatedText) {
-	int nums;
-	double data[4];
-	char **strarr;
+	int failure = 0;
+	int nums = 0;
+	char **strarr = NULL;
 	_SectionSteel_H *obj; 
 	obj = object;
+	
 	//跳过前导类型标识符H 
-	nums = strsplit(FormatedText + 1, "*", &strarr);
+	nums = strsplit(FormatedText + 1, LINKSYM, &strarr);
 	switch(nums) {
 		case 2:
 			obj->ShortH = atof(strarr[0]);
 			obj->ShortB = atof(strarr[1]);
-			if (expand_H_(object) == 0) {
-				strsplit_free(&strarr, nums);
-				return 0;
-			}
+			if (expand_H_(object) == 0) 
+				failure = 1;
 			break;
 		case 4:
-			obj->H = average_delim(strarr[0], "~");
-			obj->B = average_delim(strarr[1], "~");
-			obj->tB = atof(strarr[2]);
-			obj->tH = atof(strarr[3]);
+			obj->H = average_delim(strarr[0], GRADSYM);
+			obj->B = average_delim(strarr[1], GRADSYM);
+			obj->tH = atof(strarr[2]);
+			obj->tB = atof(strarr[3]);
 			break;
 		default:
+			failure = 1;
 			break;
 	}
 	strsplit_free(&strarr, nums);
-	printf("Debug: H = %f,\tB = %f,\ttH = %f,\ttB= %f\n", obj->H, obj->B, obj->tH, obj->tB);
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
+	if (failure)
+		return 0;
 	return 1;
 }
 
 int expand_H_(void *object) {
 	char *Name = NULL, *Name1 = NULL, *Name2 = NULL;
-	char *linksym = "*";
 	double const *data = NULL;
 	double partdata[2] = {0};
 	_SectionSteel_H *obj = object;
@@ -267,15 +287,15 @@ int expand_H_(void *object) {
 		return 0;
 	*Name = '\0';
 	
-	Name1 = dtostr(obj->ShortH, 3);
-	Name2 = dtostr(obj->ShortB, 3);
+	Name1 = dtostr(obj->ShortH, DATA_PRECISION);
+	Name2 = dtostr(obj->ShortB, DATA_PRECISION);
 	if (Name1 == NULL || Name2 == NULL) {
 		free(Name), free(Name1), free(Name2);
 		Name = NULL, Name1 = NULL, Name2 = NULL;
 		return 0;
 	}
 	Name = strcat(Name, Name1);
-	Name = strcat(Name, linksym);
+	Name = strcat(Name, LINKSYM);
 	Name = strcat(Name, Name2);
 	data = search_Data_ByName("H", Name);
 	free(Name1), free(Name2);
@@ -292,19 +312,81 @@ int expand_H_(void *object) {
 }
 
 int setData_H(void *object, char const *FormatedText) {
+	int failure = 0;
+	int nums1 = 0, nums2 = 0;
+	char **strarr1 = NULL, **strarr2 = NULL;
+	SectionSteel_H *obj; 
+	obj = object;
+	
+	//跳过前导类型标识符H 
+	nums1 = strsplit(FormatedText + 1, LINKSYM, &strarr1);
+	switch(nums1) {
+		case 2:
+			obj->ShortH = atof(strarr1[0]);
+			obj->ShortB = atof(strarr1[1]);
+			if (expand_H(object) == 0) 
+				failure = 1;
+			break;
+		case 4:
+			obj->H = average_delim(strarr1[0], GRADSYM);
+			{		
+				nums2 = strsplit(strarr1[1], DIVSYM, &strarr2);
+				obj->B1 = average_delim(strarr2[0], GRADSYM);
+				if (nums2 = 2) 
+					obj->B2 = average_delim(strarr2[1], GRADSYM);
+				else
+					obj->B2 = obj->B1;
+				strsplit_free(&strarr2, nums2);
+			}	
+			obj->tH = atof(strarr1[2]);
+			{
+				nums2 = strsplit(strarr1[3], DIVSYM, &strarr2);
+				obj->tB1 = atof(strarr2[0]);
+				if (nums2 = 2) 
+					obj->tB2 = atof(strarr2[1]);
+				else
+					obj->tB2 = obj->tB1;
+				strsplit_free(&strarr2, nums2);
+			}
+			break;
+		default:
+			failure = 1;
+			break;
+	}
+	strsplit_free(&strarr1, nums1);
+	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
+					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
+	if (failure)
+		return 0;
+	return 1;
+}
 
+int expand_H(void *object) {
+	
 }
 
 int setData_HT(void *object, char const *FormatedText) {
 
 }
 
+int expand_HT(void *object) {
+	
+}
+
 int setData_HI(void *object, char const *FormatedText) {
 
 }
 
+int expand_HI(void *object) {
+	
+}
+
 int setData_T(void *object, char const *FormatedText) {
 
+}
+
+int expand_T(void *object) {
+	
 }
 
 int setData_J(void *object, char const *FormatedText) {
@@ -319,36 +401,72 @@ int setData_I(void *object, char const *FormatedText) {
 
 }
 
+int expand_I(void *object) {
+	
+}
+
 int setData_Chan(void *object, char const *FormatedText) {
 
+}
+
+int expand_Chan(void *object) {
+	
 }
 
 int setData_Chan_MtM(void *object, char const *FormatedText) {
 
 }
 
+int expand_Chan_MtM(void *object) {
+	
+}
+
 int setData_Chan_BtB(void *object, char const *FormatedText) {
 
+}
+
+int expand_Chan_BtB(void *object) {
+	
 }
 
 int setData_L(void *object, char const *FormatedText) {
 
 }
 
+int expand_L(void *object) {
+	
+}
+
 int setData_2L(void *object, char const *FormatedText) {
 
+}
+
+int expand_2L(void *object) {
+	
 }
 
 int setData_C(void *object, char const *FormatedText) {
 
 }
 
+int expand_C(void *object) {
+	
+}
+
 int setData_2C(void *object, char const *FormatedText) {
 
 }
 
+int expand_2C(void *object) {
+	
+}
+
 int setData_Z(void *object, char const *FormatedText) {
 
+}
+
+int expand_Z(void *object) {
+	
 }
 
 int setData_PL_(void *object, char const *FormatedText) {

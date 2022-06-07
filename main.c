@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
 	char str[100], delim[10] = {'\0'};
 	char from[5] = {'\0'}, to[5] = {'\0'};
 	char *newstr = NULL, **strarr = NULL;
+	char *resault = NULL;
 	int i, nums;
 	double d;
 	printf("Now testting function \"strsplit\"\n");
@@ -44,7 +45,9 @@ int main(int argc, char *argv[]) {
 	}
 	printf("Now testting struct initialization\n");
 	while (scanf("%s", str) != EOF) {
-		structinitial(str);
+//		structinitial(str);
+		resault = SectionSteelAW(str, 1);
+		free(resault);
 	}
 	return 0;
 }
@@ -58,14 +61,36 @@ int structinitial(char const *RawText) {
 	SecSteType = getSecSteType(FormatedText);
 	if (SecSteType == NULL) 
 		return 0;
-	obj = new_H_();
+	obj = new_H();
 	if (obj == NULL) 
 		return 0;
-	if (setData_H_(obj, FormatedText) == 0) {
-		free_H_(obj);
+	if (setData_H(obj, FormatedText) == 0) {
+		free_H(obj);
 		return 0;
 	}
 	
-	free_H_(obj);
+	free_H(obj);
 	return 1;
+}
+
+char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
+	char *FormatedText = NULL;
+	char *SecSteType = NULL;
+	char *Resault = NULL;
+	void *obj = NULL;
+	if (formatting(RawText, &FormatedText) == 0)
+		return NULL;
+	SecSteType = getSecSteType(FormatedText);
+	if (SecSteType == NULL) 
+		return NULL;
+	obj = NewObj(SecSteType);
+	if (obj == NULL) 
+		return NULL;
+	if (SetData(obj, SecSteType, FormatedText) == 0) {
+		FreeObj(obj, SecSteType);
+		return NULL;
+	}
+	Resault = getResault(obj, SecSteType, CtrlCode);
+	FreeObj(obj, SecSteType);
+	return Resault;
 }

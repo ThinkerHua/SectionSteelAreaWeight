@@ -1,7 +1,14 @@
 #ifndef _SECTION_STEEL_H_
 #define _SECTION_STEEL_H_
 
+#define LINKSYM "*"
+#define GRADSYM "~"
+#define DIVSYM "/"
+#define CUTSYM "-"
+#define WELDSYM "+"
+
 #define GBSECSTE_NAME_LENGTH 15
+#define DATA_PRECISION 3
 
 typedef struct {
 	double ShortH;
@@ -25,13 +32,14 @@ typedef struct {
 	double H;
 	double B1;
 	double B2;
-	double th;
+	double tH;
 	double tB1;
 	double tB2;
 }SectionSteel_H;
 SectionSteel_H *new_H (void);
 void free_H(void *object);
 int setData_H(void *object, char const *FormatedText);
+int expand_H(void *object);
 char *getResault_H(void *object, unsigned const CtrlCode);
 char *getArea_H(void *object, unsigned const CtrlCode);
 char *getWeight_H(void *object, unsigned const CtrlCode);
@@ -40,6 +48,7 @@ typedef _SectionSteel_H SectionSteel_HT;
 SectionSteel_HT *new_HT (void);
 void free_HT(void *object);
 int setData_HT(void *object, char const *FormatedText);
+int expand_HT(void *object);
 char *getResault_HT(void *object, unsigned const CtrlCode);
 char *getArea_HT(void *object, unsigned const CtrlCode);
 char *getWeight_HT(void *object, unsigned const CtrlCode);
@@ -57,6 +66,7 @@ typedef struct {
 SectionSteel_HI *new_HI (void);
 void free_HI(void *object);
 int setData_HI(void *object, char const *FormatedText);
+int expand_HI(void *object);
 char *getResault_HI(void *object, unsigned const CtrlCode);
 char *getArea_HI(void *object, unsigned const CtrlCode);
 char *getWeight_HI(void *object, unsigned const CtrlCode);
@@ -65,6 +75,7 @@ typedef _SectionSteel_H SectionSteel_T;
 SectionSteel_T *new_T (void);
 void free_T(void *object);
 int setData_T(void *object, char const *FormatedText);
+int expand_T(void *object);
 char *getResault_T(void *object, unsigned const CtrlCode);
 char *getArea_T(void *object, unsigned const CtrlCode);
 char *getWeight_T(void *object, unsigned const CtrlCode);
@@ -94,7 +105,7 @@ char *getArea_D(void *object, unsigned const CtrlCode);
 char *getWeight_D(void *object, unsigned const CtrlCode);
 
 typedef struct {
-	double Name;
+	char *Name;
 	double H;
 	double B;
 	double tH;
@@ -103,12 +114,13 @@ typedef struct {
 SectionSteel_I *new_I (void);
 void free_I(void *object);
 int setData_I(void *object, char const *FormatedText);
+int expand_I(void *object);
 char *getResault_I(void *object, unsigned const CtrlCode);
 char *getArea_I(void *object, unsigned const CtrlCode);
 char *getWeight_I(void *object, unsigned const CtrlCode);
 
 typedef struct {
-	double Name;
+	char *Name;
 	double H;
 	double B;
 	double tH;
@@ -117,6 +129,7 @@ typedef struct {
 SectionSteel_Chan *new_Chan (void);
 void free_Chan(void *object);
 int setData_Chan(void *object, char const *FormatedText);
+int expand_Chan(void *object);
 char *getResault_Chan(void *object, unsigned const CtrlCode);
 char *getArea_Chan(void *object, unsigned const CtrlCode);
 char *getWeight_Chan(void *object, unsigned const CtrlCode);
@@ -125,6 +138,7 @@ typedef SectionSteel_Chan SectionSteel_Chan_MtM;
 SectionSteel_Chan_MtM *new_Chan_MtM (void);
 void free_Chan_MtM(void *object);
 int setData_Chan_MtM(void *object, char const *FormatedText);
+int expand_Chan_MtM(void *object);
 char *getResault_Chan_MtM(void *object, unsigned const CtrlCode);
 char *getArea_Chan_MtM(void *object, unsigned const CtrlCode);
 char *getWeight_Chan_MtM(void *object, unsigned const CtrlCode);
@@ -133,12 +147,13 @@ typedef SectionSteel_Chan SectionSteel_Chan_BtB;
 SectionSteel_Chan_BtB *new_Chan_BtB (void);
 void free_Chan_BtB(void *object);
 int setData_Chan_BtB(void *object, char const *FormatedText);
+int expand_Chan_BtB(void *object);
 char *getResault_Chan_BtB(void *object, unsigned const CtrlCode);
 char *getArea_Chan_BtB(void *object, unsigned const CtrlCode);
 char *getWeight_Chan_BtB(void *object, unsigned const CtrlCode);
 
 typedef struct {
-	double Name;
+	char *Name;
 	double B1;
 	double B2;
 	double t;
@@ -146,6 +161,7 @@ typedef struct {
 SectionSteel_L *new_L (void);
 void free_L(void *object);
 int setData_L(void *object, char const *FormatedText);
+int expand_L(void *object);
 char *getResault_L(void *object, unsigned const CtrlCode);
 char *getArea_L(void *object, unsigned const CtrlCode);
 char *getWeight_L(void *object, unsigned const CtrlCode);
@@ -154,6 +170,7 @@ typedef SectionSteel_L SectionSteel_2L;
 SectionSteel_2L *new_2L (void);
 void free_2L(void *object);
 int setData_2L(void *object, char const *FormatedText);
+int expand_2L(void *object);
 char *getResault_2L(void *object, unsigned const CtrlCode);
 char *getArea_2L(void *object, unsigned const CtrlCode);
 char *getWeight_2L(void *object, unsigned const CtrlCode);
@@ -167,6 +184,7 @@ typedef struct {
 SectionSteel_C *new_C (void);
 void free_C(void *object);
 int setData_C(void *object, char const *FormatedText);
+int expand_C(void *object);
 char *getResault_C(void *object, unsigned const CtrlCode);
 char *getArea_C(void *object, unsigned const CtrlCode);
 char *getWeight_C(void *object, unsigned const CtrlCode);
@@ -175,6 +193,7 @@ typedef SectionSteel_C SectionSteel_2C;
 SectionSteel_2C *new_2C (void);
 void free_2C(void *object);
 int setData_2C(void *object, char const *FormatedText);
+int expand_2C(void *object);
 char *getResault_2C(void *object, unsigned const CtrlCode);
 char *getArea_2C(void *object, unsigned const CtrlCode);
 char *getWeight_2C(void *object, unsigned const CtrlCode);
@@ -183,6 +202,7 @@ typedef SectionSteel_C SectionSteel_Z;
 SectionSteel_Z *new_Z (void);
 void free_Z(void *object);
 int setData_Z(void *object, char const *FormatedText);
+int expand_Z(void *object);
 char *getResault_Z(void *object, unsigned const CtrlCode);
 char *getArea_Z(void *object, unsigned const CtrlCode);
 char *getWeight_Z(void *object, unsigned const CtrlCode);
