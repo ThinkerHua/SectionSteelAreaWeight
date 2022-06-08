@@ -191,7 +191,7 @@ void *NewObj(char const *SecSteType) {
 	}
 }
 
-void FreeObj(void *obj, char const *SecSteType) {
+void FreeObj(void **obj, char const *SecSteType) {
 	if (strcmp(SecSteType, "H") == 0) {
 		free_H(obj);
 	} else if (strcmp(SecSteType, "HT") == 0) {

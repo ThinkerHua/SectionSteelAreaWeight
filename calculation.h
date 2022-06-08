@@ -31,7 +31,7 @@ int strcmp_X(char const *str1, char const *str2);
 		长度相等时，按标准库函数strcmp的规则进行比较。 
 */
 void *NewObj(char const *SecSteType);
-void FreeObj(void *obj, char const *SecSteType);
+void FreeObj(void **obj, char const *SecSteType);
 int SetData(void *obj, char const *SecSteType, char const *FormatedText);
 /*
 	返回值	1	obj属性设置成功；

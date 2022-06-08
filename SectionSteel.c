@@ -136,110 +136,132 @@ SectionSteel_PLD *new_PLD (void) {
 	return obj;
 }
 
-void free_H_(void *object) {
-	free(object);
+void free_H_(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_H(void *object) {
-	free(object);
+void free_H(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_HT(void *object) {
-	free(object);
+void free_HT(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_HI(void *object) {
-	free(object);
+void free_HI(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_T(void *object) {
-	free(object);
+void free_T(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_J(void *object) {
-	free(object);
+void free_J(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_D(void *object) {
-	free(object);
+void free_D(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_I(void *object) {
+void free_I(void **object) {
 	SectionSteel_I *obj;
-	obj = object;
+	obj = *object;
 	free(obj->Name);
-	free(object);
+	free(*object);
+	*object = NULL;
 }
 
-void free_Chan(void *object) {
+void free_Chan(void **object) {
 	SectionSteel_Chan *obj;
-	obj = object;
+	obj = *object;
 	free(obj->Name);
-	free(object);
+	free(*object);
+	*object = NULL;
 }
 
-void free_Chan_MtM(void *object) {
+void free_Chan_MtM(void **object) {
 	SectionSteel_Chan_MtM *obj;
-	obj = object;
+	obj = *object;
 	free(obj->Name);
-	free(object);
+	free(*object);
+	*object = NULL;
 }
 
-void free_Chan_BtB(void *object) {
+void free_Chan_BtB(void **object) {
 	SectionSteel_Chan_BtB *obj;
-	obj = object;
+	obj = *object;
 	free(obj->Name);
-	free(object);
+	free(*object);
+	*object = NULL;
 }
 
-void free_L(void *object) {
+void free_L(void **object) {
 	SectionSteel_L *obj;
-	obj = object;
+	obj = *object;
 	free(obj->Name);
-	free(object);
+	free(*object);
+	*object = NULL;
 }
 
-void free_2L(void *object) {
+void free_2L(void **object) {
 	SectionSteel_2L *obj;
-	obj = object;
+	obj = *object;
 	free(obj->Name);
-	free(object);
+	free(*object);
+	*object = NULL;
 }
 
-void free_C(void *object) {
-	free(object);
+void free_C(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_2C(void *object) {
-	free(object);
+void free_2C(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_Z(void *object) {
-	free(object);
+void free_Z(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_PL_(void *object) {
-	free(object);
+void free_PL_(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_PLT_(void *object) {
-	free(object);
+void free_PLT_(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_PLD_(void *object) {
-	free(object);
+void free_PLD_(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_PL(void *object) {
-	free(object);
+void free_PL(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_PLT(void *object) {
-	free(object);
+void free_PLT(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
-void free_PLD(void *object) {
-	free(object);
+void free_PLD(void **object) {
+	free(*object);
+	*object = NULL;
 }
 
 int setData_H_(void *object, char const *FormatedText) {
@@ -381,7 +403,7 @@ int expand_H(void *object) {
 	} else
 		failure = 1;
 	
-	free_H_(_obj);
+	free_H_((void **)&_obj);
 	if (failure)
 		return 0;
 	return 1;
