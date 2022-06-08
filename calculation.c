@@ -124,7 +124,7 @@ void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)
 	mid = (left + right) / 2;
 	swap(&strarr[left], &strarr[mid]);
 	for (i = left + 1, last = left; i <= right; i++) {
-		if (compare(strarr[i], strarr[left]))
+		if (compare(strarr[i], strarr[left]) > 0)
 			swap(&strarr[i], &strarr[++last]);
 	}
 	swap(&strarr[left], &strarr[last]);
@@ -142,7 +142,7 @@ void swap(char **op1, char **op2) {
 }
 
 int strcmp_X(char const *str1, char const *str2) {
-	int len1, len2;
+	int len1, len2, i;
 	len1 = strlen(str1), len2 = strlen(str2);
 	if (len1 > len2) return 1;
 	if (len1 < len2) return -1;

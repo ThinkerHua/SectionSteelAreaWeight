@@ -38,13 +38,39 @@ typedef struct {
 	double tB;
 }SectionSteel_H_;
 SectionSteel_H_ *new_H_ (void);
+/*
+	失败则void == NULL 
+*/ 
 void free_H_(void **object);
 int setData_H_(void *object, char const *FormatedText);
+/*
+	失败返回0，成功返回1 
+*/
 int expand_H_(void *object);
+/*
+	失败返回0，成功返回1 
+*/
 char *getResault_H_(void *object, unsigned const CtrlCode);
+/*
+	失败返回NULL
+	得到的结果不需要使用时应free掉 
+*/
 char *getArea_H_(void *object, unsigned const CtrlCode);
+/*
+	一般不直接调用，而是通过getResault_H_函数调用 
+	失败返回NULL
+	得到的结果不需要使用时应free掉 
+*/
 char *getWeight_H_(void *object, unsigned const CtrlCode);
+/*
+	一般不直接调用，而是通过getResault_H_函数调用 
+	失败返回NULL
+	得到的结果不需要使用时应free掉 
+*/
 
+/*
+	以下结构相关函数说明同上 
+*/
 typedef struct {
 	double ShortH;
 	double ShortB;
@@ -85,7 +111,6 @@ typedef struct {
 SectionSteel_HI *new_HI (void);
 void free_HI(void **object);
 int setData_HI(void *object, char const *FormatedText);
-int expand_HI(void *object);
 char *getResault_HI(void *object, unsigned const CtrlCode);
 char *getArea_HI(void *object, unsigned const CtrlCode);
 char *getWeight_HI(void *object, unsigned const CtrlCode);

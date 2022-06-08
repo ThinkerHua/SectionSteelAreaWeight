@@ -267,12 +267,18 @@ void free_PLD(void **object) {
 int setData_H_(void *object, char const *FormatedText) {
 	int failure = 0;
 	int nums = 0;
+	char const *DataText = NULL;
 	char **strarr = NULL;
-	SectionSteel_H_ *obj; 
-	obj = object;
+	SectionSteel_H_ *obj = object; 
 	
 	//跳过前导类型标识符H 
-	nums = strsplit(FormatedText + 1, LINKSYM, &strarr);
+	DataText = strstr(FormatedText, "H");
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + 1;
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
 	switch(nums) {
 		case 2:
 			obj->ShortH = atof(strarr[0]);
@@ -290,11 +296,12 @@ int setData_H_(void *object, char const *FormatedText) {
 			failure = 1;
 			break;
 	}
+	
 	strsplit_free(&strarr, nums);
-	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
 	if (failure)
 		return 0;
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -319,13 +326,18 @@ int expand_H_(void *object) {
 	Name = strcat(Name, Name1);
 	Name = strcat(Name, LINKSYM);
 	Name = strcat(Name, Name2);
+	
+	//将数据当做型号名进行搜索，搜索不到则当做缺省数据进行搜索 
 	data = search_Data_ByName("H", Name);
 	free(Name1), free(Name2);
 	if (data == NULL) {
 		free(Name);
 		partdata[0] = obj->ShortH, partdata[1] = obj->ShortB;
 		data = search_Data_ByPart("H", partdata, 2);
+		if (data == NULL)
+			return 0;
 	}
+	
 	obj->H = data[0];
 	obj->B = data[1];
 	obj->tH = data[2];
@@ -336,12 +348,18 @@ int expand_H_(void *object) {
 int setData_H(void *object, char const *FormatedText) {
 	int failure = 0;
 	int nums1 = 0, nums2 = 0;
+	char const *DataText = NULL;
 	char **strarr1 = NULL, **strarr2 = NULL;
-	SectionSteel_H *obj; 
-	obj = object;
+	SectionSteel_H *obj = object; 
 	
 	//跳过前导类型标识符H 
-	nums1 = strsplit(FormatedText + 1, LINKSYM, &strarr1);
+	DataText = strstr(FormatedText, "H");
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + 1;
+		
+	nums1 = strsplit(DataText, LINKSYM, &strarr1);
 	switch(nums1) {
 		case 2:
 			obj->ShortH = atof(strarr1[0]);
@@ -375,23 +393,24 @@ int setData_H(void *object, char const *FormatedText) {
 			failure = 1;
 			break;
 	}
+	
 	strsplit_free(&strarr1, nums1);
-	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
-					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
 	if (failure)
 		return 0;
+	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
+					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
 	return 1;
 }
 
 int expand_H(void *object) {
 	SectionSteel_H_ *_obj = NULL;
-	SectionSteel_H *obj = NULL;
+	SectionSteel_H *obj = object;
 	int failure = 0;
 	
 	_obj = new_H_();
 	if (_obj == NULL)
 		return 0;
-	obj = object;
+		
 	_obj->ShortH = obj->ShortH;
 	_obj->ShortB = obj->ShortB;
 	
@@ -412,12 +431,18 @@ int expand_H(void *object) {
 int setData_HT(void *object, char const *FormatedText) {
 	int failure = 0;
 	int nums = 0;
+	char const *DataText = NULL;
 	char **strarr = NULL;
-	SectionSteel_HT *obj; 
-	obj = object;
+	SectionSteel_HT *obj = object; 
 	
 	//跳过前导类型标识符HT 
-	nums = strsplit(FormatedText + 2, LINKSYM, &strarr);
+	DataText = strstr(FormatedText, "HT");
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + 2;
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
 	switch(nums) {
 		case 2:
 			obj->ShortH = atof(strarr[0]);
@@ -435,11 +460,12 @@ int setData_HT(void *object, char const *FormatedText) {
 			failure = 1;
 			break;
 	}
+	
 	strsplit_free(&strarr, nums);
-	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
 	if (failure)
 		return 0;
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -464,13 +490,18 @@ int expand_HT(void *object) {
 	Name = strcat(Name, Name1);
 	Name = strcat(Name, LINKSYM);
 	Name = strcat(Name, Name2);
+	
+	//将数据当做型号名进行搜索，搜索不到则当做缺省数据进行搜索 
 	data = search_Data_ByName("HT", Name);
 	free(Name1), free(Name2);
 	if (data == NULL) {
 		free(Name);
 		partdata[0] = obj->ShortH, partdata[1] = obj->ShortB;
 		data = search_Data_ByPart("HT", partdata, 2);
+		if (data == NULL)
+			return 0;
 	}
+	
 	obj->H = data[0];
 	obj->B = data[1];
 	obj->tH = data[2];
@@ -479,11 +510,72 @@ int expand_HT(void *object) {
 }
 
 int setData_HI(void *object, char const *FormatedText) {
-
-}
-
-int expand_HI(void *object) {
+	int failure = 0;
+	int nums = 0;
+	char const *DataText = NULL;
+	char **strarr = NULL;
+	SectionSteel_H_ *H_1 = NULL, *H_2 = NULL;
+	SectionSteel_HI *obj = object;
 	
+	//跳过前导类型标识符HI 
+	DataText = strstr(FormatedText, "HI");
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + 2;
+		
+	nums = strsplit(DataText, WELDSYM, &strarr);
+	switch(nums) {
+		case 1:
+			H_1 = new_H_();
+			if (H_1 == NULL) {
+				failure = 1;
+				break;
+			}
+			if (setData_H_(H_1, strarr[0]) == 0) {
+				failure = 1;
+				break;
+			}
+			obj->H1 = obj->H2 = H_1->H;
+			obj->B1 = obj->B2 = H_1->B;
+			obj->tH1 = obj->tH2 = H_1->tH;
+			obj->tB1 = obj->tB2 = H_1->tB;
+			free_H_((void **)&H_1);
+			break;
+		case 2:
+			H_1 = new_H_(), H_2 = new_H_();
+			if (H_1 == NULL || H_2 == NULL) {
+				failure = 1;
+				break;
+			}
+			if (setData_H_(H_1, strarr[0]) == 0 || setData_H_(H_2, strarr[1]) == 0) {
+				failure = 1;
+				break;
+			}
+			obj->H1 = H_1->H;
+			obj->B1 = H_1->B;
+			obj->tH1 = H_1->tH;
+			obj->tB1 = H_1->tB;
+			obj->H2 = H_2->H;
+			obj->B2 = H_2->B;
+			obj->tH2 = H_2->tH;
+			obj->tB2 = H_2->tB;
+			break;
+		default:
+			failure = 1;
+			break;
+	}
+	
+	free_H_((void **)&H_1);
+	free_H_((void **)&H_2);
+	strsplit_free(&strarr, nums);
+	if (failure)
+		return 0;
+	printf(	"Debug: H1 = %.1f,  B1 = %.1f,  tH1 = %.1f,  tB1= %.1f\n"
+			"       H2 = %.1f,  B2 = %.1f,  tH2 = %.1f,  tB2= %.1f\n", 
+					obj->H1, 	obj->B1, 	obj->tH1,	obj->tB1,
+					obj->H2, 	obj->B2, 	obj->tH2, 	obj->tB2);
+	return 1;
 }
 
 int setData_T(void *object, char const *FormatedText) {
