@@ -39,12 +39,13 @@ typedef struct {
 }SectionSteel_H_;
 SectionSteel_H_ *new_H_ (void);
 /*
-	失败则void == NULL 
+	失败则返回NULL 
 */ 
 void free_H_(void **object);
 int setData_H_(void *object, char const *FormatedText);
 /*
-	失败返回0，成功返回1 
+	失败返回0，成功返回1
+	应当经由统一接口调用。非统一接口私自调用，则参数FormatedText必须符合约定规则 
 */
 int expand_H_(void *object);
 /*
