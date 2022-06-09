@@ -7,132 +7,230 @@
 SectionSteel_H_ *new_H_ (void) {
 	SectionSteel_H_ *obj;
 	obj = (SectionSteel_H_ *)malloc(sizeof(SectionSteel_H_));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "H";
+	obj->ShortH = obj->ShortB = obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_H *new_H (void) {
 	SectionSteel_H *obj;
 	obj = (SectionSteel_H *)malloc(sizeof(SectionSteel_H));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "H";
+	obj->ShortH = obj->ShortB = 
+	obj->H = obj->B1 = obj->B2 = obj->tH = obj->tB1 = obj->tB2 = 0;
 	return obj;
 }
 
 SectionSteel_HT *new_HT (void) {
 	SectionSteel_HT *obj;
 	obj = (SectionSteel_HT *)malloc(sizeof(SectionSteel_HT));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "HT";
+	obj->ShortH = obj->ShortB = obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_HI *new_HI (void) {
 	SectionSteel_HI *obj;
 	obj = (SectionSteel_HI *)malloc(sizeof(SectionSteel_HI));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "H";
+	obj->H1 = obj->B1 = obj->tH1 = obj->tB1 = 
+	obj->H2 = obj->B2 = obj->tH2 = obj->tB2 = 0;
 	return obj;
 }
 
 SectionSteel_T *new_T (void) {
 	SectionSteel_T *obj;
 	obj = (SectionSteel_T *)malloc(sizeof(SectionSteel_T));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "T";
+	obj->ShortH = obj->ShortB = obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_J *new_J (void) {
 	SectionSteel_J *obj;
 	obj = (SectionSteel_J *)malloc(sizeof(SectionSteel_J));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "J";
+	obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_D *new_D (void) {
 	SectionSteel_D *obj;
 	obj = (SectionSteel_D *)malloc(sizeof(SectionSteel_D));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "D";
+	obj->D = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_I *new_I (void) {
 	SectionSteel_I *obj;
 	obj = (SectionSteel_I *)malloc(sizeof(SectionSteel_I));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "I";
+	obj->Name = NULL;
+	obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_Chan *new_Chan (void) {
 	SectionSteel_Chan *obj;
 	obj = (SectionSteel_Chan *)malloc(sizeof(SectionSteel_Chan));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "Chan";
+	obj->Name = NULL;
+	obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_Chan_MtM *new_Chan_MtM (void) {
 	SectionSteel_Chan_MtM *obj;
 	obj = (SectionSteel_Chan_MtM *)malloc(sizeof(SectionSteel_Chan_MtM));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "Chan";
+	obj->Name = NULL;
+	obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_Chan_BtB *new_Chan_BtB (void) {
 	SectionSteel_Chan_BtB *obj;
 	obj = (SectionSteel_Chan_BtB *)malloc(sizeof(SectionSteel_Chan_BtB));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "Chan";
+	obj->Name = NULL;
+	obj->H = obj->B = obj->tH = obj->tB = 0;
 	return obj;
 }
 
 SectionSteel_L *new_L (void) {
 	SectionSteel_L *obj;
 	obj = (SectionSteel_L *)malloc(sizeof(SectionSteel_L));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "L";
+	obj->Name = NULL;
+	obj->B1 = obj->B2 = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_2L *new_2L (void) {
 	SectionSteel_2L *obj;
 	obj = (SectionSteel_2L *)malloc(sizeof(SectionSteel_2L));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "L";
+	obj->Name = NULL;
+	obj->B1 = obj->B2 = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_C *new_C (void) {
 	SectionSteel_C *obj;
 	obj = (SectionSteel_C *)malloc(sizeof(SectionSteel_C));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "C";
+	obj->H = obj->B = obj->C = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_2C *new_2C (void) {
 	SectionSteel_2C *obj;
 	obj = (SectionSteel_2C *)malloc(sizeof(SectionSteel_2C));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "C";
+	obj->H = obj->B = obj->C = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_Z *new_Z (void) {
 	SectionSteel_Z *obj;
 	obj = (SectionSteel_Z *)malloc(sizeof(SectionSteel_Z));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "Z";
+	obj->H = obj->B = obj->C = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_PL_ *new_PL_ (void) {
 	SectionSteel_PL_ *obj;
 	obj = (SectionSteel_PL_ *)malloc(sizeof(SectionSteel_PL_));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "PL";
+	obj->B = obj->L = obj->t = 0;
+	obj->pNext = NULL;
 	return obj;
 }
 
 SectionSteel_PLT_ *new_PLT_ (void) {
 	SectionSteel_PLT_ *obj;
 	obj = (SectionSteel_PLT_ *)malloc(sizeof(SectionSteel_PLT_));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "PLT";
+	obj->B = obj->L = obj->t = 0;
+	obj->pNext = NULL;
 	return obj;
 }
 
 SectionSteel_PLD_ *new_PLD_ (void) {
 	SectionSteel_PLD_ *obj;
 	obj = (SectionSteel_PLD_ *)malloc(sizeof(SectionSteel_PLD_));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "PLD";
+	obj->D = obj->t = 0;
+	obj->pNext = NULL;
 	return obj;
 }
 
 SectionSteel_PL *new_PL (void) {
 	SectionSteel_PL *obj;
 	obj = (SectionSteel_PL *)malloc(sizeof(SectionSteel_PL));
+	obj->pPL = NULL;
+	obj->pPLT = NULL;
+	obj->pPLD = NULL;
 	return obj;
 }
 
 SectionSteel_PLT *new_PLT (void) {
 	SectionSteel_PLT *obj;
 	obj = (SectionSteel_PLT *)malloc(sizeof(SectionSteel_PLT));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "PLT";
+	obj->B = obj->L = obj->t = 0;
 	return obj;
 }
 
 SectionSteel_PLD *new_PLD (void) {
 	SectionSteel_PLD *obj;
 	obj = (SectionSteel_PLD *)malloc(sizeof(SectionSteel_PLD));
+	if (obj == NULL)
+		return NULL;
+	obj->Type = "PLD";
+	obj->D = obj->t = 0;
 	return obj;
 }
 
@@ -235,21 +333,34 @@ void free_Z(void **object) {
 }
 
 void free_PL_(void **object) {
+	SectionSteel_PL_ *obj = *object;
+	if (obj->pNext != NULL)
+		free_PL_((void **)&obj->pNext);
 	free(*object);
 	*object = NULL;
 }
 
 void free_PLT_(void **object) {
+	SectionSteel_PLT_ *obj = *object;
+	if (obj->pNext != NULL)
+		free_PLT_((void **)&obj->pNext);
 	free(*object);
 	*object = NULL;
 }
 
 void free_PLD_(void **object) {
+	SectionSteel_PLD_ *obj = *object;
+	if (obj->pNext != NULL)
+		free_PLD_((void **)&obj->pNext);
 	free(*object);
 	*object = NULL;
 }
 
 void free_PL(void **object) {
+	SectionSteel_PL *obj = *object;
+	free_PL_((void **)&obj->pPL);
+	free_PLT_((void **)&obj->pPLT);
+	free_PLD_((void **)&obj->pPLD);
 	free(*object);
 	*object = NULL;
 }
@@ -271,12 +382,13 @@ int setData_H_(void *object, char const *FormatedText) {
 	char **strarr = NULL;
 	SectionSteel_H_ *obj = object; 
 	
-	//跳过前导类型标识符H 
-	DataText = strstr(FormatedText, "H");
+	//跳过前导类型标识符H
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
 	if (DataText == NULL)
 		DataText = FormatedText;
 	else
-		DataText = FormatedText + 1;
+		DataText = FormatedText + strlen(obj->Type);
 		
 	nums = strsplit(DataText, LINKSYM, &strarr);
 	switch(nums) {
@@ -328,12 +440,12 @@ int expand_H_(void *object) {
 	Name = strcat(Name, Name2);
 	
 	//将数据当做型号名进行搜索，搜索不到则当做缺省数据进行搜索 
-	data = search_Data_ByName("H", Name);
+	data = search_Data_ByName(obj->Type, Name);
 	free(Name1), free(Name2);
 	if (data == NULL) {
 		free(Name);
 		partdata[0] = obj->ShortH, partdata[1] = obj->ShortB;
-		data = search_Data_ByPart("H", partdata, 2);
+		data = search_Data_ByPart(obj->Type, partdata, 2);
 		if (data == NULL)
 			return 0;
 	}
@@ -353,11 +465,12 @@ int setData_H(void *object, char const *FormatedText) {
 	SectionSteel_H *obj = object; 
 	
 	//跳过前导类型标识符H 
-	DataText = strstr(FormatedText, "H");
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
 	if (DataText == NULL)
 		DataText = FormatedText;
 	else
-		DataText = FormatedText + 1;
+		DataText = FormatedText + strlen(obj->Type);
 		
 	nums1 = strsplit(DataText, LINKSYM, &strarr1);
 	switch(nums1) {
@@ -429,83 +542,8 @@ int expand_H(void *object) {
 }
 
 int setData_HT(void *object, char const *FormatedText) {
-	int failure = 0;
-	int nums = 0;
-	char const *DataText = NULL;
-	char **strarr = NULL;
-	SectionSteel_HT *obj = object; 
-	
-	//跳过前导类型标识符HT 
-	DataText = strstr(FormatedText, "HT");
-	if (DataText == NULL)
-		DataText = FormatedText;
-	else
-		DataText = FormatedText + 2;
-		
-	nums = strsplit(DataText, LINKSYM, &strarr);
-	switch(nums) {
-		case 2:
-			obj->ShortH = atof(strarr[0]);
-			obj->ShortB = atof(strarr[1]);
-			if (expand_HT(object) == 0) 
-				failure = 1;
-			break;
-		case 4:
-			obj->H = atof(strarr[0]);
-			obj->B = atof(strarr[1]);
-			obj->tH = atof(strarr[2]);
-			obj->tB = atof(strarr[3]);
-			break;
-		default:
-			failure = 1;
-			break;
-	}
-	
-	strsplit_free(&strarr, nums);
-	if (failure)
+	if (setData_H_(object, FormatedText) == 0)
 		return 0;
-	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
-	return 1;
-}
-
-int expand_HT(void *object) {
-	char *Name = NULL, *Name1 = NULL, *Name2 = NULL;
-	double const *data = NULL;
-	double partdata[2] = {0};
-	SectionSteel_HT *obj = object;
-	
-	Name = (char *)calloc(GBSECSTE_NAME_LENGTH, sizeof(char));
-	if (Name == NULL)
-		return 0;
-	*Name = '\0';
-	
-	Name1 = dtostr(obj->ShortH, DATA_PRECISION);
-	Name2 = dtostr(obj->ShortB, DATA_PRECISION);
-	if (Name1 == NULL || Name2 == NULL) {
-		free(Name), free(Name1), free(Name2);
-		Name = NULL, Name1 = NULL, Name2 = NULL;
-		return 0;
-	}
-	Name = strcat(Name, Name1);
-	Name = strcat(Name, LINKSYM);
-	Name = strcat(Name, Name2);
-	
-	//将数据当做型号名进行搜索，搜索不到则当做缺省数据进行搜索 
-	data = search_Data_ByName("HT", Name);
-	free(Name1), free(Name2);
-	if (data == NULL) {
-		free(Name);
-		partdata[0] = obj->ShortH, partdata[1] = obj->ShortB;
-		data = search_Data_ByPart("HT", partdata, 2);
-		if (data == NULL)
-			return 0;
-	}
-	
-	obj->H = data[0];
-	obj->B = data[1];
-	obj->tH = data[2];
-	obj->tB = data[3];
 	return 1;
 }
 
@@ -518,11 +556,12 @@ int setData_HI(void *object, char const *FormatedText) {
 	SectionSteel_HI *obj = object;
 	
 	//跳过前导类型标识符HI 
-	DataText = strstr(FormatedText, "HI");
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
 	if (DataText == NULL)
 		DataText = FormatedText;
 	else
-		DataText = FormatedText + 2;
+		DataText = FormatedText + strlen(obj->Type);
 		
 	nums = strsplit(DataText, WELDSYM, &strarr);
 	switch(nums) {
@@ -579,23 +618,142 @@ int setData_HI(void *object, char const *FormatedText) {
 }
 
 int setData_T(void *object, char const *FormatedText) {
-
-}
-
-int expand_T(void *object) {
-	
+	if (setData_H_(object, FormatedText) == 0)
+		return 0;
+	return 1;
 }
 
 int setData_J(void *object, char const *FormatedText) {
+	int failure = 0;
+	int nums = 0;
+	char const *DataText = NULL;
+	char **strarr = NULL;
+	SectionSteel_J *obj = object;
 
+	//跳过前导类型标识符J 
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + strlen(obj->Type);
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
+	switch(nums) {
+		case 2:
+			obj->H = obj->B = average_delim(strarr[0], GRADSYM);
+			obj->tH = obj->tB = atof(strarr[1]);
+			break;
+		case 3:
+			obj->H = average_delim(strarr[0], GRADSYM);
+			obj->B = average_delim(strarr[1], GRADSYM);
+			obj->tH = obj->tB = atof(strarr[2]);
+			break;
+		case 4:
+			obj->H = average_delim(strarr[0], GRADSYM);
+			obj->B = average_delim(strarr[1], GRADSYM);
+			obj->tH = atof(strarr[2]);
+			obj->tB = atof(strarr[3]);
+			break;
+		default:
+			failure = 1;
+			break;
+	}
+	
+	strsplit_free(&strarr, nums);
+	if (failure)
+		return 0;
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H,		obj->B,		obj->tH, 	obj->tB);
+	return 1;
 }
 
 int setData_D(void *object, char const *FormatedText) {
+	int failure = 0;
+	int nums = 0;
+	char const *DataText = NULL;
+	char **strarr = NULL;
+	SectionSteel_D *obj = object;
+
+	//跳过前导类型标识符D 
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + strlen(obj->Type);
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
+	switch(nums) {
+		case 2:
+			obj->D = atof(strarr[0]);
+			obj->t = atof(strarr[1]);
+			break;
+		default:
+			failure = 1;
+			break;
+	}
+	
+	strsplit_free(&strarr, nums);
+	if (failure)
+		return 0;
+	printf("Debug: D = %.1f,  t= %.1f\n", 
+					obj->D,		obj->t);
+	return 1;
 
 }
 
 int setData_I(void *object, char const *FormatedText) {
+	int failure = 0;
+	int nums = 0;
+	char const *DataText = NULL;
+	char **strarr = NULL;
+	SectionSteel_I *obj = object;
 
+	//跳过前导类型标识符I 
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + strlen(obj->Type);
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
+	switch(nums) {
+		case 1:
+			//strarr会被释放掉，Name必须申请一片新空间以复制 
+			obj->Name = (char *)calloc(strlen(strarr[0]) + 1, sizeof(char));
+			if (obj->Name == NULL) {
+				failure = 1;
+				break;
+			}
+			*obj->Name = '\0';
+			strcpy(obj->Name, strarr[0]);
+			if (expand_I(object) == 0)
+				failure = 1;
+			break;
+		case 2:
+			obj->H = atof(strarr[0]);
+			obj->B = atof(strarr[1]);
+			if (expand_I(object) == 0)
+				failure = 1;
+			break;
+		case 4: case 5: 
+			obj->H = atof(strarr[0]);
+			obj->B = atof(strarr[1]);
+			obj->tH = atof(strarr[2]);
+			obj->tB = atof(strarr[3]);
+		default:
+			failure = 1;
+			break;
+	}
+	
+	strsplit_free(&strarr, nums);
+	if (failure)
+		return 0;
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H,		obj->B,		obj->tH, 	obj->tB);
+	return 1;
 }
 
 int expand_I(void *object) {

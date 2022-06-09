@@ -30,6 +30,7 @@
 #define DATA_PRECISION 3
 
 typedef struct {
+	char const *Type;
 	double ShortH;
 	double ShortB;
 	double H;
@@ -73,6 +74,7 @@ char *getWeight_H_(void *object, unsigned const CtrlCode);
 	以下结构相关函数说明同上 
 */
 typedef struct {
+	char const *Type;
 	double ShortH;
 	double ShortB;
 	double H;
@@ -94,12 +96,13 @@ typedef SectionSteel_H_ SectionSteel_HT;
 SectionSteel_HT *new_HT (void);
 void free_HT(void **object);
 int setData_HT(void *object, char const *FormatedText);
-int expand_HT(void *object);
+//int expand_HT(void *object);
 char *getResault_HT(void *object, unsigned const CtrlCode);
 char *getArea_HT(void *object, unsigned const CtrlCode);
 char *getWeight_HT(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	double H1;
 	double B1;
 	double tH1;
@@ -112,6 +115,7 @@ typedef struct {
 SectionSteel_HI *new_HI (void);
 void free_HI(void **object);
 int setData_HI(void *object, char const *FormatedText);
+int expand_HI(void *object);
 char *getResault_HI(void *object, unsigned const CtrlCode);
 char *getArea_HI(void *object, unsigned const CtrlCode);
 char *getWeight_HI(void *object, unsigned const CtrlCode);
@@ -120,12 +124,13 @@ typedef SectionSteel_H_ SectionSteel_T;
 SectionSteel_T *new_T (void);
 void free_T(void **object);
 int setData_T(void *object, char const *FormatedText);
-int expand_T(void *object);
+//int expand_T(void *object);
 char *getResault_T(void *object, unsigned const CtrlCode);
 char *getArea_T(void *object, unsigned const CtrlCode);
 char *getWeight_T(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	double H;
 	double B;
 	double tH;
@@ -139,6 +144,7 @@ char *getArea_J(void *object, unsigned const CtrlCode);
 char *getWeight_J(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	double D;
 	double t;
 }SectionSteel_D;
@@ -150,6 +156,7 @@ char *getArea_D(void *object, unsigned const CtrlCode);
 char *getWeight_D(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	char *Name;
 	double H;
 	double B;
@@ -165,6 +172,7 @@ char *getArea_I(void *object, unsigned const CtrlCode);
 char *getWeight_I(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	char *Name;
 	double H;
 	double B;
@@ -198,6 +206,7 @@ char *getArea_Chan_BtB(void *object, unsigned const CtrlCode);
 char *getWeight_Chan_BtB(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	char *Name;
 	double B1;
 	double B2;
@@ -221,6 +230,7 @@ char *getArea_2L(void *object, unsigned const CtrlCode);
 char *getWeight_2L(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	double H;
 	double B;
 	double C;
@@ -253,6 +263,7 @@ char *getArea_Z(void *object, unsigned const CtrlCode);
 char *getWeight_Z(void *object, unsigned const CtrlCode);
 
 typedef struct structPL{
+	char const *Type;
 	double B;
 	double L;
 	double t;
@@ -266,6 +277,7 @@ char *getArea_PL_(void *object, unsigned const CtrlCode);
 char *getWeight_PL_(void *object, unsigned const CtrlCode);
 
 typedef struct structPLT{
+	char const *Type;
 	double B;
 	double L;
 	double t;
@@ -279,6 +291,7 @@ char *getArea_PLT_(void *object, unsigned const CtrlCode);
 char *getWeight_PLT_(void *object, unsigned const CtrlCode);
 
 typedef struct structPLD{
+	char const *Type;
 	double D;
 	double t;
 	struct structPLD *pNext;
@@ -303,6 +316,7 @@ char *getArea_PL(void *object, unsigned const CtrlCode);
 char *getWeight_PL(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	double B;
 	double L;
 	double t;
@@ -315,6 +329,7 @@ char *getArea_PLT(void *object, unsigned const CtrlCode);
 char *getWeight_PLT(void *object, unsigned const CtrlCode);
 
 typedef struct {
+	char const *Type;
 	double D;
 	double t;
 }SectionSteel_PLD;
