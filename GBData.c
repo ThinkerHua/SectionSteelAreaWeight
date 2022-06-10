@@ -628,13 +628,13 @@ int link_pGBSecSte(GBSectionSteel const **p, char const *SecSteType) {
 	} else if (strcmp(SecSteType, "I") == 0) {
 		*p = GBSecSte_I;
 		return sizeof(GBSecSte_I) / sizeof(GBSecSte_I[0]);
-	} else if (strcmp(SecSteType, "[") == 0) {
+	} else if (strcmp(SecSteType, "[") == 0 || strcmp(SecSteType, "[]") == 0 || strcmp(SecSteType, "2[") == 0) {
 		*p = GBSecSte_Chan;
 		return sizeof(GBSecSte_Chan) / sizeof(GBSecSte_Chan[0]);
-	} else if (strcmp(SecSteType, "L") == 0) {
+	} else if (strcmp(SecSteType, "L") == 0 || strcmp(SecSteType, "2L") == 0) {
 		*p = GBSecSte_L;
 		return sizeof(GBSecSte_L) / sizeof(GBSecSte_L[0]);
-	} else if (strcmp(SecSteType, "C") == 0) {
+	} else if (strcmp(SecSteType, "C") == 0 || strcmp(SecSteType, "2C") == 0) {
 		*p = GBSecSte_C;
 		return sizeof(GBSecSte_C) / sizeof(GBSecSte_C[0]);
 	} else if (strcmp(SecSteType, "Z") == 0) {
