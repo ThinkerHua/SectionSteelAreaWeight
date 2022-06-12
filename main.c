@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 	char *resault = NULL;
 	int i, nums;
 	double d;
+/*
 	printf("Now testting function \"strsplit\"\n");
 	while (scanf("%s %s", str, delim) != EOF) {
 		nums = strsplit(str, delim, &strarr);
@@ -27,6 +28,8 @@ int main(int argc, char *argv[]) {
 		while(str[i] != '\0') 
 			str[i] = '\0', i++;
 	}
+*/
+/*
 	printf("Now testting function \"replace\"\n");
 	while (scanf("%s %s %s", str, from, to) != EOF) {
 		newstr = (char *)malloc(strlen(str) + 1);
@@ -36,6 +39,8 @@ int main(int argc, char *argv[]) {
 		if (replace(&newstr, from, to) > 0) 
 			printf("%s\n", newstr), free(newstr), newstr = NULL;
 	}
+*/
+/*
 	printf("Now testting function \"dtostr\"\n");
 	while (scanf("%lf", &d) != EOF) {
 		newstr = dtostr(d, 3);
@@ -43,10 +48,32 @@ int main(int argc, char *argv[]) {
 			continue;
 		printf("%s\n", newstr), free(newstr), newstr = NULL;
 	}
+*/
+/*
 	printf("Now testting struct initialization\n");
 	while (scanf("%s", str) != EOF) {
 		resault = SectionSteelAW(str, 1);
 		free(resault);
+	}
+*/
+
+	printf("Now testting function \"strcatEX\"\n");
+	for (i = 0, d = 20.009, nums = 33; i < 20; i++) 
+		str[i] = nums++;
+	newstr = strcatEX("abc%dagng%fga%coij%sag\n", i, d, nums, str);
+	printf("%s", newstr);
+	for (i = 99, d = 0, nums = 0; i >= 0; i--) 
+		str[i] = 0;
+	free(newstr), newstr = NULL;
+
+	printf("Now testting function \"getArea\"\n");
+	while (scanf("%s", str) != EOF) {
+		resault = SectionSteelAW(str, 1);
+		if (resault != NULL) {
+			printf("%s\n", resault);
+			free(resault);
+			resault = NULL;
+		}
 	}
 	return 0;
 }

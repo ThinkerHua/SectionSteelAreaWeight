@@ -191,43 +191,43 @@ void *NewObj(char const *SecSteType) {
 	}
 }
 
-void FreeObj(void **obj, char const *SecSteType) {
+void FreeObj(void **p_obj, char const *SecSteType) {
 	if (strcmp(SecSteType, "H") == 0) {
-		free_H(obj);
+		free_H(p_obj);
 	} else if (strcmp(SecSteType, "HT") == 0) {
-		free_HT(obj);
+		free_HT(p_obj);
 	} else if (strcmp(SecSteType, "HI") == 0)  {
-		free_HI(obj);
+		free_HI(p_obj);
 	} else if (strcmp(SecSteType, "T") == 0) {
-		free_T(obj);
+		free_T(p_obj);
 	} else if (strcmp(SecSteType, "J") == 0) {
-		free_J(obj);
+		free_J(p_obj);
 	} else if (strcmp(SecSteType, "D") == 0) {
-		free_D(obj);
+		free_D(p_obj);
 	} else if (strcmp(SecSteType, "I") == 0) {
-		free_I(obj);
+		free_I(p_obj);
 	} else if (strcmp(SecSteType, "[") == 0) {
-		free_Chan(obj);
+		free_Chan(p_obj);
 	} else if (strcmp(SecSteType, "[]") == 0) {
-		free_Chan_MtM(obj);
+		free_Chan_MtM(p_obj);
 	} else if (strcmp(SecSteType, "2[") == 0) {
-		free_Chan_BtB(obj);
+		free_Chan_BtB(p_obj);
 	} else if (strcmp(SecSteType, "L") == 0) {
-		free_L(obj);
+		free_L(p_obj);
 	} else if (strcmp(SecSteType, "2L") == 0) {
-		free_2L(obj);
+		free_2L(p_obj);
 	} else if (strcmp(SecSteType, "C") == 0) {
-		free_C(obj);
+		free_C(p_obj);
 	} else if (strcmp(SecSteType, "2C") == 0) {
-		free_2C(obj);
+		free_2C(p_obj);
 	} else if (strcmp(SecSteType, "Z") == 0) {
-		free_Z(obj);
+		free_Z(p_obj);
 	} else if (strcmp(SecSteType, "PL") == 0) {
-		free_PL(obj);
+		free_PL(p_obj);
 	} else if (strcmp(SecSteType, "PLT") == 0) {
-		free_PLT(obj);
+		free_PLT(p_obj);
 	} else if (strcmp(SecSteType, "PLD") == 0) {
-		free_PLD(obj);
+		free_PLD(p_obj);
 	}
 	return;
 }

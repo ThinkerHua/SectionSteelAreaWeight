@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 SectionSteel_H_ *new_H_ (void) {
 	SectionSteel_H_ *obj;
@@ -234,145 +235,145 @@ SectionSteel_PLD *new_PLD (void) {
 	return obj;
 }
 
-void free_H_(void **object) {
-	free(*object);
-	*object = NULL;
+void free_H_(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_H(void **object) {
-	free(*object);
-	*object = NULL;
+void free_H(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_HT(void **object) {
-	free(*object);
-	*object = NULL;
+void free_HT(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_HI(void **object) {
-	free(*object);
-	*object = NULL;
+void free_HI(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_T(void **object) {
-	free(*object);
-	*object = NULL;
+void free_T(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_J(void **object) {
-	free(*object);
-	*object = NULL;
+void free_J(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_D(void **object) {
-	free(*object);
-	*object = NULL;
+void free_D(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_I(void **object) {
+void free_I(void **p_object) {
 	SectionSteel_I *obj;
-	obj = *object;
+	obj = *p_object;
 	free(obj->Name);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_Chan(void **object) {
+void free_Chan(void **p_object) {
 	SectionSteel_Chan *obj;
-	obj = *object;
+	obj = *p_object;
 	free(obj->Name);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_Chan_MtM(void **object) {
+void free_Chan_MtM(void **p_object) {
 	SectionSteel_Chan_MtM *obj;
-	obj = *object;
+	obj = *p_object;
 	free(obj->Name);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_Chan_BtB(void **object) {
+void free_Chan_BtB(void **p_object) {
 	SectionSteel_Chan_BtB *obj;
-	obj = *object;
+	obj = *p_object;
 	free(obj->Name);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_L(void **object) {
+void free_L(void **p_object) {
 	SectionSteel_L *obj;
-	obj = *object;
+	obj = *p_object;
 	free(obj->Name);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_2L(void **object) {
+void free_2L(void **p_object) {
 	SectionSteel_2L *obj;
-	obj = *object;
+	obj = *p_object;
 	free(obj->Name);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_C(void **object) {
-	free(*object);
-	*object = NULL;
+void free_C(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_2C(void **object) {
-	free(*object);
-	*object = NULL;
+void free_2C(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_Z(void **object) {
-	free(*object);
-	*object = NULL;
+void free_Z(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_PL_(void **object) {
-	SectionSteel_PL_ *obj = *object;
+void free_PL_(void **p_object) {
+	SectionSteel_PL_ *obj = *p_object;
 	if (obj->pNext != NULL)
 		free_PL_((void **)&obj->pNext);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_PLT_(void **object) {
-	SectionSteel_PLT_ *obj = *object;
+void free_PLT_(void **p_object) {
+	SectionSteel_PLT_ *obj = *p_object;
 	if (obj->pNext != NULL)
 		free_PLT_((void **)&obj->pNext);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_PLD_(void **object) {
-	SectionSteel_PLD_ *obj = *object;
+void free_PLD_(void **p_object) {
+	SectionSteel_PLD_ *obj = *p_object;
 	if (obj->pNext != NULL)
 		free_PLD_((void **)&obj->pNext);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_PL(void **object) {
-	SectionSteel_PL *obj = *object;
+void free_PL(void **p_object) {
+	SectionSteel_PL *obj = *p_object;
 	free_PL_((void **)&obj->pPL);
 	free_PLT_((void **)&obj->pPLT);
 	free_PLD_((void **)&obj->pPLD);
-	free(*object);
-	*object = NULL;
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_PLT(void **object) {
-	free(*object);
-	*object = NULL;
+void free_PLT(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
-void free_PLD(void **object) {
-	free(*object);
-	*object = NULL;
+void free_PLD(void **p_object) {
+	free(*p_object);
+	*p_object = NULL;
 }
 
 int setData_H_(void *object, char const *FormatedText) {
@@ -412,8 +413,8 @@ int setData_H_(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
+//	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+//					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -510,8 +511,8 @@ int setData_H(void *object, char const *FormatedText) {
 	strsplit_free(&strarr1, nums1);
 	if (failure)
 		return 0;
-	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
-					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
+//	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
+//					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
 	return 1;
 }
 
@@ -610,10 +611,10 @@ int setData_HI(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf(	"Debug: H1 = %.1f,  B1 = %.1f,  tH1 = %.1f,  tB1= %.1f\n"
-			"       H2 = %.1f,  B2 = %.1f,  tH2 = %.1f,  tB2= %.1f\n", 
-					obj->H1, 	obj->B1, 	obj->tH1,	obj->tB1,
-					obj->H2, 	obj->B2, 	obj->tH2, 	obj->tB2);
+//	printf(	"Debug: H1 = %.1f,  B1 = %.1f,  tH1 = %.1f,  tB1= %.1f\n"
+//			"       H2 = %.1f,  B2 = %.1f,  tH2 = %.1f,  tB2= %.1f\n", 
+//					obj->H1, 	obj->B1, 	obj->tH1,	obj->tB1,
+//					obj->H2, 	obj->B2, 	obj->tH2, 	obj->tB2);
 	return 1;
 }
 
@@ -663,8 +664,8 @@ int setData_J(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-					obj->H,		obj->B,		obj->tH, 	obj->tB);
+//	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+//					obj->H,		obj->B,		obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -697,8 +698,8 @@ int setData_D(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: D = %.1f,  t= %.1f\n", 
-					obj->D,		obj->t);
+//	printf("Debug: D = %.1f,  t= %.1f\n", 
+//					obj->D,		obj->t);
 	return 1;
 
 }
@@ -752,8 +753,8 @@ int setData_I(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-					obj->H,		obj->B,		obj->tH, 	obj->tB);
+//	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+//					obj->H,		obj->B,		obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -836,8 +837,8 @@ int setData_L(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: B1 = %.1f,  B2 = %.1f,  t = %.1f\n", 
-					obj->B1,	obj->B2,	obj->t);
+//	printf("Debug: B1 = %.1f,  B2 = %.1f,  t = %.1f\n", 
+//					obj->B1,	obj->B2,	obj->t);
 	return 1;
 }
 
@@ -893,8 +894,8 @@ int setData_C(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: H = %.1f,  B = %.1f,  C = %.1f,  t = %.1f\n", 
-					obj->H,		obj->B,		obj->C, 	obj->t);
+//	printf("Debug: H = %.1f,  B = %.1f,  C = %.1f,  t = %.1f\n", 
+//					obj->H,		obj->B,		obj->C, 	obj->t);
 	return 1;
 }
 
@@ -940,8 +941,8 @@ int setData_PL_(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: B = %.1f,  L = %.1f,  t = %.1f\n", 
-					obj->B,		obj->L, 	obj->t);
+//	printf("Debug: B = %.1f,  L = %.1f,  t = %.1f\n", 
+//					obj->B,		obj->L, 	obj->t);
 	return 1;
 }
 
@@ -978,8 +979,8 @@ int setData_PLD_(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-	printf("Debug: D = %.1f,  t = %.1f\n", 
-					obj->D, 	obj->t);
+//	printf("Debug: D = %.1f,  t = %.1f\n", 
+//					obj->D, 	obj->t);
 	return 1;
 }
 
@@ -987,27 +988,59 @@ int setData_PL(void *object, char const *FormatedText) {
 	int i;
 	int failure = 0;
 	int nums = 0;
-	char const *DataText = NULL;
 	char **strarr = NULL;
 	SectionSteel_PL *obj = object;
 	SectionSteel_PL_ *sub_PL = NULL;
 	SectionSteel_PLT_ *sub_PLT = NULL;
 	SectionSteel_PLD_ *sub_PLD = NULL;
 	
-	nums = strsplit(DataText, WELDSYM, &strarr);
-	for (i = 0; i < nums; i++) {
+	nums = strsplit(FormatedText, CUTSYM, &strarr);
+	for (i = nums - 1; i >= 0; i--) {
 		if (strncmp(strarr[i], "PLD", 3) == 0) {
-			
+			sub_PLD = new_PLD_();
+			if (sub_PLD == NULL) {
+				failure = 1;
+				break;
+			}
+			if (setData_PLD_(sub_PLD, strarr[i]) == 0) {
+				failure = 1;
+				free_PLD_((void **)&sub_PLD);
+				break;
+			}
+			sub_PLD->pNext = obj->pPLD;
+			obj->pPLD = sub_PLD;
 		} else if (strncmp(strarr[i], "PLT", 3) == 0) {
-			
+			sub_PLT = new_PLT_();
+			if (sub_PLT == NULL) {
+				failure = 1;
+				break;
+			}
+			if (setData_PLT_(sub_PLT, strarr[i]) == 0) {
+				failure = 1;
+				free_PLT_((void **)&sub_PLT);
+				break;
+			}
+			sub_PLT->pNext = obj->pPLT;
+			obj->pPLT = sub_PLT;
 		} else if (strncmp(strarr[i], "PL", 2) == 0) {
-			
+			sub_PL = new_PL_();
+			if (sub_PL == NULL) {
+				failure = 1;
+				break;
+			}
+			if (setData_PL_(sub_PL, strarr[i]) == 0) {
+				failure = 1;
+				free_PL_((void **)&sub_PL);
+				break;
+			}
+			sub_PL->pNext = obj->pPL;
+			obj->pPL = sub_PL;
 		} else 
 			continue;
 	}
 	
 	strsplit_free(&strarr, nums);
-	if (failure)
+	if (failure) 
 		return 0;
 	return 1;
 }
@@ -1564,4 +1597,138 @@ char *ltostr(long const l) {
 	if (sign == -1)
 		str[0] = '-';
 	return str;
+}
+
+char *strcatEX(char const *format, ...) {
+	int failure = 0; 
+	va_list ap;
+	char const *p = format;
+	
+	int aCapacity = 20;
+	char *strarr[aCapacity];
+	int aIndex = 0;
+	
+	char *str = NULL;
+	int sLen = 0;
+	
+	int i = 0, last = 0;
+	
+	for (i = 0; i < aCapacity; i++)
+		strarr[i] = NULL;
+	va_start(ap, format);
+	
+	for (i = 0; p[i] != '\0'; i++) {
+		while (p[i] != '\0' && p[i++] != '%') 
+			;
+		switch (p[i]) {
+			case 'c': case 'd': case 'f': case 's':
+				//转义符%c、%d、%f、%s之前还有未处理的字符串 
+				if ((i - last) > 1) {
+					sLen = i - last - 1;
+					str = strncpyEX(p + last, sLen);
+					if (str == NULL) {
+						failure = 1;
+						break;
+					}
+					strarr[aIndex++] = str;
+					str = NULL;
+					last = i + 1;
+					
+					//返回到%c、%d、%f、%s进行处理 
+					i -= 2;
+				} else {
+					switch (p[i]) {
+						case 'c': 
+							str = (char *)malloc(2);
+							if (str == NULL) {
+								failure = 1;
+								break;
+							}
+							str[0] = va_arg(ap, int);
+							str[1] = '\0';
+							break;
+						case 'd': 
+							str = ltostr(va_arg(ap, long));
+							break;
+						case 'f': 
+							str = dtostr(va_arg(ap, double), DATA_PRECISION);
+							break;
+						case 's':
+							str = va_arg(ap, char *);
+							break;
+					}					
+					strarr[aIndex++] = str;
+					str = NULL;
+				}
+				break;
+			case '\0':
+				sLen = i - last;
+				str = strncpyEX(p + last, sLen);
+				if (str == NULL) {
+					failure = 1;
+					break;
+				}
+				strarr[aIndex++] = str;
+				str = NULL;
+				i--;
+				break;
+			default:
+				break;
+		}
+		if (failure)
+			break;
+		
+		//如果数组存满，将所有元素组成新字符串存入第一项，释放其他项 
+		if (aIndex == aCapacity) {
+			str = strarrcat(strarr, aCapacity);
+			if (str == NULL) {
+				failure = 1;
+				break;
+			}
+			strarr[0] = str;
+			str = NULL; 
+			aIndex = 1;
+		}
+	}
+		
+	if (failure) {
+		for (i = 0; i < aCapacity; i++)
+			free(strarr[i]), strarr[i] = NULL;
+		return NULL;
+	}
+	
+	str = strarrcat(strarr, aCapacity);
+	return str;
+}
+
+char *strncpyEX(char const *source, int const len) {
+	char *str = NULL;
+	
+	str = (char *)malloc(len + 1);
+	if (str == NULL)
+		return NULL;
+	*str = '\0';
+	return strncat(str, source, len);
+}
+
+char *strarrcat(char *strarr[], int const capacity) {
+	int i, len;
+	char *NewStr = NULL;
+	
+	for (i = len = 0; i < capacity; i++) 
+		if (strarr[i] != NULL)
+			len += strlen(strarr[i]);
+		
+	NewStr = (char *)malloc(len + 1);
+	if (NewStr == NULL)
+		return NULL;
+	*NewStr = '\0';
+	
+	for (i = 0; i < capacity; i++) {
+		NewStr = strcat(NewStr, strarr[i]);
+		free(strarr[i]);
+		strarr[i] = NULL;
+	}
+	
+	return NewStr;
 }
