@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 		free(resault);
 	}
 */
-
+/*
 	printf("Now testting function \"strcatEX\"\n");
 	for (i = 0, d = 20.009, nums = 33; i < 20; i++) 
 		str[i] = nums++;
@@ -65,14 +65,13 @@ int main(int argc, char *argv[]) {
 	for (i = 99, d = 0, nums = 0; i >= 0; i--) 
 		str[i] = 0;
 	free(newstr), newstr = NULL;
-
+*/
 	printf("Now testting function \"getArea\"\n");
 	while (scanf("%s", str) != EOF) {
 		resault = SectionSteelAW(str, 1);
 		if (resault != NULL) {
 			printf("%s\n", resault);
-			free(resault);
-			resault = NULL;
+			free(resault), resault = NULL;
 		}
 	}
 	return 0;

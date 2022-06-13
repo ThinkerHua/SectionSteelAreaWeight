@@ -12,6 +12,10 @@ typedef struct {
 }GBSectionSteel;
 
 double const search_AorW(char const *SecSteType, double const data[], int const len, int const AorW);
+/*
+	AorW	1	weight
+			0	area 
+*/
 double const *search_Data_ByName(char const *SecSteType, char const *Name);
 double const *search_Data_ByPart(char const *SecSteType, double const partData[], int const len);
 int compare_Arr_f(double const arr1[], int const len1, double const arr2[], int const len2);

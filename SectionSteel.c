@@ -1208,11 +1208,33 @@ char *getResault_PLD(void *object, unsigned const CtrlCode) {
 }
 
 char *getArea_H_(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_H_ *obj = object;
+	char *area = NULL;
+	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
+	int multi = 3;
+	double val = 0.0;
+	
+	if (CtrlCode & TYPE_TOPSURFACE)
+		multi = 4;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = dtostr(val, DATA_PRECISION);
+		if (multi == 3)
+			area = strcatEX("%s-%f", area, obj->B);
+	} else {
+		area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+		if (CtrlCode & METHOD_PRECISELY)
+			area = strcatEX("%s-%f*2", area, obj->tH);
+	}
+	
+	return area;
 }
 
 char *getArea_H(void *object, unsigned const CtrlCode) {
-	return NULL;
+	
 }
 
 char *getArea_HT(void *object, unsigned const CtrlCode) {
@@ -1523,7 +1545,7 @@ char *dtostr(double const d, unsigned const pre) {
 	判断小数部分是否需要修正
 	如果小数部分是例如001这样传入ltostr函数，则返回字符串将变成1。
 	这种情况需要在前面添加字符0修正 
-	正负符号位修正也计入cor 
+	正负符号位、小数点修正也计入cor 
 */ 	
 	len_i = strlen(int_part);
 	if (num_f > 0)
@@ -1538,24 +1560,27 @@ char *dtostr(double const d, unsigned const pre) {
 	}
 
 	if (num_f == 0)
-		cor = 0;
+		cor = 0; 
+	else
+		cor++;
 	if (sign == -1) 
 		cor++;
-	//申请空间大小为：整数部分长度 + 修正部分长度（含符号位） + 小数消除末尾0后的长度 + 1 
+	//申请空间大小为：整数部分长度 + 修正部分长度（含符号位、小数点） + 小数消除末尾0后的长度 + 1 
 	str = (char *)calloc(len_i + cor + len_f + 1, sizeof(char));
 	if (str == NULL) {
 		free(int_part), free(float_part), int_part = NULL, float_part = NULL;
 		return NULL;
 	}
-	str[0] = '\0';
+//	str[0] = '\0';
 	if (sign == -1 && (num_i != 0 || num_f != 0))
 		str[0] = '-', str[1] = '\0', len_i++, cor--;
-	str = strcat(str, int_part);
+	strcat(str, int_part);
 	if (num_f > 0) {
-		str[len_i] = '.';
+		str[len_i++] = '.';
+		cor--;
 		for (i = 0; i < cor; i++)
-			str[++len_i] = '0';
-		strcpy(&str[++len_i], float_part);
+			str[len_i++] = '0';
+		strcpy(&str[len_i], float_part);
 	}
 	free(int_part), free(float_part), int_part = NULL, float_part = NULL;
 	return str;
@@ -1609,6 +1634,7 @@ char *strcatEX(char const *format, ...) {
 	int aIndex = 0;
 	
 	char *str = NULL;
+	char *temp = NULL;
 	int sLen = 0;
 	
 	int i = 0, last = 0;
@@ -1654,7 +1680,15 @@ char *strcatEX(char const *format, ...) {
 							str = dtostr(va_arg(ap, double), DATA_PRECISION);
 							break;
 						case 's':
-							str = va_arg(ap, char *);
+							temp = va_arg(ap, char *);
+							str = (char *)calloc(strlen(temp) + 1, sizeof(char));
+							if (str == NULL) {
+								failure = 1;
+								temp = NULL;
+								break;
+							}
+							strcpy(str, temp);
+							temp = NULL;
 							break;
 					}					
 					strarr[aIndex++] = str;
@@ -1725,6 +1759,8 @@ char *strarrcat(char *strarr[], int const capacity) {
 	*NewStr = '\0';
 	
 	for (i = 0; i < capacity; i++) {
+		if (strarr[i] == NULL) 
+			continue;
 		NewStr = strcat(NewStr, strarr[i]);
 		free(strarr[i]);
 		strarr[i] = NULL;
