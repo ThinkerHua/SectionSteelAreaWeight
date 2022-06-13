@@ -13,12 +13,12 @@
 //	  Method = 2 -> Look up in table*/
 //	unsigned Method : 2;
 //}ControlCode;
-#define TYPE_AREA			1
-#define TYPE_TOPSURFACE		2
-#define TYPE_WEIGHT			4
-#define METHOD_ROUGHLY		8
-#define METHOD_PRECISELY	16
-#define METHOD_LOOKUP		32
+#define TYPE_AREA					1
+#define TYPE_EXCLUDE_TOPSURFACE		2
+#define TYPE_WEIGHT					4
+#define METHOD_ROUGHLY				8
+#define METHOD_PRECISELY			16
+#define METHOD_LOOKUP				32
 
 #define LINKSYM "*"
 #define GRADSYM "~"

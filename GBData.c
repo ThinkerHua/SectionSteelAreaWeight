@@ -564,9 +564,8 @@ double const search_AorW(char const *SecSteType, double const data[], int const 
 	GBSectionSteel const *pGBSecSte;
 	int nums;
 
-	link_pGBSecSte(&pGBSecSte, SecSteType);
+	nums = link_pGBSecSte(&pGBSecSte, SecSteType);
 	if (pGBSecSte != NULL) {
-		nums = sizeof(pGBSecSte) / sizeof(pGBSecSte[0]);
 		for (; nums > 0; nums--, pGBSecSte++) {
 			if (compare_Arr_f(data, len, pGBSecSte->Data, GB_DATA_NUMS) == 1)
 				return AorW ? pGBSecSte->Weight : pGBSecSte->Area;
@@ -616,7 +615,7 @@ int compare_Arr_f(double const arr1[], int const len1, double const arr2[], int 
 }
 
 int link_pGBSecSte(GBSectionSteel const **p, char const *SecSteType) {
-	if (strcmp(SecSteType, "H") == 0) {
+	if (strcmp(SecSteType, "H") == 0 || strcmp(SecSteType, "HI") == 0) {
 		*p = GBSecSte_H;
 		return sizeof(GBSecSte_H) / sizeof(GBSecSte_H[0]);
 	} else if (strcmp(SecSteType, "HT") == 0) {

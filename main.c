@@ -67,8 +67,8 @@ int main(int argc, char *argv[]) {
 	free(newstr), newstr = NULL;
 */
 	printf("Now testting function \"getArea\"\n");
-	while (scanf("%s", str) != EOF) {
-		resault = SectionSteelAW(str, 1);
+	while (scanf("%s %d", str, &i) != EOF) {
+		resault = SectionSteelAW(str, i);
 		if (resault != NULL) {
 			printf("%s\n", resault);
 			free(resault), resault = NULL;

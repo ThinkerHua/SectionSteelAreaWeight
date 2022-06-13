@@ -41,7 +41,7 @@ SectionSteel_HI *new_HI (void) {
 	obj = (SectionSteel_HI *)malloc(sizeof(SectionSteel_HI));
 	if (obj == NULL)
 		return NULL;
-	obj->Type = "H";
+	obj->Type = "HI";
 	obj->H1 = obj->B1 = obj->tH1 = obj->tB1 = 
 	obj->H2 = obj->B2 = obj->tH2 = obj->tB2 = 0;
 	return obj;
@@ -1211,50 +1211,151 @@ char *getArea_H_(void *object, unsigned const CtrlCode) {
 	SectionSteel_H_ *obj = object;
 	char *area = NULL;
 	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
-	int multi = 3;
+	int multi = 4;
 	double val = 0.0;
-	
-	if (CtrlCode & TYPE_TOPSURFACE)
-		multi = 4;
 		
 	if (CtrlCode & METHOD_LOOKUP) {
 		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
 		if (val == 0.0)
 			return NULL;
 		area = dtostr(val, DATA_PRECISION);
-		if (multi == 3)
-			area = strcatEX("%s-%f", area, obj->B);
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			area = strcatEX("%s-%f", area, obj->B * 0.001);
 	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi = 3;
 		area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
 		if (CtrlCode & METHOD_PRECISELY)
-			area = strcatEX("%s-%f*2", area, obj->tH);
+			area = strcatEX("%s-%f*2", area, obj->tH * 0.001);
 	}
 	
 	return area;
 }
 
 char *getArea_H(void *object, unsigned const CtrlCode) {
+	SectionSteel_H *obj = object;
+	char *area = NULL;
+	double data[] = {obj->H, obj->B1, obj->tH, obj->tB1};
+	int multi = 4;
+	double val = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		if (obj->B1 != obj->B2 || obj->tB1 != obj->tB2)
+			return NULL;
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = dtostr(val, DATA_PRECISION);
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			area = strcatEX("%s-%f", area, obj->B1 * 0.001);
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+			
+		if (obj->B1 == obj->B2)
+			area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B1 * 0.001, multi);
+		else {
+			multi -= 2;
+			if (multi == 1)
+				area = strcatEX("%f*2+%f+%f*2", obj->H * 0.001, obj->B1 * 0.001, obj->B2 * 0.001);
+			else
+				area = strcatEX("%f*2+%f*%d+%f*2", obj->H * 0.001, obj->B1 * 0.001, multi, obj->B2 * 0.001);
+		}
+		if (CtrlCode & METHOD_PRECISELY)
+			area = strcatEX("%s-%f*2", area, obj->tH * 0.001);
+	}
 	
+	return area;
 }
 
 char *getArea_HT(void *object, unsigned const CtrlCode) {
-	return NULL;
+	return getArea_H_(object, CtrlCode);
 }
 
 char *getArea_HI(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_HI *obj = object;
+	char *area = NULL;
+	double data1[] = {obj->H1, obj->B1, obj->tH1, obj->tB1};
+	double data2[] = {obj->H2, obj->B2, obj->tH2, obj->tB2};
+	int multi = 4;
+	double val1 = 0.0;
+	double val2 = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val1 = search_AorW(obj->Type, data1, sizeof(data1)/sizeof(double), 0);
+		val2 = search_AorW(obj->Type, data2, sizeof(data1)/sizeof(double), 0);
+		if (val1 == 0.0 || val2 == 0.0)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			area = strcatEX("%f-%f-%f*4+%f-%f*4", val1, obj->B1 * 0.001, obj->tH1 * 0.001, val2, obj->tH2 * 0.001);
+		else
+			area = strcatEX("%f-%f*4+%f-%f*4", val1, obj->tH1 * 0.001, val2, obj->tH2 * 0.001);
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+		area = strcatEX("%f*2+%f*%d+%f*2+%f*4", obj->H1 * 0.001, obj->B1 * 0.001, multi, obj->H2 * 0.001, obj->B2 * 0.001);
+		if (CtrlCode & METHOD_PRECISELY)
+			area = strcatEX("%s-%f*4-%f*4", area, obj->tH1 * 0.001, obj->tH2 * 0.001);
+	}
+	
+	return area;
 }
 
 char *getArea_T(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_T *obj = object;
+	char *area = NULL;
+	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
+	int multi = 2;
+	double val = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = dtostr(val, DATA_PRECISION);
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			area = strcatEX("%s-%f", area, obj->B * 0.001);
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+		if (multi == 1)
+			area = strcatEX("%f*2+%f", obj->H * 0.001, obj->B * 0.001);
+		else
+			area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+	}
+	
+	return area;
 }
 
 char *getArea_J(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_J *obj = object;
+	char *area = NULL;
+	int multi = 2;
+		
+	if (CtrlCode & METHOD_LOOKUP) 
+		return NULL;
+	else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+		if (multi == 1)
+			area = strcatEX("%f*2+%f", obj->H * 0.001, obj->B * 0.001);
+		else
+			area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+	}
+	
+	return area;
 }
 
 char *getArea_D(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_D *obj = object;
+	char *area = NULL;
+		
+	if (CtrlCode & METHOD_LOOKUP) 
+		return NULL;
+	else 
+		area = strcatEX("PI()*%f", obj->D * 0.001);
+	
+	return area;
 }
 
 char *getArea_I(void *object, unsigned const CtrlCode) {
@@ -1648,6 +1749,8 @@ char *strcatEX(char const *format, ...) {
 			;
 		switch (p[i]) {
 			case 'c': case 'd': case 'f': case 's':
+				if (last == i - 1)
+					last = i + 1;
 				//转义符%c、%d、%f、%s之前还有未处理的字符串 
 				if ((i - last) > 1) {
 					sLen = i - last - 1;
