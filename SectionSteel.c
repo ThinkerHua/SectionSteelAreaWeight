@@ -911,80 +911,15 @@ int setData_Z(void *object, char const *FormatedText) {
 }
 
 int setData_PL_(void *object, char const *FormatedText) {
-	int failure = 0;
-	int nums = 0;
-	char const *DataText = NULL;
-	char **strarr = NULL;
-	SectionSteel_PL_ *obj = object;
-
-	//跳过前导类型标识符PL 
-	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
-	DataText = strstr(FormatedText, obj->Type);
-	if (DataText == NULL)
-		DataText = FormatedText;
-	else
-		DataText = FormatedText + strlen(obj->Type);
-		
-	nums = strsplit(DataText, LINKSYM, &strarr);
-	switch(nums) {
-		case 2:	
-			obj->B = average_delim(strarr[0], GRADSYM);
-			obj->t = atof(strarr[1]);
-			break;
-		case 3:
-			obj->B = average_delim(strarr[0], GRADSYM);
-			obj->L = average_delim(strarr[1], GRADSYM);
-			obj->t = atof(strarr[2]);
-			break;
-		default:
-			failure = 1;
-			break;
-	}
-	
-	strsplit_free(&strarr, nums);
-	if (failure)
-		return 0;
-//	printf("Debug: B = %.1f,  L = %.1f,  t = %.1f\n", 
-//					obj->B,		obj->L, 	obj->t);
-	return 1;
+	return setData_PLT(object, FormatedText);
 }
 
 int setData_PLT_(void *object, char const *FormatedText) {
-	return setData_PL_(object, FormatedText);
+	return setData_PLT(object, FormatedText);
 }
 
 int setData_PLD_(void *object, char const *FormatedText) {
-	int failure = 0;
-	int nums = 0;
-	char const *DataText = NULL;
-	char **strarr = NULL;
-	SectionSteel_PLD_ *obj = object;
-
-	//跳过前导类型标识符PLD 
-	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
-	DataText = strstr(FormatedText, obj->Type);
-	if (DataText == NULL)
-		DataText = FormatedText;
-	else
-		DataText = FormatedText + strlen(obj->Type);
-		
-	nums = strsplit(DataText, LINKSYM, &strarr);
-	switch(nums) {
-		case 2:	
-			obj->D = atof(strarr[0]);
-			obj->t = atof(strarr[1]);
-			break;
-		default:
-			failure = 1;
-			break;
-	}
-	
-	strsplit_free(&strarr, nums);
-	if (failure)
-		return 0;
-//	printf("Debug: D = %.1f,  t = %.1f\n", 
-//					obj->D, 	obj->t);
-	return 1;
+	return setData_PLD(object, FormatedText);
 }
 
 int setData_PL(void *object, char const *FormatedText) {
@@ -1049,11 +984,76 @@ int setData_PL(void *object, char const *FormatedText) {
 }
 
 int setData_PLT(void *object, char const *FormatedText) {
-	return setData_PL_(object, FormatedText);
+	int failure = 0;
+	int nums = 0;
+	char const *DataText = NULL;
+	char **strarr = NULL;
+	SectionSteel_PLT *obj = object;
+
+	//跳过前导类型标识符PLT 
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + strlen(obj->Type);
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
+	switch(nums) {
+		case 2:	
+			obj->B = average_delim(strarr[0], GRADSYM);
+			obj->t = atof(strarr[1]);
+			break;
+		case 3:
+			obj->B = average_delim(strarr[0], GRADSYM);
+			obj->L = average_delim(strarr[1], GRADSYM);
+			obj->t = atof(strarr[2]);
+			break;
+		default:
+			failure = 1;
+			break;
+	}
+	
+	strsplit_free(&strarr, nums);
+	if (failure)
+		return 0;
+//	printf("Debug: B = %.1f,  L = %.1f,  t = %.1f\n", 
+//					obj->B,		obj->L, 	obj->t);
+	return 1;
 }
 
 int setData_PLD(void *object, char const *FormatedText) {
-	return setData_PLD_(object, FormatedText);
+	int failure = 0;
+	int nums = 0;
+	char const *DataText = NULL;
+	char **strarr = NULL;
+	SectionSteel_PLD *obj = object;
+
+	//跳过前导类型标识符PLD 
+	//不使用字符串常量而采用此办法可以解决继承结构调用本函数的问题 
+	DataText = strstr(FormatedText, obj->Type);
+	if (DataText == NULL)
+		DataText = FormatedText;
+	else
+		DataText = FormatedText + strlen(obj->Type);
+		
+	nums = strsplit(DataText, LINKSYM, &strarr);
+	switch(nums) {
+		case 2:	
+			obj->D = atof(strarr[0]);
+			obj->t = atof(strarr[1]);
+			break;
+		default:
+			failure = 1;
+			break;
+	}
+	
+	strsplit_free(&strarr, nums);
+	if (failure)
+		return 0;
+//	printf("Debug: D = %.1f,  t = %.1f\n", 
+//					obj->D, 	obj->t);
+	return 1;
 }
 
 char *getResault_H_(void *object, unsigned const CtrlCode) {
@@ -1227,10 +1227,9 @@ char *getArea_H_(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp = area;
 			area = strcatEX("%s-%f", temp, obj->B * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1241,10 +1240,9 @@ char *getArea_H_(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & METHOD_PRECISELY) {
 			temp = area;
 			area = strcatEX("%s-%f*2", temp, obj->tH * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	}
 	
@@ -1270,10 +1268,9 @@ char *getArea_H(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp = area;
 			area = strcatEX("%s-%f", temp, obj->B1 * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1291,10 +1288,9 @@ char *getArea_H(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & METHOD_PRECISELY) {
 			temp = area;
 			area = strcatEX("%s-%f*2", temp, obj->tH * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	}
 	
@@ -1350,10 +1346,9 @@ char *getArea_HI(void *object, unsigned const CtrlCode) {
 				area = strcatEX("%s-%f*8", temp, obj->tH1 * 0.001);
 			else
 				area = strcatEX("%s-%f*4-%f*4", temp, obj->tH1 * 0.001, obj->tH2 * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	}
 	
@@ -1377,10 +1372,9 @@ char *getArea_T(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp = area;
 			area = strcatEX("%s-%f", temp, obj->B * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1442,10 +1436,9 @@ char *getArea_I(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp =area;
 			area = strcatEX("%s-%f", temp, obj->B * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1456,10 +1449,9 @@ char *getArea_I(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & METHOD_PRECISELY) {
 			temp = area;
 			area = strcatEX("%s-%f*2", temp, obj->tH * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	}
 	
@@ -1503,10 +1495,9 @@ char *getArea_Chan_BtB(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp = area;
 			area = strcatEX("%s-%f*2", temp, obj->B * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1517,10 +1508,9 @@ char *getArea_Chan_BtB(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & METHOD_PRECISELY) {
 			temp = area;
 			area = strcatEX("%s-%f*4", temp, obj->tH * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	}
 	
@@ -1548,10 +1538,9 @@ char *getArea_L(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp = area;
 			area = strcatEX("%s-%f", temp, obj->B2 * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1591,10 +1580,9 @@ char *getArea_2L(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
 			temp = area;
 			area = strcatEX("%s-%f*2", temp, obj->B2 * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
@@ -1642,10 +1630,9 @@ char *getArea_C(void *object, unsigned const CtrlCode) {
 		if (CtrlCode & METHOD_PRECISELY) {
 			temp = area;
 			area = strcatEX("%s-%f*6", temp, obj->t * 0.001);
-			if (area == NULL) {
-				free(temp);
+			free(temp);
+			if (area == NULL) 
 				return NULL;
-			}
 		}
 	}
 	
@@ -1695,10 +1682,9 @@ char *getArea_PL_(void *object, unsigned const CtrlCode) {
 	if (obj->L != 0) {
 		temp = area;
 		area = strcatEX("%s*%f", temp, obj->L * 0.001);
-		if (area == NULL) {
-			free(temp);
+		free(temp);
+		if (area == NULL) 
 			return NULL;
-		}
 	}
 	
 	if (obj->pNext != NULL) {
@@ -1709,9 +1695,9 @@ char *getArea_PL_(void *object, unsigned const CtrlCode) {
 		}
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_next);
+		free(temp);
 		if (area == NULL) {
 			free(area_next);
-			free(temp);
 			return NULL;
 		}
 	}
@@ -1724,27 +1710,9 @@ char *getArea_PLT_(void *object, unsigned const CtrlCode) {
 	char *area = NULL, *area_next = NULL, *temp = NULL;
 	int multi = 2;
 	
-	if (CtrlCode & METHOD_LOOKUP)
-		return NULL;
-	
-	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-		multi--;
-		
-	if (multi == 2)
-		area = dtostr(obj->B * 0.001, DATA_PRECISION);
-	else
-		area = strcatEX("%f*0.5", obj->B * 0.001);
+	area = getArea_PLT(object, CtrlCode);
 	if (area == NULL)
 		return NULL;
-	
-	if (obj->L != 0) {
-		temp = area;
-		area = strcatEX("%s*%f", temp, obj->L * 0.001);
-		if (area == NULL) {
-			free(temp);
-			return NULL;
-		}
-	}
 	
 	if (obj->pNext != NULL) {
 		area_next = getArea_PLT_(obj->pNext, CtrlCode);
@@ -1754,9 +1722,9 @@ char *getArea_PLT_(void *object, unsigned const CtrlCode) {
 		}
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_next);
+		free(temp);
 		if (area == NULL) {
 			free(area_next);
-			free(temp);
 			return NULL;
 		}
 	}
@@ -1768,13 +1736,7 @@ char *getArea_PLD_(void *object, unsigned const CtrlCode) {
 	SectionSteel_PLD_ *obj = object;
 	char *area = NULL, *area_next = NULL, *temp = NULL;
 	
-	if (CtrlCode & METHOD_LOOKUP)
-		return NULL;
-	
-	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-		area = strcatEX("PI()*%f^2", obj->D * 0.001 * 0.5);
-	else
-		area = strcatEX("PI()*%f^2*2", obj->D * 0.001 * 0.5);
+	area = getArea_PLD(object, CtrlCode);
 	if (area == NULL)
 		return NULL;
 	
@@ -1786,9 +1748,9 @@ char *getArea_PLD_(void *object, unsigned const CtrlCode) {
 		}
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_next);
+		free(temp);
 		if (area == NULL) {
 			free(area_next);
-			free(temp);
 			return NULL;
 		}
 	}
@@ -1835,18 +1797,18 @@ error:
 	if (subPLT != NULL) {
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_subPLT);
+		free(temp);
 		if (area == NULL) {
 			failure = 1;
-			free(temp);
 			goto error;
 		}
 	}
 	if (subPLD != NULL) {
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_subPLD);
+		free(temp);
 		if (area == NULL) {
 			failure = 1;
-			free(temp);
 			goto error;
 		}
 	}
@@ -1858,11 +1820,49 @@ error:
 }
 
 char *getArea_PLT(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_PLT *obj = object;
+	char *area = NULL, *temp = NULL;
+	int multi = 2;
+	
+	if (CtrlCode & METHOD_LOOKUP)
+		return NULL;
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi--;
+		
+	if (multi == 2)
+		area = dtostr(obj->B * 0.001, DATA_PRECISION);
+	else
+		area = strcatEX("%f*0.5", obj->B * 0.001);
+	if (area == NULL)
+		return NULL;
+	
+	if (obj->L != 0) {
+		temp = area;
+		area = strcatEX("%s*%f", temp, obj->L * 0.001);
+		free(temp);
+		if (area == NULL) 
+			return NULL;
+	}
+	
+	return area;
 }
 
 char *getArea_PLD(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_PLD *obj = object;
+	char *area = NULL, *temp = NULL;
+	
+	if (CtrlCode & METHOD_LOOKUP)
+		return NULL;
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		area = strcatEX("PI()*%f^2", obj->D * 0.001 * 0.5);
+	else
+		area = strcatEX("PI()*%f^2*2", obj->D * 0.001 * 0.5);
+	if (area == NULL)
+		return NULL;
+	
+	return area;
 }
 
 

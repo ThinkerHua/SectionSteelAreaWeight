@@ -381,10 +381,10 @@ char *strncpyEX(char const *source, int const len);
 */
 char *strarrcat(char *strarr[], int const capacity);
 /*
-	将字符串数组strarr中所有元素组合成一个新的字符串，并存入strarr[0]， 
-	同时会释放strarr原先各元素指向的字符串 
-	capacity为数组容量 
-	失败返回NULL（不释放strarr各元素指向的字符串） 
+	将字符串数组strarr中所有元素组合成一个新的字符串，并存入第一个元素，
+	同时释放原有的各元素（原有的各元素指向的空间应当为动态分配的，即可被free） 
+	应当同时传入参数数组容量capacity
+	失败返回NULL（不释放strarr各元素指向的字符串）
 	得到的结果不需要使用时应free掉 
 */
 
