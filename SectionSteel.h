@@ -27,7 +27,7 @@
 #define WELDSYM "+"
 
 #define GBSECSTE_NAME_LENGTH 15
-#define DATA_PRECISION 3
+#define DATA_PRECISION 4
 
 typedef struct {
 	char const *Type;
@@ -353,11 +353,13 @@ char *dtostr(double const d, unsigned const pre);
 	仅支持十进制非指数形式 
 	pre为小数位数。小数末尾的0不显示，小数全为0则小数点也不显示。
 	失败返回NULL 
+	得到的结果不需要使用时应free掉 
 */
 char *ltostr(long const l);
 /*
 	仅支持十进制非指数形式 
 	失败返回NULL 
+	得到的结果不需要使用时应free掉 
 */
 
 char *strcatEX(char const *format, ...);
@@ -369,18 +371,21 @@ char *strcatEX(char const *format, ...);
 		%f	double
 		%s	char*
 	不支持标准转义符（'\n'、'\t'等） 
+	得到的结果不需要使用时应free掉 
 */
 char *strncpyEX(char const *source, int const len);
 /*
 	创建字符串source的前len个字符的新实例并返回 
 	失败返回则返回NULL 
+	得到的结果不需要使用时应free掉 
 */
 char *strarrcat(char *strarr[], int const capacity);
 /*
-	返回字符串数组strarr所有元素连接成的一个新字符串 
-	同时会释放strarr各元素指向的字符串 
+	将字符串数组strarr中所有元素组合成一个新的字符串，并存入strarr[0]， 
+	同时会释放strarr原先各元素指向的字符串 
 	capacity为数组容量 
 	失败返回NULL（不释放strarr各元素指向的字符串） 
+	得到的结果不需要使用时应free掉 
 */
 
 #endif

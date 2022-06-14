@@ -359,9 +359,12 @@ void free_PLD_(void **p_object) {
 
 void free_PL(void **p_object) {
 	SectionSteel_PL *obj = *p_object;
-	free_PL_((void **)&obj->pPL);
-	free_PLT_((void **)&obj->pPLT);
-	free_PLD_((void **)&obj->pPLD);
+	if (obj->pPL != NULL)
+		free_PL_((void **)&obj->pPL);
+	if (obj->pPLT != NULL)
+		free_PLT_((void **)&obj->pPLT);
+	if (obj->pPLD != NULL)
+		free_PLD_((void **)&obj->pPLD);
 	free(*p_object);
 	*p_object = NULL;
 }
@@ -1209,7 +1212,7 @@ char *getResault_PLD(void *object, unsigned const CtrlCode) {
 
 char *getArea_H_(void *object, unsigned const CtrlCode) {
 	SectionSteel_H_ *obj = object;
-	char *area = NULL;
+	char *area = NULL, *temp = NULL;
 	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
 	int multi = 4;
 	double val = 0.0;
@@ -1219,14 +1222,30 @@ char *getArea_H_(void *object, unsigned const CtrlCode) {
 		if (val == 0.0)
 			return NULL;
 		area = dtostr(val, DATA_PRECISION);
-		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			area = strcatEX("%s-%f", area, obj->B * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp = area;
+			area = strcatEX("%s-%f", temp, obj->B * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			multi = 3;
+			multi--;
 		area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
-		if (CtrlCode & METHOD_PRECISELY)
-			area = strcatEX("%s-%f*2", area, obj->tH * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & METHOD_PRECISELY) {
+			temp = area;
+			area = strcatEX("%s-%f*2", temp, obj->tH * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
 	}
 	
 	return area;
@@ -1234,7 +1253,7 @@ char *getArea_H_(void *object, unsigned const CtrlCode) {
 
 char *getArea_H(void *object, unsigned const CtrlCode) {
 	SectionSteel_H *obj = object;
-	char *area = NULL;
+	char *area = NULL, *temp = NULL;
 	double data[] = {obj->H, obj->B1, obj->tH, obj->tB1};
 	int multi = 4;
 	double val = 0.0;
@@ -1246,8 +1265,16 @@ char *getArea_H(void *object, unsigned const CtrlCode) {
 		if (val == 0.0)
 			return NULL;
 		area = dtostr(val, DATA_PRECISION);
-		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			area = strcatEX("%s-%f", area, obj->B1 * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp = area;
+			area = strcatEX("%s-%f", temp, obj->B1 * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 			multi--;
@@ -1261,8 +1288,14 @@ char *getArea_H(void *object, unsigned const CtrlCode) {
 			else
 				area = strcatEX("%f*2+%f*%d+%f*2", obj->H * 0.001, obj->B1 * 0.001, multi, obj->B2 * 0.001);
 		}
-		if (CtrlCode & METHOD_PRECISELY)
-			area = strcatEX("%s-%f*2", area, obj->tH * 0.001);
+		if (CtrlCode & METHOD_PRECISELY) {
+			temp = area;
+			area = strcatEX("%s-%f*2", temp, obj->tH * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
 	}
 	
 	return area;
@@ -1274,28 +1307,54 @@ char *getArea_HT(void *object, unsigned const CtrlCode) {
 
 char *getArea_HI(void *object, unsigned const CtrlCode) {
 	SectionSteel_HI *obj = object;
-	char *area = NULL;
+	char *area = NULL, *temp = NULL;
 	double data1[] = {obj->H1, obj->B1, obj->tH1, obj->tB1};
 	double data2[] = {obj->H2, obj->B2, obj->tH2, obj->tB2};
 	int multi = 4;
 	double val1 = 0.0;
 	double val2 = 0.0;
+	int same = 0;
+	
+	if (obj->H1 == obj->H2 && 
+		obj->B1 == obj->B2 && 
+		obj->tH1 == obj->tH2 && 
+		obj->tB1 == obj->tB2)
+		same = 1;
 		
 	if (CtrlCode & METHOD_LOOKUP) {
-		val1 = search_AorW(obj->Type, data1, sizeof(data1)/sizeof(double), 0);
-		val2 = search_AorW(obj->Type, data2, sizeof(data1)/sizeof(double), 0);
+		val1 = val2 = search_AorW(obj->Type, data1, sizeof(data1)/sizeof(double), 0);
+		if (!same)
+			val2 = search_AorW(obj->Type, data2, sizeof(data1)/sizeof(double), 0);
 		if (val1 == 0.0 || val2 == 0.0)
 			return NULL;
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			area = strcatEX("%f-%f-%f*4+%f-%f*4", val1, obj->B1 * 0.001, obj->tH1 * 0.001, val2, obj->tH2 * 0.001);
+			if (same)
+				area = strcatEX("%f*2-%f-%f*8", val1, obj->B1 * 0.001, obj->tH1 * 0.001);
+			else
+				area = strcatEX("%f-%f-%f*4+%f-%f*4", val1, obj->B1 * 0.001, obj->tH1 * 0.001, val2, obj->tH2 * 0.001);
 		else
-			area = strcatEX("%f-%f*4+%f-%f*4", val1, obj->tH1 * 0.001, val2, obj->tH2 * 0.001);
+			if (same)
+				area = strcatEX("%f*2-%f*8", val1, obj->tH1 * 0.001);
+			else
+				area = strcatEX("%f-%f*4+%f-%f*4", val1, obj->tH1 * 0.001, val2, obj->tH2 * 0.001);
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 			multi--;
-		area = strcatEX("%f*2+%f*%d+%f*2+%f*4", obj->H1 * 0.001, obj->B1 * 0.001, multi, obj->H2 * 0.001, obj->B2 * 0.001);
-		if (CtrlCode & METHOD_PRECISELY)
-			area = strcatEX("%s-%f*4-%f*4", area, obj->tH1 * 0.001, obj->tH2 * 0.001);
+		if (same)
+			area = strcatEX("%f*4+%f*%d", obj->H1 * 0.001, obj->B1 * 0.001, multi + 4);
+		else
+			area = strcatEX("%f*2+%f*%d+%f*2+%f*4", obj->H1 * 0.001, obj->B1 * 0.001, multi, obj->H2 * 0.001, obj->B2 * 0.001);
+		if (CtrlCode & METHOD_PRECISELY) {
+			temp = area;
+			if (same)
+				area = strcatEX("%s-%f*8", temp, obj->tH1 * 0.001);
+			else
+				area = strcatEX("%s-%f*4-%f*4", temp, obj->tH1 * 0.001, obj->tH2 * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
 	}
 	
 	return area;
@@ -1303,7 +1362,7 @@ char *getArea_HI(void *object, unsigned const CtrlCode) {
 
 char *getArea_T(void *object, unsigned const CtrlCode) {
 	SectionSteel_T *obj = object;
-	char *area = NULL;
+	char *area = NULL, *temp = NULL;
 	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
 	int multi = 2;
 	double val = 0.0;
@@ -1313,8 +1372,16 @@ char *getArea_T(void *object, unsigned const CtrlCode) {
 		if (val == 0.0)
 			return NULL;
 		area = dtostr(val, DATA_PRECISION);
-		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			area = strcatEX("%s-%f", area, obj->B * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp = area;
+			area = strcatEX("%s-%f", temp, obj->B * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
 	} else {
 		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 			multi--;
@@ -1359,55 +1426,435 @@ char *getArea_D(void *object, unsigned const CtrlCode) {
 }
 
 char *getArea_I(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_I *obj = object;
+	char *area = NULL, *temp = NULL;
+	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
+	int multi = 4;
+	double val = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = dtostr(val, DATA_PRECISION);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp =area;
+			area = strcatEX("%s-%f", temp, obj->B * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+		area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & METHOD_PRECISELY) {
+			temp = area;
+			area = strcatEX("%s-%f*2", temp, obj->tH * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	}
+	
+	return area;
 }
 
 char *getArea_Chan(void *object, unsigned const CtrlCode) {
-	return NULL;
+	return getArea_I(object, CtrlCode);
 }
 
 char *getArea_Chan_MtM(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_Chan_MtM *obj = object;
+	char *area = NULL;
+	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
+	int multi = 4;
+	double val = 0.0;
+		
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi -= 2;
+	area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+//	if (area == NULL)
+//		return NULL;
+	
+	return area;
 }
 
 char *getArea_Chan_BtB(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_Chan_BtB *obj = object;
+	char *area = NULL, *temp = NULL;
+	double data[] = {obj->H, obj->B, obj->tH, obj->tB};
+	int multi = 8;
+	double val = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = strcatEX("%f*2-%f*2", val, obj->H * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp = area;
+			area = strcatEX("%s-%f*2", temp, obj->B * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi -= 2;
+		area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & METHOD_PRECISELY) {
+			temp = area;
+			area = strcatEX("%s-%f*4", temp, obj->tH * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	}
+	
+	return area;
 }
 
 char *getArea_L(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_L *obj = object;
+	char *area = NULL, *temp = NULL;
+	double data[] = {obj->B1, obj->B2, obj->t};
+	int multi = 2;
+	double val = 0.0;
+	int same = 0;
+	
+	if (obj->B1 == obj->B2)
+		same = 1;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = dtostr(val, DATA_PRECISION);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp = area;
+			area = strcatEX("%s-%f", temp, obj->B2 * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+		if (same)
+			area = strcatEX("%f*%d", obj->B1 * 0.001, multi + 2);
+		else
+			if (multi == 1)
+				area = strcatEX("%f*2+%f", obj->B1 * 0.001, obj->B2 * 0.001);
+			else
+				area = strcatEX("%f*2+%f*%d", obj->B1 * 0.001, obj->B2 * 0.001, multi);
+//		if (area == NULL)
+//			return NULL;
+	}
+	
+	return area;
 }
 
 char *getArea_2L(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_L *obj = object;
+	char *area = NULL, *temp = NULL;
+	double data[] = {obj->B1, obj->B2, obj->t};
+	int multi = 4;
+	double val = 0.0;
+	int same = 0;
+	
+	if (obj->B1 == obj->B2)
+		same = 1;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+		if (val == 0.0)
+			return NULL;
+		area = strcatEX("%f*2-%f*2", val, obj->B1 * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+			temp = area;
+			area = strcatEX("%s-%f*2", temp, obj->B2 * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi -= 2;
+		if (same)
+			area = strcatEX("%f*%d", obj->B1 * 0.001, multi + 2);
+		else
+			area = strcatEX("%f*2+%f*%d", obj->B1 * 0.001, obj->B2 * 0.001, multi);
+//		if (area == NULL)
+//			return NULL;
+	}
+	
+	return area;
 }
 
 char *getArea_C(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_C *obj = object;
+	char *area = NULL, *temp = NULL;
+//	double data[] = {obj->H, obj->B, obj->C, obj->t};
+	int multi = 4;
+//	double val = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP) {
+//		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
+//		if (val == 0.0)
+//			return NULL;
+//		area = dtostr(val, DATA_PRECISION);
+//		if (area == NULL)
+//			return NULL;
+//		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
+//			temp = area;
+//			area = strcatEX("%s-%f", temp, obj->B * 0.001);
+//			if (area == NULL) {
+//				free(temp);
+//				return NULL;
+//			}
+//		}
+		return NULL;
+	} else {
+		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+			multi--;
+		area = strcatEX("%f*2+%f*%d+%f*4", obj->H * 0.001, obj->B * 0.001, multi, obj->C * 0.001);
+		if (area == NULL)
+			return NULL;
+		if (CtrlCode & METHOD_PRECISELY) {
+			temp = area;
+			area = strcatEX("%s-%f*6", temp, obj->t * 0.001);
+			if (area == NULL) {
+				free(temp);
+				return NULL;
+			}
+		}
+	}
+	
+	return area;
 }
 
 char *getArea_2C(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_2C *obj = object;
+	char *area = NULL;
+//	double data[] = {obj->H, obj->B, obj->C, obj->t};
+	int multi = 4;
+//	double val = 0.0;
+		
+	if (CtrlCode & METHOD_LOOKUP)
+		return NULL;
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi -= 2;
+	area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
+//	if (area == NULL)
+//		return NULL;
+	
+	return area;
 }
 
 char *getArea_Z(void *object, unsigned const CtrlCode) {
-	return NULL;
+	return getArea_C(object, CtrlCode);
 }
 
 char *getArea_PL_(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_PL_ *obj = object;
+	char *area = NULL, *area_next = NULL, *temp = NULL;
+	int multi = 2;
+	
+	if (CtrlCode & METHOD_LOOKUP)
+		return NULL;
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi--;
+		
+	if (multi == 1)
+		area = dtostr(obj->B * 0.001, DATA_PRECISION);
+	else
+		area = strcatEX("%f*2", obj->B * 0.001);
+	if (area == NULL)
+		return NULL;
+	
+	if (obj->L != 0) {
+		temp = area;
+		area = strcatEX("%s*%f", temp, obj->L * 0.001);
+		if (area == NULL) {
+			free(temp);
+			return NULL;
+		}
+	}
+	
+	if (obj->pNext != NULL) {
+		area_next = getArea_PL_(obj->pNext, CtrlCode);
+		if (area_next == NULL) {
+			free(area);
+			return NULL;
+		}
+		temp = area;
+		area = strcatEX("%s-%s", temp, area_next);
+		if (area == NULL) {
+			free(area_next);
+			free(temp);
+			return NULL;
+		}
+	}
+	
+	return area;
 }
 
 char *getArea_PLT_(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_PLT_ *obj = object;
+	char *area = NULL, *area_next = NULL, *temp = NULL;
+	int multi = 2;
+	
+	if (CtrlCode & METHOD_LOOKUP)
+		return NULL;
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi--;
+		
+	if (multi == 2)
+		area = dtostr(obj->B * 0.001, DATA_PRECISION);
+	else
+		area = strcatEX("%f*0.5", obj->B * 0.001);
+	if (area == NULL)
+		return NULL;
+	
+	if (obj->L != 0) {
+		temp = area;
+		area = strcatEX("%s*%f", temp, obj->L * 0.001);
+		if (area == NULL) {
+			free(temp);
+			return NULL;
+		}
+	}
+	
+	if (obj->pNext != NULL) {
+		area_next = getArea_PLT_(obj->pNext, CtrlCode);
+		if (area_next == NULL) {
+			free(area);
+			return NULL;
+		}
+		temp = area;
+		area = strcatEX("%s-%s", temp, area_next);
+		if (area == NULL) {
+			free(area_next);
+			free(temp);
+			return NULL;
+		}
+	}
+	
+	return area;
 }
 
 char *getArea_PLD_(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_PLD_ *obj = object;
+	char *area = NULL, *area_next = NULL, *temp = NULL;
+	
+	if (CtrlCode & METHOD_LOOKUP)
+		return NULL;
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		area = strcatEX("PI()*%f^2", obj->D * 0.001 * 0.5);
+	else
+		area = strcatEX("PI()*%f^2*2", obj->D * 0.001 * 0.5);
+	if (area == NULL)
+		return NULL;
+	
+	if (obj->pNext != NULL) {
+		area_next = getArea_PLD_(obj->pNext, CtrlCode);
+		if (area_next == NULL) {
+			free(area);
+			return NULL;
+		}
+		temp = area;
+		area = strcatEX("%s-%s", temp, area_next);
+		if (area == NULL) {
+			free(area_next);
+			free(temp);
+			return NULL;
+		}
+	}
+	
+	return area;
 }
 
 char *getArea_PL(void *object, unsigned const CtrlCode) {
-	return NULL;
+	SectionSteel_PL *obj = object;
+	SectionSteel_PL_ *subPL = obj->pPL;
+	SectionSteel_PLT_ *subPLT = obj->pPLT;
+	SectionSteel_PLD_ *subPLD = obj->pPLD;
+	char *area = NULL, *temp = NULL;
+	char *area_subPL = NULL, *area_subPLT = NULL, *area_subPLD = NULL;
+	int failure = 0;
+	
+	area_subPL = getArea_PL_(subPL, CtrlCode);
+	if (area_subPL == NULL)
+		failure = 1;
+	if (subPLT != NULL) {
+		area_subPLT = getArea_PLT_(subPLT, CtrlCode);
+		if (area_subPLT == NULL)
+			failure = 1;
+	}
+	if (subPLD != NULL) {
+		area_subPLD = getArea_PLD_(subPLD, CtrlCode);
+		if (area_subPLD == NULL)
+			failure = 1;
+	}
+	
+error:
+	if (failure) {
+		free(area_subPL);
+		free(area_subPLT);
+		free(area_subPLD);
+		return NULL;
+	}
+	
+	area = strcatEX("%s", area_subPL);
+	if (area == NULL) {
+		failure = 1;
+		goto error;
+	}
+	if (subPLT != NULL) {
+		temp = area;
+		area = strcatEX("%s-%s", temp, area_subPLT);
+		if (area == NULL) {
+			failure = 1;
+			free(temp);
+			goto error;
+		}
+	}
+	if (subPLD != NULL) {
+		temp = area;
+		area = strcatEX("%s-%s", temp, area_subPLD);
+		if (area == NULL) {
+			failure = 1;
+			free(temp);
+			goto error;
+		}
+	}
+	
+	free(area_subPL);
+	free(area_subPLT);
+	free(area_subPLD);
+	return area;
 }
 
 char *getArea_PLT(void *object, unsigned const CtrlCode) {

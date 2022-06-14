@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 /*
 	printf("Now testting function \"dtostr\"\n");
 	while (scanf("%lf", &d) != EOF) {
-		newstr = dtostr(d, 3);
+		newstr = dtostr(d, DATA_PRECISION);
 		if (newstr == NULL)
 			continue;
 		printf("%s\n", newstr), free(newstr), newstr = NULL;

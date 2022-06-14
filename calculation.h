@@ -18,8 +18,12 @@ int replace(char **const p_str, char const *from, char const *to);
 	返回值	-1	无法为处理后的字符串分配空间
 			0	传入的字符串为空字符串（空指针或0长度）
 			1	替换成功 
+	str不需要使用时应free掉 
 */
 char *getSecSteType(char const *FormatedText);
+/*
+	得到的结果不需要使用时应free掉 
+*/
 void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)(char const *str1, char const *str2));
 void swap(char **op1, char **op2);
 int strcmp_X(char const *str1, char const *str2);
@@ -48,6 +52,7 @@ char *getResault(void *obj, char const *SecSteType, unsigned const CtrlCode);
 		3	=1则进行粗略计算，与位序4、5互斥
 		4	=1则进行精细计算，与位序3、5互斥
 		5	=1则进行查表计算，与位序3、4互斥 
+	得到的结果不需要使用时应free掉 
 */
 
 #endif
