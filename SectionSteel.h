@@ -29,6 +29,8 @@
 #define GBSECSTE_NAME_LENGTH 15
 #define DATA_PRECISION 4
 
+#define STEEL_DENSITY 7850
+
 typedef struct {
 	char const *Type;
 	double ShortH;
