@@ -22,11 +22,15 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	if (obj == NULL) 
 		return NULL;
 	if (SetData(obj, SecSteType, FormatedText) == 0) {
-		FreeObj(obj, SecSteType);
+		FreeObj(&obj, SecSteType);
 		return NULL;
 	}
 	Resault = getResault(obj, SecSteType, CtrlCode);
-	FreeObj(obj, SecSteType);
+
+	FreeObj(&obj, SecSteType), obj = NULL;
+	free(FormatedText), FormatedText = NULL;
+	//SecSteType来自const字符串数组，不需要释放，只需赋值NULL 
+	SecSteType = NULL;
 	return Resault;
 }
 

@@ -1,5 +1,6 @@
-#include "calculation.h"
+#include "dynamically_allocated_string.h"
 #include "SectionSteel.h"
+#include "calculation.h"
 #include <stdlib.h>
 #include <string.h>
 

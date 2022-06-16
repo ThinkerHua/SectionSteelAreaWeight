@@ -1,16 +1,16 @@
 [Project]
-FileName=Demo.dev
-Name=Demo
-Type=1
+FileName=SectionSteelAW.dev
+Name=SectionSteelAW
+Type=3
 Ver=2
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=
+PrivateResource=SectionSteelAW_private.rc
 ResourceIncludes=
 MakeIncludes=
-Compiler=
-CppCompiler=
+Compiler=-DBUILDING_DLL=1_@@_
+CppCompiler=-DBUILDING_DLL=1_@@_
 Linker=
 IsCpp=0
 Icon=
@@ -19,39 +19,39 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=
+OverrideOutputName=SectionSteelAW.dll
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
 Folders=
-IncludeVersionInfo=0
+IncludeVersionInfo=1
 SupportXPThemes=0
-CompilerSet=1
-CompilerSettings=0000000000000000001000000
-UnitCount=7
+CompilerSet=0
+CompilerSettings=0000000000000000000000000
+UnitCount=10
 
 [VersionInfo]
 Major=1
 Minor=0
 Release=0
 Build=0
-LanguageID=1033
+LanguageID=2052
 CharsetID=1252
 CompanyName=
-FileVersion=
-FileDescription=Developed using the Dev-C++ IDE
+FileVersion=1.0.0.0
+FileDescription=Generate the calculation formula of section steel's area or weight.
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=
-ProductName=
-ProductVersion=
+ProductName=Section Steel AW
+ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=main.c
+FileName=dllmain.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -61,7 +61,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=SectionSteel.c
+FileName=dll.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -71,16 +71,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=SectionSteel.h
-CompileCpp=0
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit4]
 FileName=calculation.h
 CompileCpp=0
 Folder=
@@ -90,8 +80,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
-FileName=calculation.c
+[Unit4]
+FileName=GBData.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -100,7 +90,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=GBData.c
 CompileCpp=0
 Folder=
@@ -110,8 +100,48 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit6]
+FileName=calculation.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit7]
-FileName=GBData.h
+FileName=SectionSteel.h
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=SectionSteel.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit9]
+FileName=dynamically_allocated_string.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=dynamically_allocated_string.h
 CompileCpp=0
 Folder=
 Compile=1
