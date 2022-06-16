@@ -1,4 +1,4 @@
-#include "dynamically_allocated_string.h"
+#include "dallocstr.h"
 #include "GBData.h"
 #include "SectionSteel.h"
 #include <stdlib.h>

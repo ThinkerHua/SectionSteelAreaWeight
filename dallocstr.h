@@ -1,5 +1,5 @@
-#ifndef DYNAMICALLY_ALLOCATED_STRING
-#define DYNAMICALLY_ALLOCATED_STRING
+#ifndef dallocstr
+#define dallocstr
 
 #define DATA_PRECISION 4
 

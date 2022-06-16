@@ -1,4 +1,4 @@
-#include "dynamically_allocated_string.h"
+#include "dallocstr.h"
 #include <string.h>
 #include <stdlib.h> 
 #include <stdarg.h>
@@ -459,58 +459,4 @@ int replace_at_original_location(char *str, char const *from, char const *to) {
 	
 	return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

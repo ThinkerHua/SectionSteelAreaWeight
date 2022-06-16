@@ -131,7 +131,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=dynamically_allocated_string.c
+FileName=dallocstr.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -141,7 +141,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=dynamically_allocated_string.h
+FileName=dallocstr.h
 CompileCpp=0
 Folder=
 Compile=1

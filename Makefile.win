@@ -5,8 +5,8 @@ CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
 RES      = SectionSteelAW_private.res
-OBJ      = dllmain.o GBData.o calculation.o SectionSteel.o dynamically_allocated_string.o $(RES)
-LINKOBJ  = dllmain.o GBData.o calculation.o SectionSteel.o dynamically_allocated_string.o $(RES)
+OBJ      = dllmain.o GBData.o calculation.o SectionSteel.o dallocstr.o $(RES)
+LINKOBJ  = dllmain.o GBData.o calculation.o SectionSteel.o dallocstr.o $(RES)
 LIBS     = -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -39,8 +39,8 @@ calculation.o: calculation.c
 SectionSteel.o: SectionSteel.c
 	$(CC) -c SectionSteel.c -o SectionSteel.o $(CFLAGS)
 
-dynamically_allocated_string.o: dynamically_allocated_string.c
-	$(CC) -c dynamically_allocated_string.c -o dynamically_allocated_string.o $(CFLAGS)
+dallocstr.o: dallocstr.c
+	$(CC) -c dallocstr.c -o dallocstr.o $(CFLAGS)
 
 SectionSteelAW_private.res: SectionSteelAW_private.rc 
 	$(WINDRES) -i SectionSteelAW_private.rc --input-format=rc -o SectionSteelAW_private.res -O coff 
