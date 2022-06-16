@@ -1685,8 +1685,8 @@ char *getArea_PL_(void *object, unsigned const CtrlCode) {
 	char *area = NULL, *area_next = NULL, *temp = NULL;
 	int multi = 2;
 	
-	if (CtrlCode & METHOD_LOOKUP)
-		return NULL;
+//	if (CtrlCode & METHOD_LOOKUP)
+//		return NULL;
 	
 	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 		multi--;
@@ -1781,63 +1781,44 @@ char *getArea_PL(void *object, unsigned const CtrlCode) {
 	SectionSteel_PLD_ *subPLD = obj->pPLD;
 	char *area = NULL, *temp = NULL;
 	char *area_subPL = NULL, *area_subPLT = NULL, *area_subPLD = NULL;
-	int failure = 0;
 	
 	area_subPL = getArea_PL_(subPL, CtrlCode);
-	if (area_subPL == NULL) {
-		failure = 1;
-		goto error;
-	}
+	if (area_subPL == NULL) 
+		goto clean;
 	if (subPLT != NULL) {
 		area_subPLT = getArea_PLT_(subPLT, CtrlCode);
-		if (area_subPLT == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (area_subPLT == NULL) 
+			goto clean;
 	}
 	if (subPLD != NULL) {
 		area_subPLD = getArea_PLD_(subPLD, CtrlCode);
-		if (area_subPLD == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (area_subPLD == NULL) 
+			goto clean;
 	}
-	
-error:
-	if (failure) {
-		free(area_subPL);
-		free(area_subPLT);
-		free(area_subPLD);
-		return NULL;
-	}
-	
+
 	area = strcatEX("%s", area_subPL);
-	if (area == NULL) {
-		failure = 1;
-		goto error;
-	}
+	if (area == NULL) 
+		goto clean;
 	if (subPLT != NULL) {
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_subPLT);
 		free(temp);
-		if (area == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (area == NULL) 
+			goto clean;
 	}
 	if (subPLD != NULL) {
 		temp = area;
 		area = strcatEX("%s-%s", temp, area_subPLD);
 		free(temp);
-		if (area == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (area == NULL) 
+			goto clean;
 	}
 	
+clean:	
 	free(area_subPL);
 	free(area_subPLT);
 	free(area_subPLD);
+	
 	return area;
 }
 
@@ -1846,8 +1827,8 @@ char *getArea_PLT(void *object, unsigned const CtrlCode) {
 	char *area = NULL, *temp = NULL;
 	int multi = 2;
 	
-	if (CtrlCode & METHOD_LOOKUP)
-		return NULL;
+//	if (CtrlCode & METHOD_LOOKUP)
+//		return NULL;
 	
 	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 		multi--;
@@ -1874,8 +1855,8 @@ char *getArea_PLD(void *object, unsigned const CtrlCode) {
 	SectionSteel_PLD *obj = object;
 	char *area = NULL, *temp = NULL;
 	
-	if (CtrlCode & METHOD_LOOKUP)
-		return NULL;
+//	if (CtrlCode & METHOD_LOOKUP)
+//		return NULL;
 	
 	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 		area = strcatEX("PI()*%f^2", obj->D * 0.5 * 0.001);
@@ -2256,63 +2237,71 @@ char *getWeight_PL(void *object, unsigned const CtrlCode) {
 	SectionSteel_PLD_ *subPLD = obj->pPLD;
 	char *weight = NULL, *temp = NULL;
 	char *weight_subPL = NULL, *weight_subPLT = NULL, *weight_subPLD = NULL;
-	int failure = 0;
+	char *replace_from = NULL;
+	int i = 0, len_temp = 0, len_source = 0;
 	
 	weight_subPL = getWeight_PL_(subPL, CtrlCode);
-	if (weight_subPL == NULL) {
-		failure = 1;
-		goto error;
-	}
+	if (weight_subPL == NULL) 
+		goto clean;
 	if (subPLT != NULL) {
 		weight_subPLT = getWeight_PLT_(subPLT, CtrlCode);
-		if (weight_subPLT == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (weight_subPLT == NULL) 
+			goto clean;
 	}
 	if (subPLD != NULL) {
 		weight_subPLD = getWeight_PLD_(subPLD, CtrlCode);
-		if (weight_subPLD == NULL) {
-			failure = 1;
-			goto error;
-		}
-	}
-	
-error:
-	if (failure) {
-		free(weight_subPL);
-		free(weight_subPLT);
-		free(weight_subPLD);
-		return NULL;
+		if (weight_subPLD == NULL) 
+			goto clean;
 	}
 	
 	weight = strcatEX("%s", weight_subPL);
-	if (weight == NULL) {
-		failure = 1;
-		goto error;
-	}
+	if (weight == NULL) 
+		goto clean;
 	if (subPLT != NULL) {
 		temp = weight;
 		weight = strcatEX("%s-%s", temp, weight_subPLT);
 		free(temp);
-		if (weight == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (weight == NULL) 
+			goto clean;
 	}
 	if (subPLD != NULL) {
 		temp = weight;
 		weight = strcatEX("%s-%s", temp, weight_subPLD);
 		free(temp);
-		if (weight == NULL) {
-			failure = 1;
-			goto error;
-		}
+		if (weight == NULL) 
+			goto clean;
 	}
 	
+	if (subPL->pNext != NULL || subPLT != NULL || subPLD != NULL) {
+		replace_from = strcatEX("*%d", STEEL_DENSITY);
+		if (replace_from == NULL)
+			goto clean;
+		temp = strncpyEX(weight, strlen(weight));
+		if (temp == NULL) {
+			free(replace_from);
+			goto clean;
+		}
+		len_source = strlen(weight);
+		replace(&temp, replace_from, "");//空间足够，不会造成破坏 
+		len_temp = strlen(temp);
+		for (i = len_temp; i < len_source;) 
+			temp[++i] = '\0';
+		temp[len_temp + 1] = ')';
+		for (i = len_temp; i > 0; i--) {
+			temp[i] = temp[i - 1];
+		}
+		temp[i] = '(';
+		temp = strcat(temp, replace_from);
+		free(replace_from);
+		free(weight);
+		weight = temp;
+	}
+	
+clean:	
 	free(weight_subPL);
 	free(weight_subPLT);
 	free(weight_subPLD);
+	
 	return weight;
 }
 
@@ -2706,4 +2695,64 @@ char *strarrcat(char *strarr[], int const capacity) {
 	}
 	
 	return NewStr;
+}
+
+int replace(char **const p_str, char const *from, char const *to) {
+	int len_s, len_f, len_t, len;
+	int i, j, nums, lastmatchedindex;
+	char *str = *p_str, *newstr = NULL;
+/*
+	不允许传入空字符串，否则返回0
+*/ 
+	if (str == NULL || from == NULL || to == NULL)
+		return 0;
+	len_s = strlen(str), len_f = strlen(from), len_t = strlen(to);
+	if (len_s == 0) 
+		return 0;
+/*
+	统计出待替换数量nums
+*/
+	if (len_f == 0) {
+		nums = 0;
+	} else {
+		for (i = 0, nums = 0; i <= len_s - len_f; i++) {
+			if (strncmp(&str[i], from, len_f) != 0)
+				continue;
+			nums++;
+			i += (len_f - 1);
+		}
+	}
+/*
+	计算替换后的字符串需占用的空间大小，并申请新空间 
+	申请失败返回-1
+*/ 
+	newstr = (char *)malloc(len_s + (len_t - len_f) * nums + 1);
+	if (newstr == NULL)
+		return -1;
+/*
+	将不需要替换的字符和要替换成的字符依次复制到新空间 
+*/
+	if (nums == 0) {
+		strncpy(newstr, str, len_s + 1);
+	} else {
+		for (i = 0, lastmatchedindex = 0, j = 0; i <= len_s - len_f;) {
+			if (strncmp(&str[i], from, len_f) == 0) {
+				strncpy(&newstr[j], to, len_t);
+				j += len_t;
+				i += len_f;
+				continue;
+			}
+			lastmatchedindex = i;
+			while (i < len_s && strncmp(&str[i], from, len_f) != 0)
+				i++;
+			len = i - lastmatchedindex;
+			strncpy(&newstr[j], &str[lastmatchedindex], len);
+			j += len;
+		}
+		newstr[j] = '\0';
+	}
+	free(str);
+	*p_str = newstr;
+	newstr = NULL;
+	return 1;
 }

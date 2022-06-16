@@ -11,15 +11,6 @@ struct replaceinfo {
 	char *from;
 	char *to;
 };
-int replace(char **const p_str, char const *from, char const *to);
-/*
-	将字符串str中包含的字符串from替换成字符串to
-	只能处理malloc出来的字符串str，且应当传入字符串str的地址做为参数
-	返回值	-1	无法为处理后的字符串分配空间
-			0	传入的字符串为空字符串（空指针或0长度）
-			1	替换成功 
-	str不需要使用时应free掉 
-*/
 char *getSecSteType(char const *FormatedText);
 /*
 	得到的结果不需要使用时应free掉 

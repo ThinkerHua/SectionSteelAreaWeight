@@ -389,5 +389,14 @@ char *strarrcat(char *strarr[], int const capacity);
 	失败返回NULL（不释放strarr各元素指向的字符串）
 	得到的结果不需要使用时应free掉 
 */
+int replace(char **const p_str, char const *from, char const *to);
+/*
+	将字符串str中包含的字符串from替换成字符串to
+	字符串str应当是动态分配的空间，且应当传入字符串str的地址做为参数
+	返回值	-1	无法为处理后的字符串分配空间
+			0	传入的字符串为空字符串（空指针或0长度）
+			1	替换成功 
+	str不需要使用时应free掉 
+*/
 
 #endif

@@ -48,65 +48,6 @@ int formatting(char const *RawText, char **const p_FormatedText) {
 	return 0;
 }
 
-int replace(char **const p_str, char const *from, char const *to) {
-	int len_s, len_f, len_t, len;
-	int i, j, nums, lastmatchedindex;
-	char *newstr = NULL;
-/*
-	不允许传入空字符串，否则返回0
-*/ 
-	if (*p_str == NULL || from == NULL || to == NULL)
-		return 0;
-	len_s = strlen(*p_str), len_f = strlen(from), len_t = strlen(to);
-	if (len_s == 0) 
-		return 0;
-/*
-	统计出待替换数量nums
-*/
-	if (len_f == 0) {
-		nums = 0;
-	} else {
-		for (i = 0, nums = 0; i <= len_s - len_f; i++) {
-			if (strncmp(&(*p_str)[i], from, len_f) != 0)
-				continue;
-			nums++;
-			i += (len_f - 1);
-		}
-	}
-/*
-	计算替换后的字符串需占用的空间大小，并申请新空间 
-	申请失败返回-1
-*/ 
-	newstr = (char *)malloc(len_s + (len_t - len_f) * nums + 1);
-	if (newstr == NULL)
-		return -1;
-/*
-	将不需要替换的字符和要替换成的字符依次复制到新空间 
-*/
-	if (nums == 0) {
-		strncpy(newstr, *p_str, len_s + 1);
-	} else {
-		for (i = 0, lastmatchedindex = 0, j = 0; i <= len_s - len_f;) {
-			if (strncmp(&(*p_str)[i], from, len_f) == 0) {
-				strncpy(&newstr[j], to, len_t);
-				j += len_t;
-				i += len_f;
-				continue;
-			}
-			lastmatchedindex = i;
-			while (i < len_s && strncmp(&(*p_str)[i], from, len_f) != 0)
-				i++;
-			len = i - lastmatchedindex;
-			strncpy(&newstr[j], &(*p_str)[lastmatchedindex], len);
-			j += len;
-		}
-		newstr[j] = '\0';
-	}
-	free(*p_str);
-	*p_str = newstr;
-	newstr = NULL;
-	return 1;
-}
 
 char *getSecSteType(char const *FormatedText) {
 	int i, nums;
