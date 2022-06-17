@@ -928,54 +928,100 @@ int setData_PLD_(void *object, char const *FormatedText) {
 int setData_PL(void *object, char const *FormatedText) {
 	int i;
 	int failure = 0;
-	int nums = 0;
+	int nums = 0, n = 0;
 	char **strarr = NULL;
+	char *temp = NULL;
 	SectionSteel_PL *obj = object;
-	SectionSteel_PL_ *sub_PL = NULL;
-	SectionSteel_PLT_ *sub_PLT = NULL;
-	SectionSteel_PLD_ *sub_PLD = NULL;
+	SectionSteel_PL_ *subPL = NULL;
+	SectionSteel_PLT_ *subPLT = NULL;
+	SectionSteel_PLD_ *subPLD = NULL;
 	
 	nums = strsplit(FormatedText, CUTSYM, &strarr);
 	for (i = nums - 1; i >= 0; i--) {
-		if (strncmp(strarr[i], "PLD", 3) == 0) {
-			sub_PLD = new_PLD_();
-			if (sub_PLD == NULL) {
-				failure = 1;
-				break;
+		if ((temp = strstr(strarr[i], "PLD")) != NULL) {
+			//多个相同零件识别 
+			*temp = '\0';
+			n = atof(strarr[i]);
+			*temp = 'P';
+			if (n == 0) 
+				n = 1;
+			while (n-- > 0) {
+				subPLD = new_PLD_();
+				if (subPLD == NULL) {
+					failure = 1;
+					break;
+				}
+				if (setData_PLD_(subPLD, temp) == 0) {
+					failure = 1;
+					free_PLD_((void **)&subPLD);
+					break;
+				}
+				subPLD->pNext = obj->pPLD;
+				obj->pPLD = subPLD;
+				//确保所有零件厚度一致 
+				if (subPLD->pNext != NULL && subPLD->pNext->t != subPLD->t || 
+					subPLT != NULL && subPLT->t != subPLD->t || 
+					subPL != NULL && subPL->t != subPLD->t) {
+					failure = 1;
+					break;
+				}
 			}
-			if (setData_PLD_(sub_PLD, strarr[i]) == 0) {
-				failure = 1;
-				free_PLD_((void **)&sub_PLD);
-				break;
+		} else if ((temp = strstr(strarr[i], "PLT")) != NULL) {
+			//多个相同零件识别 
+			*temp = '\0';
+			n = atof(strarr[i]);
+			*temp = 'P';
+			if (n == 0) 
+				n = 1;
+			while (n-- > 0) {
+				subPLT = new_PLT_();
+				if (subPLT == NULL) {
+					failure = 1;
+					break;
+				}
+				if (setData_PLT_(subPLT, temp) == 0) {
+					failure = 1;
+					free_PLT_((void **)&subPLT);
+					break;
+				}
+				subPLT->pNext = obj->pPLT;
+				obj->pPLT = subPLT;
+				//确保所有零件厚度一致 
+				if (subPLT->pNext != NULL && subPLT->pNext->t != subPLT->t || 
+					subPLD != NULL && subPLD->t != subPLT->t || 
+					subPL != NULL && subPL->t != subPLT->t) {
+					failure = 1;
+					break;
+				}
 			}
-			sub_PLD->pNext = obj->pPLD;
-			obj->pPLD = sub_PLD;
-		} else if (strncmp(strarr[i], "PLT", 3) == 0) {
-			sub_PLT = new_PLT_();
-			if (sub_PLT == NULL) {
-				failure = 1;
-				break;
+		} else if ((temp = strstr(strarr[i], "PL")) != NULL) {
+			//多个相同零件识别 
+			*temp = '\0';
+			n = atof(strarr[i]);
+			*temp = 'P';
+			if (n == 0) 
+				n = 1;
+			while (n-- > 0) {
+				subPL = new_PL_();
+				if (subPL == NULL) {
+					failure = 1;
+					break;
+				}
+				if (setData_PL_(subPL, temp) == 0) {
+					failure = 1;
+					free_PL_((void **)&subPL);
+					break;
+				}
+				subPL->pNext = obj->pPL;
+				obj->pPL = subPL;
+				//确保所有零件厚度一致 
+				if (subPL->pNext != NULL && subPL->pNext->t != subPL->t || 
+					subPLT != NULL && subPLT->t != subPL->t || 
+					subPLD != NULL && subPLD->t != subPL->t) {
+					failure = 1;
+					break;
+				}
 			}
-			if (setData_PLT_(sub_PLT, strarr[i]) == 0) {
-				failure = 1;
-				free_PLT_((void **)&sub_PLT);
-				break;
-			}
-			sub_PLT->pNext = obj->pPLT;
-			obj->pPLT = sub_PLT;
-		} else if (strncmp(strarr[i], "PL", 2) == 0) {
-			sub_PL = new_PL_();
-			if (sub_PL == NULL) {
-				failure = 1;
-				break;
-			}
-			if (setData_PL_(sub_PL, strarr[i]) == 0) {
-				failure = 1;
-				free_PL_((void **)&sub_PL);
-				break;
-			}
-			sub_PL->pNext = obj->pPL;
-			obj->pPL = sub_PL;
 		} else 
 			continue;
 	}
@@ -1400,27 +1446,23 @@ char *getArea_J(void *object, unsigned const CtrlCode) {
 	char *area = NULL;
 	int width_equal = 0;
 	int multi = 2;
-		
-	if (CtrlCode & METHOD_LOOKUP) 
-		return NULL;
-	else {
-		if (obj->H == obj->B && obj->tH == obj->tB)
-			width_equal = 1;
-		
-		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			multi--;
-		
-		if (multi == 1)
-			if (width_equal)
-				area = strcatEX("%f*%d", obj->H * 0.001, multi + 2);
-			else
-				area = strcatEX("%f*2+%f", obj->H * 0.001, obj->B * 0.001);
+	
+	if (obj->H == obj->B && obj->tH == obj->tB)
+		width_equal = 1;
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi--;
+	
+	if (multi == 1)
+		if (width_equal)
+			area = strcatEX("%f*%d", obj->H * 0.001, multi + 2);
 		else
-			if (width_equal)
-				area = strcatEX("%f*%d", obj->H * 0.001, multi + 2);
-			else
-				area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
-	}
+			area = strcatEX("%f*2+%f", obj->H * 0.001, obj->B * 0.001);
+	else
+		if (width_equal)
+			area = strcatEX("%f*%d", obj->H * 0.001, multi + 2);
+		else
+			area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
 	
 	return area;
 }
@@ -1429,10 +1471,7 @@ char *getArea_D(void *object, unsigned const CtrlCode) {
 	SectionSteel_D *obj = object;
 	char *area = NULL;
 		
-	if (CtrlCode & METHOD_LOOKUP) 
-		return NULL;
-	else 
-		area = strcatEX("PI()*%f", obj->D * 0.001);
+	area = strcatEX("PI()*%f", obj->D * 0.001);
 	
 	return area;
 }
@@ -1622,36 +1661,16 @@ char *getArea_C(void *object, unsigned const CtrlCode) {
 //	double data[] = {obj->H, obj->B, obj->C, obj->t};
 //	double val = 0.0;
 	int multi = 4;
-		
-	if (CtrlCode & METHOD_LOOKUP) {
-//		val = search_AorW(obj->Type, data, sizeof(data)/sizeof(double), 0);
-//		if (val == 0.0)
-//			return NULL;
-//		area = dtostr(val, DATA_PRECISION);
-//		if (area == NULL)
-//			return NULL;
-//		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE) {
-//			temp = area;
-//			area = strcatEX("%s-%f", temp, obj->B * 0.001);
-//			if (area == NULL) {
-//				free(temp);
-//				return NULL;
-//			}
-//		}
+	
+	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
+		multi--;
+	area = strcatEX("%f*2+%f*%d+%f*4", obj->H * 0.001, obj->B * 0.001, multi, obj->C * 0.001);
+	if (area == NULL)
 		return NULL;
-	} else {
-		if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-			multi--;
-		area = strcatEX("%f*2+%f*%d+%f*4", obj->H * 0.001, obj->B * 0.001, multi, obj->C * 0.001);
-		if (area == NULL)
-			return NULL;
-		if (CtrlCode & METHOD_PRECISELY) {
-			temp = area;
-			area = strcatEX("%s-%f*6", temp, obj->t * 0.001);
-			free(temp);
-//			if (area == NULL) 
-//				return NULL;
-		}
+	if (CtrlCode & METHOD_PRECISELY || CtrlCode & METHOD_LOOKUP) {
+		temp = area;
+		area = strcatEX("%s-%f*6", temp, obj->t * 0.001);
+		free(temp);
 	}
 	
 	return area;
@@ -1663,9 +1682,7 @@ char *getArea_2C(void *object, unsigned const CtrlCode) {
 //	double data[] = {obj->H, obj->B, obj->C, obj->t};
 //	double val = 0.0;
 	int multi = 4;
-		
-	if (CtrlCode & METHOD_LOOKUP)
-		return NULL;
+	
 	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
 		multi -= 2;
 	area = strcatEX("%f*2+%f*%d", obj->H * 0.001, obj->B * 0.001, multi);
@@ -2003,19 +2020,15 @@ char *getWeight_J(void *object, unsigned const CtrlCode) {
 	if (obj->H == obj->B && obj->tH == obj->tB)
 		width_equal = 1;
 	
-	if (CtrlCode & METHOD_LOOKUP) {
-		return NULL;
-	} else {
-		if (width_equal)
-			weight = strcatEX("(%f-%f)*%f*4*%d", 
-								obj->H * 0.001, obj->tH * 0.001, obj->tH * 0.001, 
-								STEEL_DENSITY);
-		else
-			weight = strcatEX("(%f*%f+(%f-%f*2)*%f)*2*%d", 
-								obj->H * 0.001, obj->tH * 0.001, 
-								obj->B * 0.001, obj->tH * 0.001, obj->tB * 0.001, 
-								STEEL_DENSITY);
-	}
+	if (width_equal)
+		weight = strcatEX("(%f-%f)*%f*4*%d", 
+							obj->H * 0.001, obj->tH * 0.001, obj->tH * 0.001, 
+							STEEL_DENSITY);
+	else
+		weight = strcatEX("(%f*%f+(%f-%f*2)*%f)*2*%d", 
+							obj->H * 0.001, obj->tH * 0.001, 
+							obj->B * 0.001, obj->tH * 0.001, obj->tB * 0.001, 
+							STEEL_DENSITY);
 	
 	return weight;
 }
@@ -2024,17 +2037,13 @@ char *getWeight_D(void *object, unsigned const CtrlCode) {
 	SectionSteel_D *obj = object;
 	char *weight = NULL;
 	
-	if (CtrlCode & METHOD_LOOKUP) {
-		return NULL;
-	} else {
-		if (obj->t == obj->D * 0.5)
-			weight = strcatEX("PI()*%f^2*%d", obj->t * 0.001, STEEL_DENSITY);
-		else
-			weight = strcatEX("PI()*(%f^2-%f^2)*%d", 
-								obj->D * 0.5 * 0.001, 
-								(obj->D * 0.5 - obj->t) * 0.001, 
-								STEEL_DENSITY);
-	}
+	if (obj->t == obj->D * 0.5)
+		weight = strcatEX("PI()*%f^2*%d", obj->t * 0.001, STEEL_DENSITY);
+	else
+		weight = strcatEX("PI()*(%f^2-%f^2)*%d", 
+							obj->D * 0.5 * 0.001, 
+							(obj->D * 0.5 - obj->t) * 0.001, 
+							STEEL_DENSITY);
 	
 	return weight;
 }
