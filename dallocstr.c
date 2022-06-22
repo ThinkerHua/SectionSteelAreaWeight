@@ -405,7 +405,7 @@ int replace(char **const p_str, char const *from, char const *to) {
 	if (nums == 0) {
 		strncpy(newstr, str, len_s + 1);
 	} else {
-		for (i = 0, lastmatchedindex = 0, j = 0; i <= len_s - len_f;) {
+		for (i = 0, lastmatchedindex = 0, j = 0; i < len_s;) {
 			if (strncmp(&str[i], from, len_f) == 0) {
 				strncpy(&newstr[j], to, len_t);
 				j += len_t;
@@ -413,8 +413,8 @@ int replace(char **const p_str, char const *from, char const *to) {
 				continue;
 			}
 			lastmatchedindex = i;
-			while (i < len_s && strncmp(&str[i], from, len_f) != 0)
-				i++;
+			while (++i < len_s && strncmp(&str[i], from, len_f) != 0)
+				;
 			len = i - lastmatchedindex;
 			strncpy(&newstr[j], &str[lastmatchedindex], len);
 			j += len;
