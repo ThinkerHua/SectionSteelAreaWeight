@@ -12,7 +12,7 @@ CtrlCode：二进制从低位到高位控制作用如下
 			#define TYPE_WEIGHT					4	//生成单位重量计算式
 			#define METHOD_ROUGHLY				8	//粗略计算（单位面积计算式不考虑厚度）
 			#define METHOD_PRECISELY			16	//较精确的计算（考虑厚度）
-			#define METHOD_LOOKUP				32	//在国标规范数据表在查找
+			#define METHOD_LOOKUP				32	//在国标规范数据表中查找
 返回值：详见下述计算规则（返回值不需要使用时应当free掉）
 
 函数原型：void free_dallocstr(char *str);
