@@ -84,7 +84,7 @@ void swap(char **op1, char **op2) {
 }
 
 int strcmp_X(char const *str1, char const *str2) {
-	int len1, len2, i;
+	int len1, len2;
 	len1 = strlen(str1), len2 = strlen(str2);
 	if (len1 > len2) return 1;
 	if (len1 < len2) return -1;

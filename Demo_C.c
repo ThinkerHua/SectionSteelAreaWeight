@@ -21,7 +21,8 @@ int main (int argc, char *argv[]) {
 	
 	module = LoadLibraryA("SectionSteelAW.dll");
 	if (module == NULL) {
-		MessageBox(0,"Cannot start this program because of missing \"SectionSteelAW.dll\" file!\n","Error",MB_ICONERROR);
+		MessageBox(0,"Cannot start this program because of missing "
+						"\"SectionSteelAW.dll\" file!\n","Error",MB_ICONERROR);
 		return 0;
 	}
 	SSAW = (char *(*)(char const *, unsigned const))GetProcAddress(module, "SectionSteelAW");

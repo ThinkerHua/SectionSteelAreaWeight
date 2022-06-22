@@ -1,6 +1,7 @@
 #include "dallocstr.h"
 #include "GBData.h"
 #include "SectionSteel.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -415,8 +416,8 @@ int setData_H_(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-//					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H, 	obj->B, 	obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -513,8 +514,8 @@ int setData_H(void *object, char const *FormatedText) {
 	strsplit_free(&strarr1, nums1);
 	if (failure)
 		return 0;
-//	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
-//					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
+	printf("Debug: H = %.1f,  B1 = %.1f,  B2 = %.1f,  tH = %.1f,  tB1= %.1f,  tB2= %.1f\n", 
+					obj->H, 	obj->B1, 	obj->B2, 	obj->tH, 	obj->tB1,	obj->tB2);
 	return 1;
 }
 
@@ -613,10 +614,10 @@ int setData_HI(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf(	"Debug: H1 = %.1f,  B1 = %.1f,  tH1 = %.1f,  tB1= %.1f\n"
-//			"       H2 = %.1f,  B2 = %.1f,  tH2 = %.1f,  tB2= %.1f\n", 
-//					obj->H1, 	obj->B1, 	obj->tH1,	obj->tB1,
-//					obj->H2, 	obj->B2, 	obj->tH2, 	obj->tB2);
+	printf(	"Debug: H1 = %.1f,  B1 = %.1f,  tH1 = %.1f,  tB1= %.1f\n"
+			"       H2 = %.1f,  B2 = %.1f,  tH2 = %.1f,  tB2= %.1f\n", 
+					obj->H1, 	obj->B1, 	obj->tH1,	obj->tB1,
+					obj->H2, 	obj->B2, 	obj->tH2, 	obj->tB2);
 	return 1;
 }
 
@@ -666,8 +667,8 @@ int setData_J(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-//					obj->H,		obj->B,		obj->tH, 	obj->tB);
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H,		obj->B,		obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -704,8 +705,8 @@ int setData_D(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: D = %.1f,  t= %.1f\n", 
-//					obj->D,		obj->t);
+	printf("Debug: D = %.1f,  t= %.1f\n", 
+					obj->D,		obj->t);
 	return 1;
 
 }
@@ -759,8 +760,8 @@ int setData_I(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
-//					obj->H,		obj->B,		obj->tH, 	obj->tB);
+	printf("Debug: H = %.1f,  B = %.1f,  tH = %.1f,  tB= %.1f\n", 
+					obj->H,		obj->B,		obj->tH, 	obj->tB);
 	return 1;
 }
 
@@ -843,8 +844,8 @@ int setData_L(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: B1 = %.1f,  B2 = %.1f,  t = %.1f\n", 
-//					obj->B1,	obj->B2,	obj->t);
+	printf("Debug: B1 = %.1f,  B2 = %.1f,  t = %.1f\n", 
+					obj->B1,	obj->B2,	obj->t);
 	return 1;
 }
 
@@ -900,8 +901,8 @@ int setData_C(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: H = %.1f,  B = %.1f,  C = %.1f,  t = %.1f\n", 
-//					obj->H,		obj->B,		obj->C, 	obj->t);
+	printf("Debug: H = %.1f,  B = %.1f,  C = %.1f,  t = %.1f\n", 
+					obj->H,		obj->B,		obj->C, 	obj->t);
 	return 1;
 }
 
@@ -1066,8 +1067,8 @@ int setData_PLT(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: B = %.1f,  L = %.1f,  t = %.1f\n", 
-//					obj->B,		obj->L, 	obj->t);
+	printf("Debug: B = %.1f,  L = %.1f,  t = %.1f\n", 
+					obj->B,		obj->L, 	obj->t);
 	return 1;
 }
 
@@ -1100,8 +1101,8 @@ int setData_PLD(void *object, char const *FormatedText) {
 	strsplit_free(&strarr, nums);
 	if (failure)
 		return 0;
-//	printf("Debug: D = %.1f,  t = %.1f\n", 
-//					obj->D, 	obj->t);
+	printf("Debug: D = %.1f,  t = %.1f\n", 
+					obj->D, 	obj->t);
 	return 1;
 }
 

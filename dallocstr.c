@@ -226,8 +226,7 @@ char *strcatEX(char const *format, ...) {
 	va_list ap;
 	char const *p = format;
 	
-	int aCapacity = 20;
-	char *strarr[aCapacity];
+	char *strarr[STRARR_CAPACITY];
 	int aIndex = 0;
 	
 	char *str = NULL;
@@ -236,7 +235,7 @@ char *strcatEX(char const *format, ...) {
 	
 	int i = 0, last = 0;
 	
-	for (i = 0; i < aCapacity; i++)
+	for (i = 0; i < STRARR_CAPACITY; i++)
 		strarr[i] = NULL;
 	va_start(ap, format);
 	
@@ -312,8 +311,8 @@ char *strcatEX(char const *format, ...) {
 			break;
 		
 		//如果数组存满，将所有元素组成新字符串存入第一项，释放其他项 
-		if (aIndex == aCapacity) {
-			str = strarrcat(strarr, aCapacity);
+		if (aIndex == STRARR_CAPACITY) {
+			str = strarrcat(strarr, STRARR_CAPACITY);
 			if (str == NULL) {
 				failure = 1;
 				break;
@@ -325,12 +324,12 @@ char *strcatEX(char const *format, ...) {
 	}
 		
 	if (failure) {
-		for (i = 0; i < aCapacity; i++)
+		for (i = 0; i < STRARR_CAPACITY; i++)
 			free(strarr[i]), strarr[i] = NULL;
 		return NULL;
 	}
 	
-	str = strarrcat(strarr, aCapacity);
+	str = strarrcat(strarr, STRARR_CAPACITY);
 	return str;
 }
 

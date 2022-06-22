@@ -1,12 +1,7 @@
-/* Replace "dll.h" with the name of your header */
 #include "dll.h"
 #include "calculation.h"
 #include <string.h>
 #include <windows.h>
-
-//DLLIMPORT void HelloWorld() {
-//	MessageBox(0,"Hello World from DLL!\n","Hi",MB_ICONINFORMATION);
-//}
 
 DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	char *FormatedText = NULL;
@@ -32,6 +27,11 @@ DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode) {
 	//SecSteType来自const字符串数组，不需要释放，只需赋值NULL 
 	SecSteType = NULL;
 	return Resault;
+}
+
+
+DLLIMPORT void free_dallocstr(char *str) {
+	free(str);
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved) {

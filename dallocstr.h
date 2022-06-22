@@ -2,6 +2,7 @@
 #define dallocstr
 
 #define DATA_PRECISION 4
+#define STRARR_CAPACITY 20
 
 int strsplit(char const *str, char const *delim, char ***const p_strarr);
 /*
