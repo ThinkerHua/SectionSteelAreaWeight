@@ -1,5 +1,9 @@
 ﻿本DLL用于生成型材单位面积和单位重量计算式。
 
+EXPORTS
+    SectionSteelAW @1
+    free_dallocstr @2
+
 函数原型：char *SectionSteelAW(char const *RawText, unsigned const CtrlCode);
 RawText：详见下述书写规则
 CtrlCode：二进制从低位到高位控制作用如下
@@ -10,6 +14,10 @@ CtrlCode：二进制从低位到高位控制作用如下
 			#define METHOD_PRECISELY			16	//较精确的计算（考虑厚度）
 			#define METHOD_LOOKUP				32	//在国标规范数据表在查找
 返回值：详见下述计算规则（返回值不需要使用时应当free掉）
+
+函数原型：void free_dallocstr(char *str);
+str：要释放内存空间的字符串
+作用：释放动态分配内存空间的字符串。此函数专供VB.net使用，C可以直接使用free函数。
 
 1、书写规则
 1.1 有无空格不影响计算；参数中的括号不是必须的，可写可不写，不影响计算，中、英文括号都可识别；有时暂无法确定规格型号，可用待定规格标识符修饰一个暂定规格型号，待定规格标识符为?、？任选。
