@@ -403,8 +403,8 @@ int setData_H_(void *object, char const *FormatedText) {
 				failure = 1;
 			break;
 		case 4:
-			obj->H = average_delim(strarr[0], GRADSYM);
-			obj->B = average_delim(strarr[1], GRADSYM);
+			obj->H = average_delim_weighted(strarr[0], GRADSYM);
+			obj->B = average_delim_weighted(strarr[1], GRADSYM);
 			obj->tH = atof(strarr[2]);
 			obj->tB = atof(strarr[3]);
 			break;
@@ -485,12 +485,12 @@ int setData_H(void *object, char const *FormatedText) {
 				failure = 1;
 			break;
 		case 4:
-			obj->H = average_delim(strarr1[0], GRADSYM);
+			obj->H = average_delim_weighted(strarr1[0], GRADSYM);
 			{		
 				nums2 = strsplit(strarr1[1], DIVSYM, &strarr2);
-				obj->B1 = average_delim(strarr2[0], GRADSYM);
+				obj->B1 = average_delim_weighted(strarr2[0], GRADSYM);
 				if (nums2 == 2) 
-					obj->B2 = average_delim(strarr2[1], GRADSYM);
+					obj->B2 = average_delim_weighted(strarr2[1], GRADSYM);
 				else
 					obj->B2 = obj->B1;
 				strsplit_free(&strarr2, nums2);
@@ -645,17 +645,17 @@ int setData_J(void *object, char const *FormatedText) {
 	nums = strsplit(DataText, LINKSYM, &strarr);
 	switch(nums) {
 		case 2:
-			obj->H = obj->B = average_delim(strarr[0], GRADSYM);
+			obj->H = obj->B = average_delim_weighted(strarr[0], GRADSYM);
 			obj->tH = obj->tB = atof(strarr[1]);
 			break;
 		case 3:
-			obj->H = average_delim(strarr[0], GRADSYM);
-			obj->B = average_delim(strarr[1], GRADSYM);
+			obj->H = average_delim_weighted(strarr[0], GRADSYM);
+			obj->B = average_delim_weighted(strarr[1], GRADSYM);
 			obj->tH = obj->tB = atof(strarr[2]);
 			break;
 		case 4:
-			obj->H = average_delim(strarr[0], GRADSYM);
-			obj->B = average_delim(strarr[1], GRADSYM);
+			obj->H = average_delim_weighted(strarr[0], GRADSYM);
+			obj->B = average_delim_weighted(strarr[1], GRADSYM);
 			obj->tH = atof(strarr[2]);
 			obj->tB = atof(strarr[3]);
 			break;
@@ -1051,12 +1051,12 @@ int setData_PLT(void *object, char const *FormatedText) {
 	nums = strsplit(DataText, LINKSYM, &strarr);
 	switch(nums) {
 		case 2:	
-			obj->B = average_delim(strarr[0], GRADSYM);
+			obj->B = average_delim_weighted(strarr[0], GRADSYM);
 			obj->t = atof(strarr[1]);
 			break;
 		case 3:
-			obj->B = average_delim(strarr[0], GRADSYM);
-			obj->L = average_delim(strarr[1], GRADSYM);
+			obj->B = average_delim_weighted(strarr[0], GRADSYM);
+			obj->L = average_delim_weighted(strarr[1], GRADSYM);
 			obj->t = atof(strarr[2]);
 			break;
 		default:

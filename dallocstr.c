@@ -87,18 +87,24 @@ void strsplit_free(char ***const p_strarr, int const nums) {
 	free(*p_strarr), *p_strarr = NULL;
 }
 
-double average_delim(char const *str, char const *delim) {
-	int i, nums;
+double average_delim_weighted(char const *str, char const *delim) {
+	int i, nums, count;
 	double value;
 	char **strarr;
 	nums = strsplit(str, delim, &strarr);
 	if (nums <= 0)
 		return 0;
 	else {
+		count = nums;
+		if (nums > 2)
+			count = (nums - 2) * 2 + 2;
 		for (i = 0, value = 0; i < nums; i++) 
-			value += atof(strarr[i]);
-		value /= nums;
+			if (i > 0 && i < nums - 1)
+				value += atof(strarr[i]) * 2;
+			else
+				value += atof(strarr[i]);
 		strsplit_free(&strarr, nums);
+		value /= count;
 	}
 	return value;
 }

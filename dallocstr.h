@@ -20,7 +20,7 @@ void strsplit_free(char ***const p_strarr, int const nums);
 	必须保证nums与strsplit函数的返回值一致，否则后果未知 
 */
 
-double average_delim(char const *str, char const *delim);
+double average_delim_weighted(char const *str, char const *delim);
 /*
 	返回str内由delim分割的数值的平均值 
 */
