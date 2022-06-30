@@ -7,6 +7,7 @@
 #define METHOD_ROUGHLY				8
 #define METHOD_PRECISELY			16
 #define METHOD_LOOKUP				32
+#define PI_STYLE					64
 
 DLLIMPORT char *SectionSteelAW(char const *RawText, unsigned const CtrlCode);
 */

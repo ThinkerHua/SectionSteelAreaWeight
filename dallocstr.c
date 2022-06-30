@@ -232,6 +232,7 @@ char *strcatEX(char const *format, ...) {
 	va_list ap;
 	char const *p = format;
 	
+	//减少复制操作，先存入字符串数组，数组满了或已处理完所有剩余字符串，再进行连接操作 
 	char *strarr[STRARR_CAPACITY];
 	int aIndex = 0;
 	
@@ -386,6 +387,12 @@ int replace(char **const p_str, char const *from, char const *to) {
 	if (len_s == 0) 
 		return 0;
 /*
+	减少不必要的内存分配操作 
+*/
+	if (len_f >= len_t)
+		return replace_at_original_location(*p_str, from, to);
+		
+/*
 	统计出待替换数量nums
 */
 	if (len_f == 0) {
@@ -433,7 +440,7 @@ int replace(char **const p_str, char const *from, char const *to) {
 	return 1;
 }
 
-int replace_at_original_location(char *str, char const *from, char const *to) {
+int replace_at_original_location(char *const str, char const *from, char const *to) {
 	int i, last; 
 	int len_s = 0, len_f = 0, len_t = 0;
 /*

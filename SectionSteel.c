@@ -941,9 +941,9 @@ int setData_PL(void *object, char const *FormatedText) {
 	for (i = nums - 1; i >= 0; i--) {
 		if ((temp = strstr(strarr[i], "PLD")) != NULL) {
 			//多个相同零件识别 
-			*temp = '\0';
+//			*temp = '\0';
 			n = atof(strarr[i]);
-			*temp = 'P';
+//			*temp = 'P';
 			if (n == 0) 
 				n = 1;
 			while (n-- > 0) {
@@ -969,9 +969,9 @@ int setData_PL(void *object, char const *FormatedText) {
 			}
 		} else if ((temp = strstr(strarr[i], "PLT")) != NULL) {
 			//多个相同零件识别 
-			*temp = '\0';
+//			*temp = '\0';
 			n = atof(strarr[i]);
-			*temp = 'P';
+//			*temp = 'P';
 			if (n == 0) 
 				n = 1;
 			while (n-- > 0) {
@@ -997,9 +997,9 @@ int setData_PL(void *object, char const *FormatedText) {
 			}
 		} else if ((temp = strstr(strarr[i], "PL")) != NULL) {
 			//多个相同零件识别 
-			*temp = '\0';
+//			*temp = '\0';
 			n = atof(strarr[i]);
-			*temp = 'P';
+//			*temp = 'P';
 			if (n == 0) 
 				n = 1;
 			while (n-- > 0) {
@@ -1471,8 +1471,12 @@ char *getArea_J(void *object, unsigned const CtrlCode) {
 char *getArea_D(void *object, unsigned const CtrlCode) {
 	SectionSteel_D *obj = object;
 	char *area = NULL;
+	char *pi = PI_FUN;
 		
-	area = strcatEX("PI()*%f", obj->D * 0.001);
+	if (CtrlCode & PI_STYLE)
+		pi = PI_NUM;
+		
+	area = strcatEX("%s*%f", pi, obj->D * 0.001);
 	
 	return area;
 }
@@ -1871,14 +1875,18 @@ char *getArea_PLT(void *object, unsigned const CtrlCode) {
 char *getArea_PLD(void *object, unsigned const CtrlCode) {
 	SectionSteel_PLD *obj = object;
 	char *area = NULL, *temp = NULL;
+	char *pi = PI_FUN;
+		
+	if (CtrlCode & PI_STYLE)
+		pi = PI_NUM;
 	
 //	if (CtrlCode & METHOD_LOOKUP)
 //		return NULL;
 	
 	if (CtrlCode & TYPE_EXCLUDE_TOPSURFACE)
-		area = strcatEX("PI()*%f^2", obj->D * 0.5 * 0.001);
+		area = strcatEX("%s*%f^2", pi, obj->D * 0.5 * 0.001);
 	else
-		area = strcatEX("PI()*%f^2*2", obj->D * 0.5 * 0.001);
+		area = strcatEX("%s*%f^2*2", pi, obj->D * 0.5 * 0.001);
 //	if (area == NULL)
 //		return NULL;
 	
@@ -2037,11 +2045,15 @@ char *getWeight_J(void *object, unsigned const CtrlCode) {
 char *getWeight_D(void *object, unsigned const CtrlCode) {
 	SectionSteel_D *obj = object;
 	char *weight = NULL;
+	char *pi = PI_FUN;
+		
+	if (CtrlCode & PI_STYLE)
+		pi = PI_NUM;
 	
 	if (obj->t == obj->D * 0.5)
-		weight = strcatEX("PI()*%f^2*%d", obj->t * 0.001, STEEL_DENSITY);
+		weight = strcatEX("%s*%f^2*%d", pi, obj->t * 0.001, STEEL_DENSITY);
 	else
-		weight = strcatEX("PI()*(%f^2-%f^2)*%d", 
+		weight = strcatEX("%s*(%f^2-%f^2)*%d", pi, 
 							obj->D * 0.5 * 0.001, 
 							(obj->D * 0.5 - obj->t) * 0.001, 
 							STEEL_DENSITY);
@@ -2337,8 +2349,12 @@ char *getWeight_PLT(void *object, unsigned const CtrlCode) {
 char *getWeight_PLD(void *object, unsigned const CtrlCode) {
 	SectionSteel_PLD *obj = object;
 	char *weight = NULL;
+	char *pi = PI_FUN;
+		
+	if (CtrlCode & PI_STYLE)
+		pi = PI_NUM;
 	
-	weight = strcatEX("PI()*%f^2*%f*%d", 
+	weight = strcatEX("%s*%f^2*%f*%d", pi, 
 						obj->D * 0.5 * 0.001, obj->t * 0.001, 
 						STEEL_DENSITY);
 	

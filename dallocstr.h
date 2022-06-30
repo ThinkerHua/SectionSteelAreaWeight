@@ -1,5 +1,5 @@
-#ifndef dallocstr
-#define dallocstr
+#ifndef _DYNAMICLY_ALLOCATED_STRING_H_ 
+#define _DYNAMICLY_ALLOCATED_STRING_H_
 
 #define DATA_PRECISION 4
 #define STRARR_CAPACITY 20
@@ -73,7 +73,7 @@ int replace(char **const p_str, char const *from, char const *to);
 			1	替换成功 
 	str不需要使用时应free掉 
 */
-int replace_at_original_location(char *str, char const *from, char const *to);
+int replace_at_original_location(char *const str, char const *from, char const *to);
 /*
 	效果类似replace函数，但只在字符串原始地址上进行操作，不创建新实例
 	因此，from的长度不得短于to的长度

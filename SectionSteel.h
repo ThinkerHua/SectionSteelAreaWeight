@@ -12,6 +12,9 @@
 //	  Method = 1 -> Precisely
 //	  Method = 2 -> Look up in table*/
 //	unsigned Method : 2;
+//	/*PI_STYLE = 0 -> PI()
+//	  PI_STYLE = 1 -> 3.14*/
+//	PI_STYLE : 1;
 //}ControlCode;
 #define TYPE_AREA					1
 #define TYPE_EXCLUDE_TOPSURFACE		2
@@ -19,6 +22,10 @@
 #define METHOD_ROUGHLY				8
 #define METHOD_PRECISELY			16
 #define METHOD_LOOKUP				32
+#define PI_STYLE					64
+
+#define PI_FUN "PI()"
+#define PI_NUM "3.14"
 
 #define LINKSYM "*"
 #define GRADSYM "~"
