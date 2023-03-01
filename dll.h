@@ -19,7 +19,7 @@ DLLIMPORT char *SectionSteel_Area_Weight(char const *RawText, unsigned const Ctr
 	失败返回NULL 
 	CtrlCode说明参见"calculation.h"中的"getResault"函数 
 */ 
-DLLIMPORT char *Stiffener_Specifications(char const *RawText, unsigned const CtrlCode);
+DLLIMPORT char *Stiffener_Specification(char const *RawText, unsigned const CtrlCode);
 /*
 	生成型钢的加劲肋规格
 	失败返回NULL 

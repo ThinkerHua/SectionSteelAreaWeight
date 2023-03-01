@@ -2366,8 +2366,8 @@ char *getStiffener_H_(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0;
 	
-	width = (obj->B - obj->tH) * 0.5 * 0.001;
-	length = (obj->H - obj->tB * 2) * 0.001;
+	width = (obj->B - obj->tH) * 0.5;
+	length = obj->H - obj->tB * 2;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
@@ -2383,8 +2383,8 @@ char *getStiffener_H(void *object, unsigned const CtrlCode) {
 	double width = 0.0, length = 0.0;
 	
 	width = obj->B1 <= obj->B2 ? obj->B1 - obj->tH : obj->B2 - obj->tH;
-	width *= (0.5 * 0.001);
-	length = (obj->H - obj->tB1 - obj->tB2) * 0.001;
+	width *= 0.5;
+	length = obj->H - obj->tB1 - obj->tB2;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
@@ -2403,10 +2403,9 @@ char *getStiffener_HI(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0, thickness = 0.0;
 	
-	width = (obj->H1 - obj->tB1 * 2 - obj->tH2) * 0.001;
-	length = (obj->H2 - obj->tB2 * 2 - obj->tH1) * 0.001;
+	width = (obj->H1 - obj->tB1 * 2 - obj->tH2) * 0.5;
+	length = (obj->H2 - obj->tB2 * 2 - obj->tH1) * 0.5;
 	thickness = obj->tH1 > obj->tH2 ? obj->tH1 : obj->tH2;
-	thickness *= 0.001;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)thickness);
@@ -2421,8 +2420,8 @@ char *getStiffener_T(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0;
 	
-	width = (obj->B - obj->tH) * 0.5 * 0.001;
-	length = (obj->H - obj->tB) * 0.001;
+	width = (obj->B - obj->tH) * 0.5;
+	length = obj->H - obj->tB;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
@@ -2437,10 +2436,9 @@ char *getStiffener_J(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0, thickness = 0.0;
 	
-	width = (obj->B - obj->tH * 2) * 0.001;
-	length = (obj->H - obj->tB * 2) * 0.001;
+	width = obj->B - obj->tH * 2;
+	length = obj->H - obj->tB * 2;
 	thickness = obj->tB > obj->tH ? obj->tB : obj->tH;
-	thickness *= 0.001;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)thickness);
@@ -2458,7 +2456,7 @@ char *getStiffener_D(void *object, unsigned const CtrlCode) {
 		return stif;
 	
 	if (CtrlCode) 
-		stif = strcatEX("PLD%d*%d", (long)obj->D - obj->t * 2, (long)obj->t);
+		stif = strcatEX("PLD%d*%d", (long)(obj->D - obj->t * 2), (long)obj->t);
 	else
 		stif = strcatEX("PLD%f*%f", obj->D - obj->t * 2, obj->t);
 	
@@ -2470,8 +2468,8 @@ char *getStiffener_I(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0;
 	
-	width = (obj->B - obj->tH) * 0.5 * 0.001;
-	length = (obj->H - obj->tB * 2) * 0.001;
+	width = (obj->B - obj->tH) * 0.5;
+	length = obj->H - obj->tB * 2;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
@@ -2486,8 +2484,8 @@ char *getStiffener_Chan(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0;
 	
-	width = (obj->B - obj->tH) * 0.001;
-	length = (obj->H - obj->tB * 2) * 0.001;
+	width = obj->B - obj->tH;
+	length = obj->H - obj->tB * 2;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
@@ -2502,8 +2500,8 @@ char *getStiffener_Chan_MtM(void *object, unsigned const CtrlCode) {
 	char *stif = NULL;
 	double width = 0.0, length = 0.0;
 	
-	width = (obj->B - obj->tH) * 2 * 0.001;
-	length = (obj->H - obj->tB * 2) * 0.001;
+	width = (obj->B - obj->tH) * 2;
+	length = obj->H - obj->tB * 2;
 	
 	if (CtrlCode)
 		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);

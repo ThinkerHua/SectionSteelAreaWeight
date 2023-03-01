@@ -1,11 +1,11 @@
-﻿本DLL用于生成型材单位面积和单位重量计算式。
+﻿本DLL用于生成型材单位面积和单位重量计算式，次要功能可生成型钢的加劲肋。
 
 EXPORTS
     SectionSteel_Area_Weight @1
-    Stiffener_Specifications @2
+    Stiffener_Specification @2
     free_dallocstr @3
 
-函数原型：char *SectionSteelAreaWeight(char const *RawText, unsigned const CtrlCode);
+函数原型：char *SectionSteel_Area_Weight(char const *RawText, unsigned const CtrlCode);
 RawText：详见下述书写规则
 CtrlCode：二进制从低位到高位控制作用如下
 			#define TYPE_AREA					1	//生成单位面积计算式
@@ -17,7 +17,7 @@ CtrlCode：二进制从低位到高位控制作用如下
 			#define PI_STYLE					64	//PI的写法（置0为PI()，置1为3.14）
 返回值：详见下述计算规则（返回值不需要使用时应当free掉）
 
-函数原型：char *Stiffener_Specifications(char const *RawText, unsigned const CtrlCode);
+函数原型：char *Stiffener_Specification(char const *RawText, unsigned const CtrlCode);
 RawText：详见下述书写规则
 CtrlCode：	=1	加劲肋规格参数截尾取整
 			=0	加劲肋规格参数保留小数
@@ -151,4 +151,50 @@ str：要释放内存空间的字符串
 		重量	三种模式结果相同（均按精确执行）
 
 3、加劲肋生成规则
-（待完善）
+	以下所述翼缘宽度、腹板高度、直径等均指型钢外观尺寸。
+3.1 H型钢：
+	加劲肋为矩形板
+		宽度：（翼缘宽度-腹板厚度）*0.5
+		长度：腹板高度-翼缘厚度*2
+		厚度：腹板厚度
+3.2 双拼H型钢：
+	加劲肋为矩形板
+		宽度：（1号型钢腹板高度-1号型钢翼缘厚度*2-2号型钢腹板厚度）*0.5
+		长度：（2号型钢腹板高度-2号型钢翼缘厚度*2-1号型钢腹板厚度）*0.5
+		厚度：1号或2号型钢腹板厚度中的较大值
+3.3 T型钢：
+	加劲肋为矩形板
+		宽度：（翼缘宽度-腹板厚度）*0.5
+		长度：腹板高度-翼缘厚度
+		厚度：腹板厚度
+3.4 矩形管：
+	加劲肋为矩形板
+		宽度：翼缘宽度-腹板厚度*2
+		长度：腹板高度-翼缘厚度*2
+		厚度：腹板厚度与翼缘厚度中的较大值
+3.5 圆管：
+	加劲肋为圆形板，仅支持圆管，不支持圆钢
+		直径：圆管直径-圆管厚度*2
+		厚度：圆管厚度
+3.6 工字钢：
+	加劲肋为矩形板
+		宽度：（翼缘宽度-腹板厚度）*0.5
+		长度：腹板高度-翼缘厚度*2
+3.7 槽钢：
+	加劲肋为矩形板
+		宽度：翼缘宽度-腹板厚度
+		长度：腹板高度-翼缘厚度*2
+	双拼槽钢（口对口）：
+	加劲肋为矩形板
+		宽度：（翼缘宽度-腹板厚度）*2
+		长度：腹板高度-翼缘厚度*2
+	双拼槽钢（背对背）：
+	同单槽钢。
+3.8 角钢
+	不支持
+3.9 C型钢
+	不支持
+3.10 Z型钢
+	不支持
+3.11 板件
+	不支持

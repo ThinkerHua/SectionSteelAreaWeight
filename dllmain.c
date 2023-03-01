@@ -43,7 +43,7 @@ DLLIMPORT char *SectionSteel_Area_Weight(char const *RawText, unsigned const Ctr
 	return formula;
 }
 
-DLLIMPORT char *Stiffener_Specifications(char const *RawText, unsigned const CtrlCode) {
+DLLIMPORT char *Stiffener_Specification(char const *RawText, unsigned const CtrlCode) {
 	char *SecSteType = NULL;
 	void *obj = NULL;
 	char *stif = NULL;
