@@ -13,7 +13,7 @@ struct replaceinfo {
 };
 char *getSecSteType(char const *FormatedText);
 /*
-	得到的结果不需要使用时应free掉 
+	返回值指针指向const字符串数组，不再使用时不应free，只需赋值NULL
 */
 void QSortStrArr(char *strarr[], int const left, int const right, int (*compare)(char const *str1, char const *str2));
 void swap(char **op1, char **op2);
@@ -32,7 +32,7 @@ int SetData(void *obj, char const *SecSteType, char const *FormatedText);
 	返回值	1	obj属性设置成功；
 			0	obj属性设置失败。
 */
-char *getResault(void *obj, char const *SecSteType, unsigned const CtrlCode);
+char *getFormula(void *obj, char const *SecSteType, unsigned const CtrlCode);
 /*
 	参数CtrlCode，从最低位到最高位位序：
 		0	=1则计算面积，与位序2互斥（互斥：不允许同时为1，否则为未定义行为，下同） 
@@ -43,7 +43,14 @@ char *getResault(void *obj, char const *SecSteType, unsigned const CtrlCode);
 		3	=1则进行粗略计算，与位序4、5互斥
 		4	=1则进行精细计算，与位序3、5互斥
 		5	=1则进行查表计算，与位序3、4互斥 
-	得到的结果不需要使用时应free掉 
+	返回值不需要使用时应free掉 
+*/
+char *getStiffener(void *obj, char const *SecSteType, unsigned const CtrlCode);
+/*
+	参数CtrlCode：
+		1	截尾取整
+		0	保留小数
+	返回值不需要使用时应free掉 
 */
 
 #endif

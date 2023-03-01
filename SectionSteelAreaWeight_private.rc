@@ -23,7 +23,7 @@ FILETYPE VFT_DLL
       VALUE "LegalCopyright", ""
       VALUE "LegalTrademarks", ""
       VALUE "OriginalFilename", ""
-      VALUE "ProductName", "Section Steel AW"
+      VALUE "ProductName", "Section Steel's Area or Weight"
       VALUE "ProductVersion", "1.2.0.0"
     }
   }

@@ -134,6 +134,10 @@ void *NewObj(char const *SecSteType) {
 }
 
 void FreeObj(void **p_obj, char const *SecSteType) {
+	if (SecSteType == NULL) return;
+	//如果*p_obj != NULL 且 SecSteType == NULL，应当如何处理？
+	//调用此函数前自行核实？ 
+	 
 	if (strcmp(SecSteType, "H") == 0) {
 		free_H(p_obj);
 	} else if (strcmp(SecSteType, "HT") == 0) {
@@ -218,47 +222,77 @@ int SetData(void *obj, char const *SecSteType, char const *FormatedText) {
 	return p_setdata(obj, FormatedText);
 }
 
-char *getResault(void *obj, char const *SecSteType, unsigned const CtrlCode) {
-	char *(*p_getresault)(void *obj, unsigned const CtrlCode);
+char *getFormula(void *obj, char const *SecSteType, unsigned const CtrlCode) {
+	char *(*p_getFormula)(void *obj, unsigned const CtrlCode);
+	
 	if (strcmp(SecSteType, "H") == 0) {
-		p_getresault = getResault_H;
+		p_getFormula = getFormula_H;
 	} else if (strcmp(SecSteType, "HT") == 0) {
-		p_getresault = getResault_HT;
+		p_getFormula = getFormula_HT;
 	} else if (strcmp(SecSteType, "HI") == 0)  {
-		p_getresault = getResault_HI;
+		p_getFormula = getFormula_HI;
 	} else if (strcmp(SecSteType, "T") == 0) {
-		p_getresault = getResault_T;
+		p_getFormula = getFormula_T;
 	} else if (strcmp(SecSteType, "J") == 0) {
-		p_getresault = getResault_J;
+		p_getFormula = getFormula_J;
 	} else if (strcmp(SecSteType, "D") == 0) {
-		p_getresault = getResault_D;
+		p_getFormula = getFormula_D;
 	} else if (strcmp(SecSteType, "I") == 0) {
-		p_getresault = getResault_I;
+		p_getFormula = getFormula_I;
 	} else if (strcmp(SecSteType, "[") == 0) {
-		p_getresault = getResault_Chan;
+		p_getFormula = getFormula_Chan;
 	} else if (strcmp(SecSteType, "[]") == 0) {
-		p_getresault = getResault_Chan_MtM;
+		p_getFormula = getFormula_Chan_MtM;
 	} else if (strcmp(SecSteType, "2[") == 0) {
-		p_getresault = getResault_Chan_BtB;
+		p_getFormula = getFormula_Chan_BtB;
 	} else if (strcmp(SecSteType, "L") == 0) {
-		p_getresault = getResault_L;
+		p_getFormula = getFormula_L;
 	} else if (strcmp(SecSteType, "2L") == 0) {
-		p_getresault = getResault_2L;
+		p_getFormula = getFormula_2L;
 	} else if (strcmp(SecSteType, "C") == 0) {
-		p_getresault = getResault_C;
+		p_getFormula = getFormula_C;
 	} else if (strcmp(SecSteType, "2C") == 0) {
-		p_getresault = getResault_2C;
+		p_getFormula = getFormula_2C;
 	} else if (strcmp(SecSteType, "Z") == 0) {
-		p_getresault = getResault_Z;
+		p_getFormula = getFormula_Z;
 	} else if (strcmp(SecSteType, "PL") == 0) {
-		p_getresault = getResault_PL;
+		p_getFormula = getFormula_PL;
 	} else if (strcmp(SecSteType, "PLT") == 0) {
-		p_getresault = getResault_PLT;
+		p_getFormula = getFormula_PLT;
 	} else if (strcmp(SecSteType, "PLD") == 0) {
-		p_getresault = getResault_PLD;
+		p_getFormula = getFormula_PLD;
 	} else {
 		return NULL;
 	}
-	return p_getresault(obj, CtrlCode);
+	return p_getFormula(obj, CtrlCode);
+}
+
+char *getStiffener(void *obj, char const *SecSteType, unsigned const CtrlCode) {
+	char *(*p_getStiffener)(void *obj, unsigned const CtrlCode);
+	
+	if (strcmp(SecSteType, "H") == 0) {
+		p_getStiffener = getStiffener_H;
+	} else if (strcmp(SecSteType, "HT") == 0) {
+		p_getStiffener = getStiffener_HT;
+	} else if (strcmp(SecSteType, "HI") == 0)  {
+		p_getStiffener = getStiffener_HI;
+	} else if (strcmp(SecSteType, "T") == 0) {
+		p_getStiffener = getStiffener_T;
+	} else if (strcmp(SecSteType, "J") == 0) {
+		p_getStiffener = getStiffener_J;
+	} else if (strcmp(SecSteType, "D") == 0) {
+		p_getStiffener = getStiffener_D;
+	} else if (strcmp(SecSteType, "I") == 0) {
+		p_getStiffener = getStiffener_I;
+	} else if (strcmp(SecSteType, "[") == 0) {
+		p_getStiffener = getStiffener_Chan;
+	} else if (strcmp(SecSteType, "[]") == 0) {
+		p_getStiffener = getStiffener_Chan_MtM;
+	} else if (strcmp(SecSteType, "2[") == 0) {
+		p_getStiffener = getStiffener_Chan_BtB;
+	} else {
+		return NULL;
+	}
+	return p_getStiffener(obj, CtrlCode);
 }
 

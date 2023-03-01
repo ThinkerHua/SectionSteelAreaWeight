@@ -1106,154 +1106,154 @@ int setData_PLD(void *object, char const *FormatedText) {
 	return 1;
 }
 
-char *getResault_H_(void *object, unsigned const CtrlCode) {
+char *getFormula_H_(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_H_(object, CtrlCode);
 	else
 		getWeight_H_(object, CtrlCode);
 }
 
-char *getResault_H(void *object, unsigned const CtrlCode) {
+char *getFormula_H(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_H(object, CtrlCode);
 	else
 		getWeight_H(object, CtrlCode);
 }
 
-char *getResault_HT(void *object, unsigned const CtrlCode) {
+char *getFormula_HT(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_HT(object, CtrlCode);
 	else
 		getWeight_HT(object, CtrlCode);
 }
 
-char *getResault_HI(void *object, unsigned const CtrlCode) {
+char *getFormula_HI(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_HI(object, CtrlCode);
 	else
 		getWeight_HI(object, CtrlCode);
 }
 
-char *getResault_T(void *object, unsigned const CtrlCode) {
+char *getFormula_T(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_T(object, CtrlCode);
 	else
 		getWeight_T(object, CtrlCode);
 }
 
-char *getResault_J(void *object, unsigned const CtrlCode) {
+char *getFormula_J(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_J(object, CtrlCode);
 	else
 		getWeight_J(object, CtrlCode);
 }
 
-char *getResault_D(void *object, unsigned const CtrlCode) {
+char *getFormula_D(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_D(object, CtrlCode);
 	else
 		getWeight_D(object, CtrlCode);
 }
 
-char *getResault_I(void *object, unsigned const CtrlCode) {
+char *getFormula_I(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_I(object, CtrlCode);
 	else
 		getWeight_I(object, CtrlCode);
 }
 
-char *getResault_Chan(void *object, unsigned const CtrlCode) {
+char *getFormula_Chan(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_Chan(object, CtrlCode);
 	else
 		getWeight_Chan(object, CtrlCode);
 }
 
-char *getResault_Chan_MtM(void *object, unsigned const CtrlCode) {
+char *getFormula_Chan_MtM(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_Chan_MtM(object, CtrlCode);
 	else
 		getWeight_Chan_MtM(object, CtrlCode);
 }
 
-char *getResault_Chan_BtB(void *object, unsigned const CtrlCode) {
+char *getFormula_Chan_BtB(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_Chan_BtB(object, CtrlCode);
 	else
 		getWeight_Chan_BtB(object, CtrlCode);
 }
 
-char *getResault_L(void *object, unsigned const CtrlCode) {
+char *getFormula_L(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_L(object, CtrlCode);
 	else
 		getWeight_L(object, CtrlCode);
 }
 
-char *getResault_2L(void *object, unsigned const CtrlCode) {
+char *getFormula_2L(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_2L(object, CtrlCode);
 	else
 		getWeight_2L(object, CtrlCode);
 }
 
-char *getResault_C(void *object, unsigned const CtrlCode) {
+char *getFormula_C(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_C(object, CtrlCode);
 	else
 		getWeight_C(object, CtrlCode);
 }
 
-char *getResault_2C(void *object, unsigned const CtrlCode) {
+char *getFormula_2C(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_2C(object, CtrlCode);
 	else
 		getWeight_2C(object, CtrlCode);
 }
 
-char *getResault_Z(void *object, unsigned const CtrlCode) {
+char *getFormula_Z(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_Z(object, CtrlCode);
 	else
 		getWeight_Z(object, CtrlCode);
 }
 
-char *getResault_PL_(void *object, unsigned const CtrlCode) {
+char *getFormula_PL_(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_PL_(object, CtrlCode);
 	else
 		getWeight_PL_(object, CtrlCode);
 }
 
-char *getResault_PLT_(void *object, unsigned const CtrlCode) {
+char *getFormula_PLT_(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_PLT_(object, CtrlCode);
 	else
 		getWeight_PLT_(object, CtrlCode);
 }
 
-char *getResault_PLD_(void *object, unsigned const CtrlCode) {
+char *getFormula_PLD_(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_PLD_(object, CtrlCode);
 	else
 		getWeight_PLD_(object, CtrlCode);
 }
 
-char *getResault_PL(void *object, unsigned const CtrlCode) {
+char *getFormula_PL(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_PL(object, CtrlCode);
 	else
 		getWeight_PL(object, CtrlCode);
 }
 
-char *getResault_PLT(void *object, unsigned const CtrlCode) {
+char *getFormula_PLT(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_PLT(object, CtrlCode);
 	else
 		getWeight_PLT(object, CtrlCode);
 }
 
-char *getResault_PLD(void *object, unsigned const CtrlCode) {
+char *getFormula_PLD(void *object, unsigned const CtrlCode) {
 	if (CtrlCode & TYPE_AREA)
 		getArea_PLD(object, CtrlCode);
 	else
@@ -2361,3 +2361,158 @@ char *getWeight_PLD(void *object, unsigned const CtrlCode) {
 	return weight;
 }
 
+char *getStiffener_H_(void *object, unsigned const CtrlCode) {
+	SectionSteel_H_ *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0;
+	
+	width = (obj->B - obj->tH) * 0.5 * 0.001;
+	length = (obj->H - obj->tB * 2) * 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, obj->tH);
+	
+	return stif;
+}
+
+char *getStiffener_H(void *object, unsigned const CtrlCode) {
+	SectionSteel_H *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0;
+	
+	width = obj->B1 <= obj->B2 ? obj->B1 - obj->tH : obj->B2 - obj->tH;
+	width *= (0.5 * 0.001);
+	length = (obj->H - obj->tB1 - obj->tB2) * 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, obj->tH);
+	
+	return stif;
+}
+
+char *getStiffener_HT(void *object, unsigned const CtrlCode) {
+	getStiffener_H_(object, CtrlCode);
+}
+
+char *getStiffener_HI(void *object, unsigned const CtrlCode) {
+	SectionSteel_HI *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0, thickness = 0.0;
+	
+	width = (obj->H1 - obj->tB1 * 2 - obj->tH2) * 0.001;
+	length = (obj->H2 - obj->tB2 * 2 - obj->tH1) * 0.001;
+	thickness = obj->tH1 > obj->tH2 ? obj->tH1 : obj->tH2;
+	thickness *= 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)thickness);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, thickness);
+	
+	return stif;
+}
+
+char *getStiffener_T(void *object, unsigned const CtrlCode) {
+	SectionSteel_T *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0;
+	
+	width = (obj->B - obj->tH) * 0.5 * 0.001;
+	length = (obj->H - obj->tB) * 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, obj->tH);
+	
+	return stif;
+}
+
+char *getStiffener_J(void *object, unsigned const CtrlCode) {
+	SectionSteel_J *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0, thickness = 0.0;
+	
+	width = (obj->B - obj->tH * 2) * 0.001;
+	length = (obj->H - obj->tB * 2) * 0.001;
+	thickness = obj->tB > obj->tH ? obj->tB : obj->tH;
+	thickness *= 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)thickness);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, thickness);
+	
+	return stif;
+}
+
+char *getStiffener_D(void *object, unsigned const CtrlCode) {
+	SectionSteel_D *obj = object;
+	char *stif = NULL;
+	
+	if (obj->t == obj->D * 0.5) 
+		return stif;
+	
+	if (CtrlCode) 
+		stif = strcatEX("PLD%d*%d", (long)obj->D - obj->t * 2, (long)obj->t);
+	else
+		stif = strcatEX("PLD%f*%f", obj->D - obj->t * 2, obj->t);
+	
+	return stif;
+}
+
+char *getStiffener_I(void *object, unsigned const CtrlCode) {
+	SectionSteel_I *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0;
+	
+	width = (obj->B - obj->tH) * 0.5 * 0.001;
+	length = (obj->H - obj->tB * 2) * 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, obj->tH);
+	
+	return stif;
+}
+
+char *getStiffener_Chan(void *object, unsigned const CtrlCode) {
+	SectionSteel_Chan *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0;
+	
+	width = (obj->B - obj->tH) * 0.001;
+	length = (obj->H - obj->tB * 2) * 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, obj->tH);
+	
+	return stif;
+}
+
+char *getStiffener_Chan_MtM(void *object, unsigned const CtrlCode) {
+	SectionSteel_Chan *obj = object;
+	char *stif = NULL;
+	double width = 0.0, length = 0.0;
+	
+	width = (obj->B - obj->tH) * 2 * 0.001;
+	length = (obj->H - obj->tB * 2) * 0.001;
+	
+	if (CtrlCode)
+		stif = strcatEX("PL%d*%d*%d", (long)width, (long)length, (long)obj->tH);
+	else
+		stif = strcatEX("PL%f*%f*%f", width, length, obj->tH);
+	
+	return stif;
+}
+
+char *getStiffener_Chan_BtB(void *object, unsigned const CtrlCode) {
+	getStiffener_Chan(object, CtrlCode);
+}

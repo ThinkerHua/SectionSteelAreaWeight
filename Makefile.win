@@ -1,21 +1,21 @@
-# Project: SectionSteelAW
+# Project: SectionSteelAreaWeight
 # Makefile created by Dev-C++ 5.11
 
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-RES      = SectionSteelAW_private.res
+RES      = SectionSteelAreaWeight_private.res
 OBJ      = dllmain.o GBData.o calculation.o SectionSteel.o dallocstr.o $(RES)
 LINKOBJ  = dllmain.o GBData.o calculation.o SectionSteel.o dallocstr.o $(RES)
-LIBS     = -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
-INCS     = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"E:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
-BIN      = SectionSteelAW.dll
+LIBS     = -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = SectionSteelAreaWeight.dll
 CXXFLAGS = $(CXXINCS) -DBUILDING_DLL=1
 CFLAGS   = $(INCS) -DBUILDING_DLL=1
 RM       = rm.exe -f
-DEF      = libSectionSteelAW.def
-STATIC   = libSectionSteelAW.a
+DEF      = libSectionSteelAreaWeight.def
+STATIC   = libSectionSteelAreaWeight.a
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -42,6 +42,6 @@ SectionSteel.o: SectionSteel.c
 dallocstr.o: dallocstr.c
 	$(CC) -c dallocstr.c -o dallocstr.o $(CFLAGS)
 
-SectionSteelAW_private.res: SectionSteelAW_private.rc 
-	$(WINDRES) -i SectionSteelAW_private.rc --input-format=rc -o SectionSteelAW_private.res -O coff 
+SectionSteelAreaWeight_private.res: SectionSteelAreaWeight_private.rc 
+	$(WINDRES) -i SectionSteelAreaWeight_private.rc --input-format=rc -o SectionSteelAreaWeight_private.res -O coff 
 

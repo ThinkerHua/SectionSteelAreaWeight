@@ -1,12 +1,12 @@
 [Project]
-FileName=SectionSteelAW.dev
-Name=SectionSteelAW
+FileName=SectionSteelAreaWeight.dev
+Name=SectionSteelAreaWeight
 Type=3
 Ver=2
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=SectionSteelAW_private.rc
+PrivateResource=SectionSteelAreaWeight_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=-DBUILDING_DLL=1_@@_
@@ -19,7 +19,7 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=SectionSteelAW.dll
+OverrideOutputName=SectionSteelAreaWeight.dll
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
@@ -45,7 +45,7 @@ InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=
-ProductName=Section Steel AW
+ProductName=Section Steel's Area or Weight
 ProductVersion=1.2.0.0
 AutoIncBuildNr=0
 SyncProduct=1

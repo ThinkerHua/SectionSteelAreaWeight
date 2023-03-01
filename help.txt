@@ -1,10 +1,11 @@
 ﻿本DLL用于生成型材单位面积和单位重量计算式。
 
 EXPORTS
-    SectionSteelAW @1
-    free_dallocstr @2
+    SectionSteel_Area_Weight @1
+    Stiffener_Specifications @2
+    free_dallocstr @3
 
-函数原型：char *SectionSteelAW(char const *RawText, unsigned const CtrlCode);
+函数原型：char *SectionSteelAreaWeight(char const *RawText, unsigned const CtrlCode);
 RawText：详见下述书写规则
 CtrlCode：二进制从低位到高位控制作用如下
 			#define TYPE_AREA					1	//生成单位面积计算式
@@ -15,6 +16,11 @@ CtrlCode：二进制从低位到高位控制作用如下
 			#define METHOD_LOOKUP				32	//在国标规范数据表中查找
 			#define PI_STYLE					64	//PI的写法（置0为PI()，置1为3.14）
 返回值：详见下述计算规则（返回值不需要使用时应当free掉）
+
+函数原型：char *Stiffener_Specifications(char const *RawText, unsigned const CtrlCode);
+RawText：详见下述书写规则
+CtrlCode：	=1	加劲肋规格参数截尾取整
+			=0	加劲肋规格参数保留小数
 
 函数原型：void free_dallocstr(char *str);
 str：要释放内存空间的字符串
@@ -89,7 +95,7 @@ str：要释放内存空间的字符串
 		（如PL280×460×12-2PLT40×60×12等价于PL280×460×12-PLT40×60×12-PLT40×60×12）
 1.13.6 不支持零件拼接标识符，若有此需求，应将各组成零件分开填写在各个数据单元格内。
 
-2、计算规则
+2、面积和重量计算规则
 2.1 一般地：
 	粗略模式仅考虑外观，不考虑零件厚度；（仅对面积计算来说）
 	精确模式在粗略模式基础上，考虑零件厚度对计算结果的影响并作调整；（对重量计算来说，粗略和精确均按精确执行）
@@ -143,3 +149,6 @@ str：要释放内存空间的字符串
 2.2.11 板件：
 		面积	三种模式结果相同（均按粗略执行，不考虑零件厚度）
 		重量	三种模式结果相同（均按精确执行）
+
+3、加劲肋生成规则
+（待完善）
