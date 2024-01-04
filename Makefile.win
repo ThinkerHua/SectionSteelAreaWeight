@@ -1,20 +1,21 @@
-# Project: SectionSteelData
+# Project: SectionSteelAreaWeight
 # Makefile created by Dev-C++ 5.11
 
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = dllmain.o
-LINKOBJ  = dllmain.o
+RES      = SectionSteelAreaWeight_private.res
+OBJ      = dllmain.o GBData.o calculation.o SectionSteel.o dallocstr.o $(RES)
+LINKOBJ  = dllmain.o GBData.o calculation.o SectionSteel.o dallocstr.o $(RES)
 LIBS     = -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
-BIN      = SectionSteelData.dll
+BIN      = SectionSteelAreaWeight.dll
 CXXFLAGS = $(CXXINCS) -DBUILDING_DLL=1
 CFLAGS   = $(INCS) -DBUILDING_DLL=1
 RM       = rm.exe -f
-DEF      = libSectionSteelData.def
-STATIC   = libSectionSteelData.a
+DEF      = libSectionSteelAreaWeight.def
+STATIC   = libSectionSteelAreaWeight.a
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -28,3 +29,19 @@ $(BIN): $(LINKOBJ)
 
 dllmain.o: dllmain.c
 	$(CC) -c dllmain.c -o dllmain.o $(CFLAGS)
+
+GBData.o: GBData.c
+	$(CC) -c GBData.c -o GBData.o $(CFLAGS)
+
+calculation.o: calculation.c
+	$(CC) -c calculation.c -o calculation.o $(CFLAGS)
+
+SectionSteel.o: SectionSteel.c
+	$(CC) -c SectionSteel.c -o SectionSteel.o $(CFLAGS)
+
+dallocstr.o: dallocstr.c
+	$(CC) -c dallocstr.c -o dallocstr.o $(CFLAGS)
+
+SectionSteelAreaWeight_private.res: SectionSteelAreaWeight_private.rc 
+	$(WINDRES) -i SectionSteelAreaWeight_private.rc --input-format=rc -o SectionSteelAreaWeight_private.res -O coff 
+
