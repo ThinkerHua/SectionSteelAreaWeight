@@ -1,4 +1,7 @@
 # SectionSteelAW
+<b>
+## 本项目已停止更新，后续版本采用C#重构，做为子项目整合进 https://github.com/ThinkerHua/SectionSteelCalculationTool 。目前已添加大量的对Tekla Structures 截面库的支持。
+<b>
  用于生成型钢单位面积或单位重量的计算式的动态链接库。
  次要功能可生成型钢的加劲肋。
  详情参见"help.txt"文档。
